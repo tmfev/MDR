@@ -1,0 +1,28 @@
+-classpath
+'/export1/cruise/jenkins/workspace/ehcache-core_ehcache-core-2.5.2_kitbuilder/ehcache-core-2.5.2/target/classes:/export1/cruise/.m2/repository/org/slf4j/slf4j-jdk14/1.6.1/slf4j-jdk14-1.6.1.jar:/export1/cruise/.m2/repository/net/sf/ehcache/sizeof-agent/1.0.1/sizeof-agent-1.0.1.jar:/export1/cruise/.m2/repository/commons-collections/commons-collections/3.1/commons-collections-3.1.jar:/export1/cruise/.m2/repository/antlr/antlr/2.7.6/antlr-2.7.6.jar:/export1/cruise/.m2/repository/javax/servlet/servlet-api/2.4/servlet-api-2.4.jar:/export1/cruise/.m2/repository/org/slf4j/slf4j-api/1.6.1/slf4j-api-1.6.1.jar:/export1/cruise/.m2/repository/javax/transaction/jta/1.1/jta-1.1.jar:/export1/cruise/.m2/repository/org/hibernate/hibernate-core/3.5.1-Final/hibernate-core-3.5.1-Final.jar'
+-encoding
+'UTF-8'
+-overview
+'/export1/cruise/jenkins/workspace/ehcache-core_ehcache-core-2.5.2_kitbuilder/ehcache-core-2.5.2/src/main/java/net/sf/ehcache/overview.html'
+-protected
+-sourcepath
+'/export1/cruise/jenkins/workspace/ehcache-core_ehcache-core-2.5.2_kitbuilder/ehcache-core-2.5.2/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2003-2012 <a href="http://www.terracotta.org">Terracotta, Inc.</a>. All Rights Reserved.'
+-charset
+'UTF-8'
+-d
+'/export1/cruise/jenkins/workspace/ehcache-core_ehcache-core-2.5.2_kitbuilder/ehcache-core-2.5.2/target/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'Ehcache Core 2.5.2 API'
+-header
+'<a href="/" target="_top">ehcache</a>'
+-link
+'http://java.sun.com/j2se/1.5.0/docs/api'
+-use
+-version
+-windowtitle
+'Ehcache Core 2.5.2 API'

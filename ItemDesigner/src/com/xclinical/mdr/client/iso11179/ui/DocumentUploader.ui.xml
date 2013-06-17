@@ -1,0 +1,74 @@
+<!-- 
+ ! Licensed to the Apache Software Foundation (ASF) under one
+ ! or more contributor license agreements.  See the NOTICE file
+ ! distributed with this work for additional information
+ ! regarding copyright ownership.  The ASF licenses this file
+ ! to you under the Apache License, Version 2.0 (the
+ ! "License"); you may not use this file except in compliance
+ ! with the License.  You may obtain a copy of the License at
+ !
+ ! http://www.apache.org/licenses/LICENSE-2.0
+ !
+ ! Unless required by applicable law or agreed to in writing,
+ ! software distributed under the License is distributed on an
+ ! "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ ! KIND, either express or implied.  See the License for the
+ ! specific language governing permissions and limitations
+ ! under the License.    
+ -->
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:mdr="urn:import:com.xclinical.mdr.client.ui"
+	xmlns:client="urn:import:com.xclinical.mdr.client">
+
+	<ui:style>
+		.spinWait {
+			float: left;
+			margin: 4pt;
+		}
+		
+		.waitLabel {
+			
+		}
+	</ui:style>
+
+	<ui:with field='i'
+		type='com.xclinical.mdr.client.res.StandardImageBundle' />
+
+	<ui:with field='res'
+		type='com.xclinical.mdr.client.res.MdrResources' />
+
+	<g:FlowPanel>
+		<g:HTMLPanel styleName="{res.css.insetBorder}">
+			Uploaded Documents:
+			<client:ItemList ui:field="documents" />
+		</g:HTMLPanel>
+		<mdr:SwitchPanel ui:field="switcher">
+			<g:FlowPanel ui:field="uploadPanel">
+				<g:HTML ui:field="message" />
+			
+				<g:FormPanel ui:field="form" 
+					method="POST" encoding="multipart/form-data">
+					<g:FlowPanel>
+						<g:Hidden ui:field="session" name="session" />
+						<g:Grid>
+							<g:row>
+								<g:cell>
+									<b>File</b>
+								</g:cell>
+								<g:customCell>
+									<g:FileUpload name="document" />
+								</g:customCell>
+							</g:row>
+						</g:Grid>
+					</g:FlowPanel>
+				</g:FormPanel>
+				<g:Button ui:field="upload">Upload</g:Button>
+			</g:FlowPanel>
+			<g:FlowPanel ui:field="waitPanel">
+				<g:Image styleName="{style.spinWait}" resource="{i.spin16White}"></g:Image>
+				<g:Label styleName="{style.waitLabel}">Uploading...</g:Label>
+			</g:FlowPanel>
+		</mdr:SwitchPanel>
+	</g:FlowPanel>
+
+</ui:UiBinder>

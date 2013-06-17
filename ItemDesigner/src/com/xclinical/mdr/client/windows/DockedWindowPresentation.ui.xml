@@ -1,0 +1,75 @@
+<!-- 
+ ! Licensed to the Apache Software Foundation (ASF) under one
+ ! or more contributor license agreements.  See the NOTICE file
+ ! distributed with this work for additional information
+ ! regarding copyright ownership.  The ASF licenses this file
+ ! to you under the Apache License, Version 2.0 (the
+ ! "License"); you may not use this file except in compliance
+ ! with the License.  You may obtain a copy of the License at
+ !
+ ! http://www.apache.org/licenses/LICENSE-2.0
+ !
+ ! Unless required by applicable law or agreed to in writing,
+ ! software distributed under the License is distributed on an
+ ! "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ ! KIND, either express or implied.  See the License for the
+ ! specific language governing permissions and limitations
+ ! under the License.    
+ -->
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style ui:field="styte" type="com.xclinical.mdr.client.windows.DockedWindowPresentation.Style">
+		.panel {
+			margin: 3pt;
+			padding: 4pt;
+						
+			border: thin solid rgb(179, 178, 178);
+			-moz-border-radius: 3pt;
+			border-radius: 3pt;
+			background-color: rgb(218, 218, 218);
+			background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgb(233, 233,
+				233) ), color-stop(100%, rgb(215, 214, 214) ) );
+			background-image: -moz-linear-gradient(rgb(233, 233, 233),
+				rgb(215, 214, 214) );
+		}
+			
+		}
+
+		.body {
+			padding: 2pt;
+		}
+		
+		.header {
+			margin: 0;
+			width: 100%;
+			font-weight: 600;
+		}
+
+		.title {
+			margin-right: 2pt;
+		}
+		
+		.button {
+			float: right;
+			padding: 2pt 0pt 0pt 2pt;
+			opacity: 0.6;
+		}
+		
+		.button:HOVER {
+			opacity: 1;
+		}
+		
+	</ui:style>
+
+	<ui:with type="com.xclinical.mdr.client.silk.SilkImageBundle" field="silk" />
+	<ui:with field='i'
+		type='com.xclinical.mdr.client.res.StandardImageBundle' />
+	
+	<g:FlowPanel ui:field="panel" styleName="{style.panel}">
+		<g:HorizontalPanel styleName="{style.header}">
+			<g:Label ui:field="title" styleName="{style.title}" />
+			<g:Image ui:field="maximize" styleName="{style.button}" resource="{i.windowMax}" />
+			<g:Image ui:field="close" styleName="{style.button}" resource="{i.windowClose}" />
+		</g:HorizontalPanel>
+	</g:FlowPanel>
+</ui:UiBinder>

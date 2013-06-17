@@ -1,0 +1,90 @@
+
+.mdr-Link {	
+}
+
+.mdr-Link:HOVER {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.mdr-ItemFieldLabel {
+	background-color: #ededed;
+	padding: 2pt 4pt 2pt 4pt;
+	white-space: nowrap;
+	font-weight: bold;
+}
+
+.mdr-HTMLItemFieldLabel {
+	border: 1pt solid grey;
+	width: 100%;
+}
+
+.mdr-StringItemFieldLabel {
+	width: 100%;
+}
+
+.mdr-MessagePanel * .image {
+	padding: 4pt;
+}
+
+.mdr-MessagePanel * .text {
+	padding: 4pt;
+	font-weight: 600;
+}
+
+.mdr-MessagePanel * .comment {
+	margin: 1em;
+	padding: 4pt;
+	font-size: 8pt;
+	overflow: auto;
+	max-width: 600pt;
+	max-height: 400pt;
+}
+
+.mdr-MessageBox {
+	opacity: 0.95;
+}
+
+.mdr-NoSel {
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;			
+}
+
+.mdr-Popup {
+	-moz-border-radius: 6px;
+	border-radius: 6px;			
+	box-shadow: 3px 4px 5px rgba(60, 60, 60, 0.3);
+}
+
+.mdr-FadeGray {
+	background-color: rgb(204, 204, 204);
+	background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgb(233, 233,
+		233) ), color-stop(100%, rgb(188, 188, 188) ) );
+	background-image: -moz-linear-gradient(rgb(233, 233, 233),
+		rgb(188, 188, 188) );
+}
+
+.mdr-InsetBorder {
+	margin: 2px 16pt 0px 2px;
+	border: 1px solid #CCC;
+	border-top: 1px solid #999;
+}
+
+.mdr-PreviewLabel {
+	vertical-align: top;
+	text-align: right;	
+}
+
+.mdr-Dragbox {
+	border: thin solid grey;
+	opacity: 0.2;
+}
+
+.mdr-Dragbox-droppable {
+	border: thin solid green;
+	background-color: rgba(10, 210, 10, 0.1);
+	opacity: 1;
+}

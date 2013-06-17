@@ -1,0 +1,63 @@
+<html>
+<head>
+<title>PackageList Utility</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF">
+<h1>Sun Package List Utility</h1>
+<p>The Sun Package List utility (PackageList) recursively inspects specified directories 
+  to identify Java package names. Any directory that contains a <tt>.java</tt> 
+  or<code> .class</code> file qualifies as Java package unless one of the command 
+  line options instructs PackageList to ignore that directory. </p>
+<p> When run from the command line, PackageList writes the list to System.out, 
+  one per line. When run as a module, it returns a LinkedList object from <code>findPkgs()</code>. 
+  PackageList can be set to ignore any directories with a specified name, anywhere 
+  in the hierarchy, using <code>-skipAll</code>. It can also be set to ignore 
+  fully qualified paths, using <code>-skip</code>. For both options, &quot;*&quot; 
+  wildcards can be specified, as defined by the <a href="pattern.html">pattern-matching 
+  classes for filenames</a>: Specifier.java class (for <code>-skipAll</code>) 
+  and the PathSpecifier.java class (for <code>-skip</code>).</p>
+<p>For a sample command script that identifies the packages in the Java 2 Platform 
+  (aka &quot;JDK&quot;), see this file: <a href="makeJdkPkgList">makeJdkPkgList</a>. 
+</p>
+<h2>Usage</h2>
+<blockquote> 
+  <pre>java docutil.PackageList {options} dir1 dir2 ... > package.lst 
+</pre>
+  <b>Note:</b><br>
+  The list of packages that results is suitable for use by JavaDoc. Saving the 
+  list to a file gives you the option of using the JavaDoc command: &quot;<tt>javadoc 
+  ... @package.lst</tt>&quot;. (The &quot;@&quot; before the filename tells JavaDoc 
+  to process it as a list of packages.)<br>
+</blockquote>
+<h2>Options</h2>
+<blockquote> 
+  <pre>-skipAll name1:name2:...<br>
+-skip    pkg1:pkg2:...
+</pre>
+  <h4>where:</h4>
+  <ul>
+    <li>-skipAll designates a list of directory names to be skipped at any level 
+      of the hierarchy where they occur </li>
+    <li>-skip designates a list of fully-qualified package names to be skipped</li>
+    <li>The names and packages listed can be Specifier patterns or PathSpecifer 
+      patterns, respectively</li>
+    <li>The remaining command line arguments are directory paths to the packages</li>
+  </ul>
+</blockquote>
+<h2>Example</h2>
+<blockquote>
+  <pre>java docutil.PackageList -skipAll SCCS:RCS:CVS -skip x.y.z  myDir </pre>
+</blockquote>
+<p>In this example, all subdirectories of myDir are recursively inspected. Any 
+  that contain a .java or .class file are added to the output list on System.out, 
+  except:</p>
+<ul>
+  <li>Any directory named SCCS, RCS, or CVS</li>
+  <li> The directory at path x.y.z<br>
+  </li>
+</ul>
+<p>&nbsp; </p>
+</body>
+</html>

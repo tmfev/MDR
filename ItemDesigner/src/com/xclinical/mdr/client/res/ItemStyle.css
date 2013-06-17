@@ -1,0 +1,14 @@
+
+.item {
+}
+
+@sprite .removeButton {
+	float: right;
+	gwt-image: "remove";
+}
+
+@sprite .removeButton:HOVER {
+	float: right;
+	gwt-image: "removeDown";
+}
+

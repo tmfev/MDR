@@ -1,0 +1,36 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<TITLE>Pattern-Matching Classes for Filenames </TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#0000FF" VLINK="#000077" ALINK="#FF0000">
+
+<H1>Pattern-Matching Classes for Filenames </H1>
+<dl> 
+  <hr>
+  <dt><STRONG>Package: </STRONG> </dt>
+  <dd>com.sun.tools.doclets.doccheck.util</dd>
+  <dt><STRONG>Description: </STRONG></dt>
+  <dd> Utilities to assist the documentation of Java apps. </dd>
+  <dt> 
+    <HR>
+    </dt>
+</dl>
+<dl> <!-- This ../dev/api URL works in the final build, with api in dev/ -->
+  <dt><a href="../dev/api/com/sun/tools/doclets/util/Specifier.html">Specifier</a></dt>
+  <dd>A pattern-matching class.<br>
+    Recognizes s*, *s, *s*, s1*s2, *s1*s2*, etc.</dd>
+  <dt>&nbsp;</dt>
+  <dt><a href="../dev/api/com/sun/tools/doclets/util/PathSpecifier.html">PathSpecifier</a></dt>
+  <dd>A pattern matcher for directory paths. <br>
+    Recognizes &quot;/&quot;, &quot;\&quot;, and &quot;.&quot; separators. <br>
+    Recognizes p1.p2.p3..., where each p(n) is a Specifier pattern. <br>
+    If d matches p1, interprets p1.* as matching d, d.x, d.x.y, etc. <br>
+    (Interprets p1.?* As matching d.x only.)</dd>
+  <dt>&nbsp;</dt>
+  <dt><a href="../dev/api/com/sun/tools/doclets/util/FileSpecifier.html">FileSpecifier</a></dt>
+  <dd>A pattern matcher for filenames, which may include a directory path.<br>
+    (A PathSpecifier and a plain Specifier are used to construct a file specifier.)</dd>
+  <dt>&nbsp;</dt>
+</dl>
+</BODY></HTML>

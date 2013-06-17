@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory">Chapter 11. Migration from Envers standalone</title><link rel="stylesheet" href="css/hibernate.css" type="text/css"/><meta xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" name="generator" content="DocBook XSL Stylesheets V1.74.0"/><link rel="home" href="index.html" title="Hibernate Envers - Easy Entity Auditing"/><link rel="up" href="index.html" title="Hibernate Envers - Easy Entity Auditing"/><link rel="prev" href="exceptions.html" title="Chapter 10. Mapping exceptions"/><link rel="next" href="links.html" title="Chapter 12. Links"/><link rel="copyright" href="Legal_Notice.html" title="Legal Notice"/></head><body><p id="title"><a href="http://www.hibernate.org" class="site_href"><strong>Hibernate.org</strong></a><a href="http://hibernate.org/Documentation/DocumentationOverview" class="doc_href"><strong>Community Documentation</strong></a></p><ul class="docnav"><li class="previous"><a accesskey="p" href="exceptions.html"><strong>Prev</strong></a></li><li class="next"><a accesskey="n" href="links.html"><strong>Next</strong></a></li></ul><div class="chapter" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="migration"/>Chapter 11. Migration from Envers standalone</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="migration.html#migrations-code">11.1. Changes to code</a></span></dt><dt><span class="section"><a href="migration.html#migrations-configuration">11.2. Changes to configuration</a></span></dt><dt><span class="section"><a href="migration.html#migrations-revisionlog">11.3. Changes to the revision entity</a></span></dt></dl></div><p>
+        With the inclusion of Envers as a Hibernate module, some of the public API and configuration defaults
+        changed. In general, "versioning" is renamed to "auditing" (to avoid confusion with the annotation used
+        for indicating an optimistic locking field - <code class="literal">@Version</code>).
+    </p><p>
+        Because of changing some configuration defaults, there should be no more problems using Envers out-of-the-box
+        with Oracle and other databases, which don't allow tables and field names to start with "_".
+    </p><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="migrations-code"/>11.1. Changes to code</h2></div></div></div><p>
+            Public API changes involve changing "versioning" to "auditing". So, <code class="literal">@Versioned</code>
+            became <code class="literal">@Audited</code>; <code class="literal">@VersionsTable</code> became <code class="literal">@AuditTable</code>
+            and so on.
+        </p><p>
+            Also, the query interface has changed slightly, mainly in the part for specifying restrictions,
+            projections and order. Please refer to the Javadoc for further details.
+        </p></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="migrations-configuration"/>11.2. Changes to configuration</h2></div></div></div><p>
+            First of all, the name of the event listener changed. It is now named
+            <code class="literal">org.hibernate.envers.event.AuditEventListener</code>, instead of
+            <code class="literal">org.jboss.envers.event.VersionsEventListener</code>. So to make Envers
+            work, you will have to change these settings in your <code class="literal">persistence.xml</code>
+            or Hibernate configuration.
+        </p><p>
+            Secondly, the names of the audit (versions) tables and additional auditing (versioning) fields
+            changed. The default suffix added to the table name is now <code class="literal">_AUD</code>, instead of
+            <code class="literal">_versions</code>. The name of the field that holds the revision number, and which
+            is added to each audit (versions) table, is now <code class="literal">REV</code>, instead of
+            <code class="literal">_revision</code>. Finally, the name of the field that holds the type of the revision,
+            is now <code class="literal">REVTYPE</code>, instead of <code class="literal">_rev_type</code>.
+        </p><p>
+            If you have a schema generated with the old version of Envers, you will
+            have to set those properties, to use the new version of Envers without problems:
+        </p><pre class="programlisting">&lt;persistence-unit ...&gt;
+&lt;provider&gt;org.hibernate.ejb.HibernatePersistence&lt;/provider&gt;
+&lt;class&gt;...&lt;/class&gt;
+&lt;properties&gt;
+   &lt;property name="hibernate.dialect" ... /&gt;
+   &lt;!-- other hibernate properties --&gt;
+
+   &lt;!-- Envers listeners --&gt;
+
+   &lt;property name="org.hibernate.envers.auditTableSuffix" value="_versions" /&gt;
+   &lt;property name="org.hibernate.envers.revisionFieldName" value="_revision" /&gt;
+   &lt;property name="org.hibernate.envers.revisionTypeFieldName" value="_rev_type" /&gt;
+   &lt;!-- other envers properties --&gt;
+&lt;/properties&gt;
+&lt;/persistence-unit&gt;</pre><p>
+            The <code class="literal">org.hibernate.envers.doNotAuditOptimisticLockingField</code> property is
+            now by default <code class="literal">true</code>, instead of <code class="literal">false</code>. You probably
+            never would want to audit the optimistic locking field.
+            Also, the <code class="literal">org.hibernate.envers.warnOnUnsupportedTypes</code> configuraiton
+            option was removed. In case you are using some unsupported types, use the <code class="literal">@NotAudited</code>
+            annotation.
+        </p><p>
+            See <a class="xref" href="configuration.html" title="Chapter 3. Configuration">Chapter 3, <i>Configuration</i></a> for details on the configuration and a description of the
+            configuration options.
+        </p></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="migrations-revisionlog"/>11.3. Changes to the revision entity</h2></div></div></div><p>
+            This section applies only if you don't have a custom revision entity.
+            The name of the revision entity generated by default changed, so if you used the default one, you'll
+            have to add a custom revision entity, and map it to the old table. Here's the class
+            that you have to create:
+        </p><pre class="programlisting">package org.hibernate.envers.example;
+
+import org.hibernate.envers.RevisionNumber;
+import org.hibernate.envers.RevisionTimestamp;
+import org.hibernate.envers.RevisionEntity;
+
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Entity;
+import javax.persistence.Column;
+import javax.persistence.Table;
+
+@Entity
+@RevisionEntity
+@Table(name="_revisions_info")
+public class ExampleRevEntity {
+    @Id
+    @GeneratedValue
+    @RevisionNumber
+    @Column(name="revision_id")
+    private int id;
+
+    @RevisionTimestamp
+    @Column(name="revision_timestamp")
+    private long timestamp;
+
+    // Getters, setters, equals, hashCode ...
+}</pre></div></div><HR xmlns=""/><a xmlns="" href="legalnotice.html"><p xmlns="http://www.w3.org/1999/xhtml" class="copyright">Copyright © 2004 Red Hat Inc.</p></a><ul class="docnav"><li class="previous"><a accesskey="p" href="exceptions.html"><strong>Prev</strong>Chapter 10. Mapping exceptions</a></li><li class="up"><a accesskey="u" href="#"><strong>Top of page</strong></a></li><li class="home"><a accesskey="h" href="index.html"><strong>Front page</strong></a></li><li class="next"><a accesskey="n" href="links.html"><strong>Next</strong>Chapter 12. Links</a></li></ul></body></html>

@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+
+<chapter id="hibernate-gsg-tutorial-annotations">
+    <title>Tutorial Using Native Hibernate APIs and Annotation Mappings</title>
+
+    <para>
+        This tutorial is located within the download bundle under <filename>basic</filename> and illustrates
+        <itemizedlist>
+            <listitem>
+                <para>
+                    using annotations to provide mapping information
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    using the <phrase>native</phrase> Hibernate APIs
+                </para>
+            </listitem>
+        </itemizedlist>
+    </para>
+
+    <section id="hibernate-gsg-tutorial-annotations-config">
+        <title>The Hibernate configuration file</title>
+
+        <para>
+            The contents are exactly the same as in <xref linkend="hibernate-gsg-tutorial-basic-config"/>.
+            The single difference is the <literal>mapping</literal> element at the very end naming the
+            annotated entity class using the <literal>class</literal> attribute.
+        </para>
+    </section>
+
+    <section id="hibernate-gsg-tutorial-annotations-entity">
+        <title>The annotated entity Java class</title>
+        <para>
+            The entity class in this tutorial is <classname>org.hibernate.tutorial.annotations.Event</classname>
+            which is still following JavaBean conventions.  In fact the class itself is exactly the same as we saw
+            in <xref linkend="hibernate-gsg-tutorial-basic-entity"/>, the only difference being the use of
+            annotations to provide the metadata instead of a separate <filename>hbm.xml</filename> file.
+        </para>
+
+        <example id="hibernate-gsg-tutorial-annotations-entity-entity">
+            <title>Identifying the class as an entity</title>
+            <programlisting role="JAVA">@Entity
+@Table( name = "EVENTS" )
+public class Event {
+    ...
+}</programlisting>
+        </example>
+
+        <para>
+            The <interfacename>@javax.persistence.Entity</interfacename> annotation is used to mark a
+            class as an entity.  It's function is essentially the same as the <literal>class</literal>
+            mapping element discussed in <xref linkend="hibernate-gsg-tutorial-basic-mapping"/>.
+            Additionally the <interfacename>@javax.persistence.Table</interfacename> annotation is
+            used to explicitly specify the table name (the default table name would have been
+            <database class="table">EVENT</database>).
+        </para>
+
+        <example id="hibernate-gsg-tutorial-annotations-entity-id">
+            <title>Identifying the identifier property</title>
+            <programlisting role="JAVA">@Id
+@GeneratedValue(generator="increment")
+@GenericGenerator(name="increment", strategy = "increment")
+public Long getId() {
+    return id;
+}</programlisting>
+        </example>
+
+        <para>
+            <interfacename>@javax.persistence.Id</interfacename> marks the property defining the
+            entity's identifier.  <interfacename>@javax.persistence.GeneratedValue</interfacename> and
+            <interfacename>@org.hibernate.annotations.GenericGenerator</interfacename> work in tandem
+            to indicate that Hibernate should use Hibernate's <literal>increment</literal> generation
+            strategy for this entity's identifier values.
+        </para>
+
+        <example id="hibernate-gsg-tutorial-annotations-entity-properties">
+            <title>Identifying basic properties</title>
+            <programlisting role="JAVA">public String getTitle() {
+    return title;
+}
+
+@Temporal(TemporalType.TIMESTAMP)
+@Column(name = "EVENT_DATE")
+public Date getDate() {
+    return date;
+}</programlisting>
+        </example>
+
+        <para>
+            Just as discussed in <xref linkend="hibernate-gsg-tutorial-basic-mapping"/>, the
+            <literal>date</literal> property needs special handling to account for its special naming
+            and its SQL type.
+        </para>
+    </section>
+
+    <section id="hibernate-gsg-tutorial-annotations-test">
+        <title>Example code</title>
+        <para>
+            <classname>org.hibernate.tutorial.annotations.AnnotationsIllustrationTest</classname> is essentially the
+            same as <classname>org.hibernate.tutorial.hbm.NativeApiIllustrationTest</classname> discussed in
+            <xref linkend="hibernate-gsg-tutorial-basic-test"/>.
+        </para>
+    </section>
+
+    <section id="hibernate-gsg-tutorial-annotations-further">
+        <title>Take it further!</title>
+        <para>
+            Try the following exercises:
+        </para>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    With help of the <citetitle pubwork="book">Developer Guide</citetitle>, add an association to
+                    the <classname>Event</classname> entity to model a message thread.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    With help of the <citetitle pubwork="book">Developer Guide</citetitle>, add a callback to
+                    receive notifications when an <classname>Event</classname> is created, updated or deleted.  Try 
+                    the same with an event listener.
+                </para>
+            </listitem>
+        </itemizedlist>
+    </section>
+
+</chapter>

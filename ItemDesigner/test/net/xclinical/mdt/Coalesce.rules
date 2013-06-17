@@ -1,0 +1,17 @@
+import net.xclinical.mdt.Test;
+import net.xclinical.mdt.TestUtils;
+
+["/"] {
+
+var t1 = Test {
+	foo = "one";
+}
+
+var t2 = Test : t1 {
+	foo = "two";
+}
+
+TestUtils.assertSame(t1, t2);
+
+}
+

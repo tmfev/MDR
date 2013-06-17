@@ -1,0 +1,17 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		.area {
+			width: 300pt;
+			height: 200pt;
+		}
+	</ui:style>
+	<g:HTMLPanel>
+		<div>
+			<b>Server Information</b>
+		</div>
+		<g:Label ui:field="version" />
+		<g:TextArea addStyleNames="{style.area}" ui:field="additionalInfo" />
+	</g:HTMLPanel>
+</ui:UiBinder> 

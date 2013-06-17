@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0"
+	xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+
+    <persistence-unit name="index">	
+    	<class>net.xclinical.iso11179.ext.IndexElement</class>
+    				
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
+			<property name="javax.persistence.jdbc.user" value="" />
+			<property name="javax.persistence.jdbc.password" value="" />
+
+		    <property name="hibernate.dialect" value="com.xclinical.mdr.server.FixedDerbyDialect" />
+            <!-- <property name="hibernate.hbm2ddl.auto" value="update"/>  -->
+		    <property name="hibernate.show_sql" value="true" />		    
+		</properties>
+	</persistence-unit>
+    
+	<persistence-unit name="prod">	
+    	<class>net.xclinical.iso11179.Assertion</class>
+    	<class>net.xclinical.iso11179.Characteristic</class>
+		<class>net.xclinical.iso11179.Concept</class>
+		<class>net.xclinical.iso11179.ConceptSystem</class>
+		<class>net.xclinical.iso11179.ConceptualDomain</class>
+		<class>net.xclinical.iso11179.Context</class>
+		<class>net.xclinical.iso11179.DataElement</class>
+		<class>net.xclinical.iso11179.DataType</class>
+		<class>net.xclinical.iso11179.DataElementConcept</class>
+		<class>net.xclinical.iso11179.DesignatableItem</class>
+		<class>net.xclinical.iso11179.Designation</class>
+		<class>net.xclinical.iso11179.DesignationContext</class>
+		<class>net.xclinical.iso11179.Definition</class>
+		<class>net.xclinical.iso11179.DefinitionContext</class>
+		<class>net.xclinical.iso11179.LanguageIdentification</class>
+		<class>net.xclinical.iso11179.Link</class>
+		<class>net.xclinical.iso11179.LinkEnd</class>
+		<class>net.xclinical.iso11179.Namespace</class>
+		<class>net.xclinical.iso11179.ObjectClass</class>
+		<class>net.xclinical.iso11179.PermissibleValue</class>
+		<class>net.xclinical.iso11179.Relation</class>
+		<class>net.xclinical.iso11179.RelationRole</class>
+		<class>net.xclinical.iso11179.Slot</class>
+		<class>net.xclinical.iso11179.ScopedIdentifier</class>
+		<class>net.xclinical.iso11179.UnitOfMeasure</class>
+		<class>net.xclinical.iso11179.ValueDomain</class>
+		<class>net.xclinical.iso11179.ValueMeaning</class>
+		<class>net.xclinical.iso11179.ReferenceDocument</class>
+    	<class>net.xclinical.iso11179.ext.Document</class>
+    	<class>net.xclinical.iso11179.ext.IndexElement</class>
+    	<class>net.xclinical.iso11179.ext.User</class>
+    	<class>net.xclinical.iso11179.ext.UserGroup</class>
+    				
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
+			<property name="javax.persistence.jdbc.user" value="" />
+			<property name="javax.persistence.jdbc.password" value="" />
+
+		    <property name="hibernate.dialect" value="com.xclinical.mdr.server.FixedDerbyDialect" />
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+		    <property name="hibernate.show_sql" value="true" />
+		    
+			<property name="hibernate.cache.provider_class" value="org.hibernate.cache.EhCacheProvider" />
+			<property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory" />
+    		<property name="hibernate.cache.use_second_level_cache" value="true" />
+    		<property name="hibernate.cache.use_query_cache" value="true" />
+		</properties>
+	</persistence-unit>
+
+	<persistence-unit name="test">
+    	<class>net.xclinical.iso11179.Assertion</class>
+    	<class>net.xclinical.iso11179.Characteristic</class>
+		<class>net.xclinical.iso11179.Concept</class>
+		<class>net.xclinical.iso11179.ConceptSystem</class>
+		<class>net.xclinical.iso11179.ConceptualDomain</class>
+		<class>net.xclinical.iso11179.Context</class>
+		<class>net.xclinical.iso11179.DataElement</class>
+		<class>net.xclinical.iso11179.DataType</class>
+		<class>net.xclinical.iso11179.DataElementConcept</class>
+		<class>net.xclinical.iso11179.DesignatableItem</class>
+		<class>net.xclinical.iso11179.Designation</class>
+		<class>net.xclinical.iso11179.DesignationContext</class>
+		<class>net.xclinical.iso11179.Definition</class>
+		<class>net.xclinical.iso11179.DefinitionContext</class>
+		<class>net.xclinical.iso11179.LanguageIdentification</class>
+		<class>net.xclinical.iso11179.Link</class>
+		<class>net.xclinical.iso11179.LinkEnd</class>
+		<class>net.xclinical.iso11179.Namespace</class>
+		<class>net.xclinical.iso11179.ObjectClass</class>
+		<class>net.xclinical.iso11179.PermissibleValue</class>
+		<class>net.xclinical.iso11179.Relation</class>
+		<class>net.xclinical.iso11179.RelationRole</class>
+		<class>net.xclinical.iso11179.Slot</class>
+		<class>net.xclinical.iso11179.ScopedIdentifier</class>
+		<class>net.xclinical.iso11179.UnitOfMeasure</class>
+		<class>net.xclinical.iso11179.ValueDomain</class>
+		<class>net.xclinical.iso11179.ValueMeaning</class>
+		<class>net.xclinical.iso11179.ReferenceDocument</class>
+    	<class>net.xclinical.iso11179.ext.Document</class>
+    	<class>net.xclinical.iso11179.ext.IndexElement</class>
+    	<class>net.xclinical.iso11179.ext.User</class>
+    	<class>net.xclinical.iso11179.ext.UserGroup</class>
+		
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
+			<property name="javax.persistence.jdbc.user" value="" />
+			<property name="javax.persistence.jdbc.password" value="" />
+
+		    <property name="hibernate.dialect" value="com.xclinical.mdr.server.FixedDerbyDialect" />
+            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+		    <property name="hibernate.show_sql" value="true" />
+		</properties>
+	</persistence-unit>
+	
+	<persistence-unit name="export">	
+    	<class>net.xclinical.iso11179.Assertion</class>
+    	<class>net.xclinical.iso11179.Characteristic</class>
+		<class>net.xclinical.iso11179.Concept</class>
+		<class>net.xclinical.iso11179.ConceptSystem</class>
+		<class>net.xclinical.iso11179.ConceptualDomain</class>
+		<class>net.xclinical.iso11179.Context</class>
+		<class>net.xclinical.iso11179.DataElement</class>
+		<class>net.xclinical.iso11179.DataType</class>
+		<class>net.xclinical.iso11179.DataElementConcept</class>
+		<class>net.xclinical.iso11179.DesignatableItem</class>
+		<class>net.xclinical.iso11179.Designation</class>
+		<class>net.xclinical.iso11179.DesignationContext</class>
+		<class>net.xclinical.iso11179.Definition</class>
+		<class>net.xclinical.iso11179.DefinitionContext</class>
+		<class>net.xclinical.iso11179.LanguageIdentification</class>
+		<class>net.xclinical.iso11179.Link</class>
+		<class>net.xclinical.iso11179.LinkEnd</class>
+		<class>net.xclinical.iso11179.Namespace</class>
+		<class>net.xclinical.iso11179.ObjectClass</class>
+		<class>net.xclinical.iso11179.PermissibleValue</class>
+		<class>net.xclinical.iso11179.Relation</class>
+		<class>net.xclinical.iso11179.RelationRole</class>
+		<class>net.xclinical.iso11179.Slot</class>
+		<class>net.xclinical.iso11179.ScopedIdentifier</class>
+		<class>net.xclinical.iso11179.UnitOfMeasure</class>
+		<class>net.xclinical.iso11179.ValueDomain</class>
+		<class>net.xclinical.iso11179.ValueMeaning</class>
+		<class>net.xclinical.iso11179.ReferenceDocument</class>
+    	<class>net.xclinical.iso11179.ext.Document</class>
+    	<class>net.xclinical.iso11179.ext.IndexElement</class>
+    	<class>net.xclinical.iso11179.ext.User</class>
+    	<class>net.xclinical.iso11179.ext.UserGroup</class>
+    			
+		<properties>
+			<property name="javax.persistence.jdbc.url" value="jdbc:derby:../mdr-data;create=true" />
+			<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
+			<property name="javax.persistence.jdbc.user" value="" />
+			<property name="javax.persistence.jdbc.password" value="" />
+
+		    <property name="hibernate.dialect" value="com.xclinical.mdr.server.FixedDerbyDialect" />
+            <!-- <property name="hibernate.hbm2ddl.auto" value="update"/>  -->
+		    <property name="hibernate.show_sql" value="true" />
+		    
+			<property name="hibernate.cache.provider_class" value="org.hibernate.cache.EhCacheProvider" />
+			<property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory" />
+			<property name="hibernate.cache.use_second_level_cache" value="true" />
+    		<property name="hibernate.cache.use_query_cache" value="true" />
+		</properties>
+	</persistence-unit>
+		
+</persistence>
+

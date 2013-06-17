@@ -1,0 +1,26 @@
+#!/bin/csh -x
+#
+#   Run the DocCheck doclet on the sampleSrc files to create sampleOut
+
+rm -rf sampleOut
+mkdir  sampleOut
+rm -f  sample.log
+echo Processing...
+javadoc \
+     -doclet com.sun.tools.doclets.doccheck.DocCheck  \
+     -docletpath ../doccheck.jar                      \
+     -J-Xmx20M                                        \
+     -d sampleOut                                     \
+     -classlist                                       \
+     -docletID                                        \
+     -title "DocCheck Sample Code"                    \
+     -skipClass "test*.Skip*:t*.t*.Skip*"             \
+     -skipPkg  "ig*ore:ignore.*"                      \
+     -sourcepath sampleSrc                            \
+     goodpkg ignore ignore.ignore okpkg testPkg1 testPkg2 testPkg2.testPkg3 \
+     |& tee sample.log
+
+# Note:
+#   The "tee" command sends output to stdout as well 
+#   as to sample.log
+

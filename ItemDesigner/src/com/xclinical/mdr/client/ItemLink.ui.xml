@@ -1,0 +1,36 @@
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+	<ui:with type="com.xclinical.mdr.client.res.MdrResources"
+		field="r" />
+
+	<ui:with type="com.xclinical.mdr.client.res.StandardImageBundle"
+		field="i" />
+
+	<ui:style type="com.xclinical.mdr.client.ItemLink.Style" field="style">
+		.link {
+			display: block;
+			min-width: 20pt;
+			width: 100%;
+			border: 1pt solid transparent;
+			cursor: hand;
+			float:left;
+		}
+		
+		.dropOver {
+			border: 1pt solid red;
+		}
+		
+		.dropDown {
+		}
+		
+		.disabled {
+			color: rgb(126, 126, 126);
+		}
+	</ui:style>
+
+	<g:HorizontalPanel>
+		<g:Anchor addStyleNames="{style.link} {r.css.link} {r.css.nosel}" ui:field="anchor" />
+		<g:Image ui:field="dropDown" addStyleNames="{style.dropDown}" resource="{i.dropDownLight}" />
+	</g:HorizontalPanel>
+</ui:UiBinder>

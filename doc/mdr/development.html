@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Development</title>
+</head>
+<body>	
+
+<h1>Development</h1>
+<p>
+	If you want to create a WAR-file from the source code, you'll find the following information helpful.
+</p>
+
+<h2>Prerequisites</h2>
+<p>
+	Some tools need to be present on your development machine:
+</p>
+
+<table>
+	<tr>
+		<th>Tool</th>
+		<th>Location</th>
+	</tr>
+
+	<tr>
+		<td>Java</td>
+		<td><a href="http://www.oracle.com/technetwork/java">http://www.oracle.com/technetwork/java</a></td>
+	</tr>
+	
+	<tr>
+		<td>Apache Ant</td>
+		<td><a href="http://ant.apache.org">http://ant.apache.org</a></td>
+	</tr>
+	
+	<tr>
+		<td>Git</td>
+		<td><a href="http://git-scm.com">http://git-scm.com</a></td>
+	</tr>	
+		
+</table>
+
+<h2>Getting the Source</h2>
+<p>
+	The source code lives in a Git repository and you will need a local copy of the repository. Due to the nature of Git, you can clone
+	any repository that holds the MDR project.The project is hosted on Github as <code>github.com:tmfev/MDR.git</code>,
+	open the project there for further information.
+</p>
+<p>
+	A typical command to clone the repository looks like this:
+</p>
+<pre>
+	git clone git@github.com:tmfev/MDR.git
+</pre>
+<p>
+	The previous command will check out the HEAD revision. If you want to build a specific version, you need to check it out first:
+</p>
+<pre>
+	git checkout 0.8.37	
+</pre>
+
+<h2>Building the WAR</h2>
+<p>
+	There is a single WAR file that constitutes the runtime components which is called <code>ItemDesigner.war</code>. To create this WAR file,
+	type
+</p>
+<pre>
+	ant war
+</pre>
+
+<p>
+	Once you have the WAR file, it's time to <a href="deployment.html">deploy</a>.
+</p>
+
+<h2>API Documentation</h2>
+<p>
+	The <a href="api/index.html">Java API Documentation</a> has been created using JavaDoc. It is available
+	after running <code>ant doc</code>.
+</p>
+
+<p>
+	Along with the API documentation comes statistics about the quality of the documentation using
+	<a href="doccheck/index.html">DocCheck</a>
+</p>
+	
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Deployment</title>
+</head>
+<body>
+	
+<h1>Deployment</h1>
+
+<p>
+	To deploy the MDR WAR file, you need to install and configure a servlet container. The MDR successfully ran
+	on a Jetty and Tomcat server but any other container that adheres to the servlet specification should be fine.
+</p>
+<p>
+	To deploy the WAR file, you need to follow the deployment instructions of the servlet container. Usually,
+	all you need to do is to copy the WAR file to the webapps folder of the servlet container. If you want to
+	run the application on the root path of the server, additional configuration steps will be necessary.
+</p>
+
+<h2>Home Folder</h2>
+<p>
+	The MDR application owns a specific folder on the file system of the server that hosts the servlet engine.
+	This folder contains the database files, database backup files and the user authentications. 
+</p>
+<p>
+	If you want the folder to reside on a different machine, you'll need to mount the drive onto the server machine
+	and access it using a local path.
+</p>
+<p>
+	To determine the name of the folder, the application does the following:
+</p>
+<ol>
+	<li>First, it looks up path in the JNDI context <code>java:comp/env</code> named <code>MDR</code>. The object is
+	expected to be a string which is the absolute folder name.</li>
+	<li>If there is no such JNDI object, the application will lookup a system environment variable called <code>MDR</code>.
+	Again, the value is the absolute path of the folder.</li>
+	<li>If there is no such environment variable, and as a last resort, the application appends <code>/mdr</code> to the home 
+	directory of the current user and uses this folder.</li>
+</ol>
+
+<p>
+	After evaluating the absolute path, the application performs the following validations:
+</p>
+
+<ol>
+	<li>The application checks of the specified folder exists. If the folder does not exist, the application will fail to start.</li>
+	<li>The application checks if it has write permissions on the folder. If the application does not have write permissions, it will fail to start.</li>
+</ol>
+
+<h2>Users</h2>
+<p>
+	User administration uses a simple htdigest file that stores the hashed passwords. You can use <code>users.htdigest.default</code>
+	as a template. Store the file (renamed to <code>users.htdigest</code> in the home folder of the application.
+</p>
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory">Preface</title><link rel="stylesheet" href="css/hibernate.css" type="text/css"/><meta xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" name="generator" content="DocBook XSL Stylesheets V1.74.0"/><link rel="home" href="index.html" title="Hibernate Envers - Easy Entity Auditing"/><link rel="up" href="index.html" title="Hibernate Envers - Easy Entity Auditing"/><link rel="prev" href="index.html" title="Hibernate Envers - Easy Entity Auditing"/><link rel="next" href="quickstart.html" title="Chapter 1. Quickstart"/><link rel="copyright" href="Legal_Notice.html" title="Legal Notice"/></head><body><p id="title"><a href="http://www.hibernate.org" class="site_href"><strong>Hibernate.org</strong></a><a href="http://hibernate.org/Documentation/DocumentationOverview" class="doc_href"><strong>Community Documentation</strong></a></p><ul class="docnav"><li class="previous"><a accesskey="p" href="index.html"><strong>Prev</strong></a></li><li class="next"><a accesskey="n" href="quickstart.html"><strong>Next</strong></a></li></ul><div class="preface" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="preface"/>Preface</h2></div></div></div><p>
+        The Envers project aims to enable easy auditing of persistent classes. All that you
+        have to do is annotate your persistent class or some of its properties, that you
+        want to audit, with <code class="literal">@Audited</code>. For each audited entity, a table
+        will be created, which will hold the history of changes made to the entity. You
+        can then retrieve and query historical data without much effort.
+    </p><p>
+        Similarly to Subversion, the library has a concept of revisions. Basically, one
+        transaction is one revision (unless the transaction didn't modify any audited entities).
+        As the revisions are global, having a revision number, you can query for various
+        entities at that revision, retrieving a (partial) view of the database at that
+        revision. You can find a revision number having a date, and the other way round,
+        you can get the date at which a revision was commited.
+    </p><p>
+        The library works with Hibernate and requires Hibernate Annotations or Entity Manager.
+        For the auditing to work properly, the entities must have immutable unique
+        identifiers (primary keys). You can use Envers wherever Hibernate works:
+        standalone, inside JBoss AS, with JBoss Seam or Spring.
+    </p><p>
+        Some of the features:
+    </p><div xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="orderedlist"><ol><li><p>
+                auditing of all mappings defined by the JPA specification
+            </p></li><li><p>
+                auditing of Hibernate mappings, which extend JPA, like custom types and
+                collections/maps of "simple" types (Strings, Integers, etc.)
+                (see also <a class="xref" href="exceptions.html" title="Chapter 10. Mapping exceptions">Chapter 10, <i>Mapping exceptions</i></a>)
+            </p></li><li><p>
+                logging data for each revision using a "revision entity"
+            </p></li><li><p>
+                querying historical data
+            </p></li></ol></div></div><HR xmlns=""/><a xmlns="" href="legalnotice.html"><p xmlns="http://www.w3.org/1999/xhtml" class="copyright">Copyright © 2004 Red Hat Inc.</p></a><ul class="docnav"><li class="previous"><a accesskey="p" href="index.html"><strong>Prev</strong>Hibernate Envers - Easy Entity Auditing</a></li><li class="up"><a accesskey="u" href="#"><strong>Top of page</strong></a></li><li class="home"><a accesskey="h" href="index.html"><strong>Front page</strong></a></li><li class="next"><a accesskey="n" href="quickstart.html"><strong>Next</strong>Chapter 1. Quickstart</a></li></ul></body></html>

@@ -1,0 +1,7 @@
+mdr-data
+test-classes
+derby.log
+reports/
+.gwt/
+gwt-unitCache/
+gen-src/

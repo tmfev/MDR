@@ -1,0 +1,14 @@
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:mdr="urn:import:com.xclinical.mdr.client">
+
+	<ui:with type="com.xclinical.mdr.client.res.MdrResources"
+		field="r" />
+
+	<ui:style>
+		.panel {
+			cursor: pointer;
+		}
+	</ui:style>
+
+	<mdr:RatingWidget styleName="{style.panel}" ui:field="averageRating" />
+</ui:UiBinder>

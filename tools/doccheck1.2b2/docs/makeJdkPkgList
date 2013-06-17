@@ -1,0 +1,16 @@
+#!/bin/csh -x
+set JDK  = /usr/local/java/jdk1.3/solaris
+set JAVA = "${JDK}/bin/java -classic"
+set DIR  = `pwd`
+set CP   = ${DIR}/classes
+set PATH = ${JDK}/bin:$PATH
+
+set SRCLOC = /re/promoted/jdk/1.3
+set SRCPATH = ${SRCLOC}/latest/ws/src/share/classes
+
+rm -f generatedPkg.lst
+$JAVA -classpath $CP  docutil.PackageList \
+      -skipAll SCCS:RCS:CVS               \
+      -skip    'ignore.*'                 \
+      $SRCPATH | sort > generatedPkg.lst
+

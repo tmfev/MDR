@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory">Chapter 1. Quickstart</title><link rel="stylesheet" href="css/hibernate.css" type="text/css"/><meta xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" name="generator" content="DocBook XSL Stylesheets V1.74.0"/><link rel="home" href="index.html" title="Hibernate Envers - Easy Entity Auditing"/><link rel="up" href="index.html" title="Hibernate Envers - Easy Entity Auditing"/><link rel="prev" href="preface.html" title="Preface"/><link rel="next" href="example.html" title="Chapter 2. Short example"/><link rel="copyright" href="Legal_Notice.html" title="Legal Notice"/></head><body><p id="title"><a href="http://www.hibernate.org" class="site_href"><strong>Hibernate.org</strong></a><a href="http://hibernate.org/Documentation/DocumentationOverview" class="doc_href"><strong>Community Documentation</strong></a></p><ul class="docnav"><li class="previous"><a accesskey="p" href="preface.html"><strong>Prev</strong></a></li><li class="next"><a accesskey="n" href="example.html"><strong>Next</strong></a></li></ul><div class="chapter" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="quickstart"/>Chapter 1. Quickstart</h2></div></div></div><p>
+        If you're using JPA, when coniguring Hibernate (in <code class="literal">persistence.xml</code>), add the following event
+        listeners: (this will allow Envers to check if any audited entities were modified)
+    </p><pre class="programlisting">&lt;persistence-unit ...&gt;
+&lt;provider&gt;org.hibernate.ejb.HibernatePersistence&lt;/provider&gt;
+&lt;class&gt;...&lt;/class&gt;
+&lt;properties&gt;
+   &lt;property name="hibernate.dialect" ... /&gt;
+   &lt;!-- other hibernate properties --&gt;
+
+   &lt;property name="hibernate.ejb.event.post-insert"
+             value="org.hibernate.ejb.event.EJB3PostInsertEventListener,org.hibernate.envers.event.AuditEventListener" /&gt;
+   &lt;property name="hibernate.ejb.event.post-update"
+             value="org.hibernate.ejb.event.EJB3PostUpdateEventListener,org.hibernate.envers.event.AuditEventListener" /&gt;
+   &lt;property name="hibernate.ejb.event.post-delete"
+             value="org.hibernate.ejb.event.EJB3PostDeleteEventListener,org.hibernate.envers.event.AuditEventListener" /&gt;
+   &lt;property name="hibernate.ejb.event.pre-collection-update"
+             value="org.hibernate.envers.event.AuditEventListener" /&gt;
+   &lt;property name="hibernate.ejb.event.pre-collection-remove"
+             value="org.hibernate.envers.event.AuditEventListener" /&gt;
+   &lt;property name="hibernate.ejb.event.post-collection-recreate"
+             value="org.hibernate.envers.event.AuditEventListener" /&gt;
+&lt;/properties&gt;
+&lt;/persistence-unit&gt;</pre><p>
+	If you're using  Hibernate directly, add the following to <code class="literal">hibernate.cfg.xml</code>:
+    </p><pre class="programlisting">
+	&lt;hibernate-configuration&gt;
+	&lt;session-factory&gt;
+
+	&lt;listener class="org.hibernate.envers.event.AuditEventListener" type="post-insert"/&gt;
+	&lt;listener class="org.hibernate.envers.event.AuditEventListener" type="post-update"/&gt;
+	&lt;listener class="org.hibernate.envers.event.AuditEventListener" type="post-delete"/&gt;
+	&lt;listener class="org.hibernate.envers.event.AuditEventListener" type="pre-collection-update"/&gt;
+	&lt;listener class="org.hibernate.envers.event.AuditEventListener" type="pre-collection-remove"/&gt;
+	&lt;listener class="org.hibernate.envers.event.AuditEventListener" type="post-collection-recreate"/&gt;
+
+
+	&lt;/session-factory&gt;
+	&lt;/hibernate-configuration&gt;
+    </pre><p>
+        The <code class="literal">EJB3Post...EvenListener</code>s are needed, so that ejb3 entity lifecycle callback
+        methods work (<code class="literal">@PostPersist, @PostUpdate, @PostRemove</code>.
+    </p><p>
+        Then, annotate your persistent class with <code class="literal">@Audited</code> - this will make all
+        properties audited. For example:
+    </p><pre class="programlisting">import org.hibernate.envers.Audited;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Column;
+
+@Entity
+@Audited // that's the important part :)
+public class Person {
+    @Id
+    @GeneratedValue
+    private int id;
+
+    private String name;
+
+    private String surname;
+
+    @ManyToOne
+    private Address address;
+
+    // add getters, setters, constructors, equals and hashCode here
+}</pre><p>
+        And the referenced entity:
+    </p><pre class="programlisting">@Entity
+@Audited
+public class Address {
+    @Id
+    @GeneratedValue
+    private int id;
+
+    private String streetName;
+
+    private Integer houseNumber;
+
+    private Integer flatNumber;
+
+    @OneToMany(mappedBy = "address")
+    private Set&lt;Person&gt; persons;
+
+    // add getters, setters, constructors, equals and hashCode here
+}
+</pre><p>
+        And that's it! You create, modify and delete the entites as always. If you look
+        at the generated schema, you will notice that it is unchanged by adding auditing
+        for the Address and Person entities. Also, the data they hold is the same. There are,
+        however, two new tables - <code class="literal">Address_AUD</code> and <code class="literal">Person_AUD</code>,
+        which store the historical data, whenever you commit a transaction.
+    </p><p>
+        Instead of annotating the whole class and auditing all properties, you can annotate
+        only some persistent properties with <code class="literal">@Audited</code>. This will cause only
+        these properties to be audited.
+    </p><p>
+        You can access the audit (history) of an entity using the <code class="literal">AuditReader</code> interface, which you
+        can obtain when having an open EntityManager.
+    </p><pre class="programlisting">AuditReader reader = AuditReaderFactory.get(entityManager);
+Person oldPerson = reader.find(Person.class, personId, revision)
+</pre><p>
+        The <code class="literal">T find(Class&lt;T&gt; cls, Object primaryKey, Number revision)</code>
+        method returns an entity with the given primary key, with the data it contained at
+        the given revision. If the entity didn't exist at this revision, <code class="literal">null</code>
+        is returned. Only the audited properties will be set on the returned entity.
+        The rest will be <code class="literal">null</code>.
+    </p><p>
+        You can also get a list of revisions at which an entity was modified using the
+        <code class="literal">getRevisions</code> method, as well as retrieve the date,
+        at which a revision was created using the <code class="literal">getRevisionDate</code> method.
+    </p></div><HR xmlns=""/><a xmlns="" href="legalnotice.html"><p xmlns="http://www.w3.org/1999/xhtml" class="copyright">Copyright © 2004 Red Hat Inc.</p></a><ul class="docnav"><li class="previous"><a accesskey="p" href="preface.html"><strong>Prev</strong>Preface</a></li><li class="up"><a accesskey="u" href="#"><strong>Top of page</strong></a></li><li class="home"><a accesskey="h" href="index.html"><strong>Front page</strong></a></li><li class="next"><a accesskey="n" href="example.html"><strong>Next</strong>Chapter 2. Short example</a></li></ul></body></html>

@@ -1,0 +1,15 @@
+import net.xclinical.mdt.TestUtils;
+
+["/"] {
+
+var s1 = "a" + "b";
+TestUtils.assertEquals("ab", s1);
+
+var s2 = "a" + "b" + "c";
+TestUtils.assertEquals("abc", s2);
+
+var i1 = 1 + 2;
+TestUtils.assertEquals(3, i1);
+
+}
+

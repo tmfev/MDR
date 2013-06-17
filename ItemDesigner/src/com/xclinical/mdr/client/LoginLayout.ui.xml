@@ -1,0 +1,146 @@
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:mdr="urn:import:com.xclinical.mdr.client.ui">
+
+	<ui:style>
+		@def TITLECOLOR rgb(64,64,64);
+
+		body {
+ 			font: Arial, sans-serif;
+		}
+
+		.appPanel {
+			margin: 1em;
+		}
+		
+		.logo {
+			float: left;
+		}
+		
+		.title {
+			float: left;
+			margin-top: 4pt;
+			margin-bottom: 0.1em;
+			margin-left: 0.4em;
+			color: #657196;
+			font-size: 1.6em;
+			font-family: sans-serif;
+		}
+		
+		.searchItemList {
+			margin: 4pt;
+		}
+		
+		.session {
+			float: right;
+		}
+		
+		.frame {
+			background-color: #d0e4f6;
+			width: 100%;
+			padding: 4pt;
+			margin: 2pt 4pt 2pt 2pt;
+			border: 1pt solid #92c1f0;
+		}
+		
+		.infoPanel {
+			width: 100%;
+		}
+
+		.infoTable {
+			margin: 0px auto;
+			width: 420pt;
+		}
+
+		.titleText {
+			color: TITLECOLOR;
+			font-size: 28pt;
+			font-weight: bold;
+		}
+
+		.subtitleText {
+			color: TITLECOLOR;
+			font-size: 16pt; 
+			font-weight: bold;
+			margin-bottom: 1em;
+		}
+
+		.abstractText {
+			color: TITLECOLOR;
+			font-size: 12pt; 
+			margin-bottom: 2em;
+		}
+
+		.contactText {
+			margin-top: 1em;
+			margin-bottom: 2em;
+		}
+	</ui:style>
+
+	<ui:with field='res'
+		type='com.xclinical.mdr.client.res.StandardImageBundle' />
+
+	<g:DockLayoutPanel styleName="{style.appPanel}" unit="EM">
+		<g:north size="4">
+			<g:FlowPanel>
+			</g:FlowPanel>
+		</g:north>
+		<g:east size="20">
+			<g:VerticalPanel>
+				<mdr:SignInWidget styleName="{style.frame}" ui:field="signIn" />
+				<mdr:SignUpWidget styleName="{style.frame}" ui:field="signUp" />
+			</g:VerticalPanel>
+		</g:east>
+		<g:center>
+			<g:HTMLPanel styleName="{style.infoPanel}">
+				<table class="{style.infoTable}" cellpadding="4pt">
+				    <colgroup>
+    					<col width="25%" />
+    					<col width="25%" />
+						<col width="25%" />
+    					<col width="25%" />
+    				</colgroup>
+				    <tr>
+				        <td align="center" colspan="4"><div class="{style.titleText}">MDR</div></td>
+				    </tr>
+				    <tr>
+				        <td align="center" colspan="4"><div class="{style.subtitleText}">Das nationale Metadata Repository für die klinische und epidemiologische Forschung in Deutschland</div></td>
+				    </tr>
+				    <tr>
+				        <td align="center" colspan="4"><div class="{style.abstractText}">Ein Werkzeug zur Unterstützung der Wiederverwendung von Datenelementen bei der Planung und Erstellung				             
+				            von Datenbanken und Dokumentationsprozessen in prospektiven klinischen und epidemiologischen Studien und Registern</div></td>
+					</tr>
+					<tr>
+					    <td align="center"><a href="http://www.imise.uni-leipzig.de"><g:Image resource="{res.imiseLogo}"/></a></td>
+					    <td align="center"><a href="http://www.ibe.med.uni-muenchen.de"><g:Image resource="{res.lmuLogo}"/></a></td>
+   					    <td align="center"><a href="http://www.xclinical.com"><g:Image resource="{res.xclinicalLogo}"/></a></td>
+   					    <td align="center"><a href="http://www.tmf-ev.de"><g:Image resource="{res.tmfLogo}"/></a></td>
+					</tr>
+					<tr>
+					    <td>Institut für Medizinische Informatik, Statistik und Epidemiologie (IMISE)</td>					    
+						<td>Institut für medizinische Informationsverarbeitung, Biometrie und Epidemiologie (IBE)</td>
+						<td>XClinical GmbH</td>
+					    <td>TMF – Technologie- und Methodenplattform für die vernetzte medizinische Forschung e.V.</td>
+					</tr>
+					<tr>
+					    <td>Härtelstraße 16-18<br/>04107 Leipzig</td>
+					    <td>Marchioninistraße 15<br/>81377 München</td>
+					    <td>Arnulfstraße 19<br/>80335 München</td>
+					    <td>Neustädtische Kirchstr. 6<br/>10117 Berlin</td>
+					</tr>
+					<tr>
+					    <td colspan="4">
+					        <div class="{style.contactText}">Kontakt: <a href="mailto:markus.loeffler@imise.uni-leipzig.de">markus.loeffler@imise.uni-leipzig.de</a></div>
+					    </td>
+					</tr>
+					<tr>
+					    <td colspan="4">
+					        Gefördert vom BMBF<br/>
+					        <g:Image resource="{res.bmfLogo}" />
+					    </td>
+					</tr>
+				</table>			
+				    
+			</g:HTMLPanel>
+		</g:center>
+	</g:DockLayoutPanel>
+</ui:UiBinder>

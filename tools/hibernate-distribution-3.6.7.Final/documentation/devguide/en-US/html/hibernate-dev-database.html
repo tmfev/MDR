@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory">Chapter 1. Database Access</title><link rel="stylesheet" href="css/hibernate.css" type="text/css"/><meta xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" name="generator" content="DocBook XSL Stylesheets V1.74.0"/><link rel="home" href="index.html" title="Hibernate Developer Guide"/><link rel="up" href="index.html" title="Hibernate Developer Guide"/><link rel="prev" href="hibernate-gsg-preface.html" title="Preface"/></head><body><p id="title"><a href="http://www.hibernate.org" class="site_href"><strong>Hibernate.org</strong></a><a href="http://hibernate.org/Documentation/DocumentationOverview" class="doc_href"><strong>Community Documentation</strong></a></p><ul class="docnav"><li class="previous"><a accesskey="p" href="hibernate-gsg-preface.html"><strong>Prev</strong></a></li><li class="next"/></ul><div class="chapter" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="hibernate-dev-database"/>Chapter 1. Database Access</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="hibernate-dev-database.html#hibernate-dev-database-connect">1.1. JDBC Connections</a></span></dt><dd><dl><dt><span class="section"><a href="hibernate-dev-database.html#hibernate-dev-database-connect-pools">1.1.1. Using connection pooling</a></span></dt><dt><span class="section"><a href="hibernate-dev-database.html#hibernate-dev-database-connect-dataSource">1.1.2. Using javax.sql.DataSource</a></span></dt></dl></dd><dt><span class="section"><a href="hibernate-dev-database.html#hibernate-dev-database-dialect">1.2. Database Dialects</a></span></dt><dd><dl><dt><span class="section"><a href="hibernate-dev-database.html#hibernate-dev-database-dialect-config">1.2.1. Specifying the Dialect to use</a></span></dt><dt><span class="section"><a href="hibernate-dev-database.html#hibernate-dev-database-dialect-resolution">1.2.2. Dialect resolution</a></span></dt><dt><span class="section"><a href="hibernate-dev-database.html#hibernate-dev-database-dialect-custom">1.2.3. Custom Dialects</a></span></dt></dl></dd><dt><span class="section"><a href="hibernate-dev-database.html#hiberate-dev-database-schema">1.3. Database Schema</a></span></dt></dl></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="hibernate-dev-database-connect"/>1.1. JDBC Connections</h2></div></div></div><p>
+            Hibernate understands how to connect to a database through an interface
+            <code class="interfacename">org.hibernate.connection.ConnectionProvider</code>.  While
+            <code class="interfacename">org.hibernate.connection.ConnectionProvider</code> is considered an extension SPI,
+            Hibernate comes with a number of built-in providers.
+        </p><div class="section" lang="en-US"><div class="titlepage"><div><div><h3 class="title"><a id="hibernate-dev-database-connect-pools"/>1.1.1. Using connection pooling</h3></div></div></div><p>
+                The built-in connection pooling based providers all require the following settings
+            </p><div class="variablelist"><dl><dt><span class="term"><span class="property">hibernate.connection.driver_class</span></span></dt><dd><p>
+                            Names the <code class="interfacename">java.sql.Driver</code> implementation class from your JDBC
+                            provider.
+                        </p></dd><dt><span class="term"><span class="property">hibernate.connection.url</span></span></dt><dd><p>
+                            The JDBC connection url.  See your JDBC provider's documentation for details and examples.
+                        </p></dd><dt><span class="term"><span class="property">hibernate.connection.username</span></span></dt><dd><p>
+                            The name of the user to use when opening a JDBC <code class="interfacename">java.sql.Connection</code>.
+                        </p></dd><dt><span class="term"><span class="property">hibernate.connection.password</span></span></dt><dd><p>
+                            The password associated with the provided username.
+                        </p></dd></dl></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h4 class="title"><a id="hibernate-dev-database-connect-pools-hibernate"/>1.1.1.1. Using Hibernate's built-in connection pooling</h4></div></div></div><div xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="warning"><h2>Warning</h2><p>
+                        The built-in Hibernate connection pool is not intended for production use.  It lacks several
+                        features found on any decent connection pool.  However, it can be quite useful to get started
+                        and in unit testing.
+                    </p></div><p>
+                    The only additional supported setting for the built-in pooling is the
+                    <span class="property">hibernate.connection.pool_size</span> setting which tells the pool how many
+                    connections maximum it can keep in the pool.
+                </p></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h4 class="title"><a id="hibernate-dev-database-connect-pools-c3p0"/>1.1.1.2. Using c3p0 for connection pooling</h4></div></div></div><p>
+                    
+                    To be continued...
+                </p></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h4 class="title"><a id="hibernate-dev-database-connect-pools-proxool"/>1.1.1.3. Using proxool for connection pooling</h4></div></div></div><p>
+                    
+                    To be continued...
+                </p></div></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h3 class="title"><a id="hibernate-dev-database-connect-dataSource"/>1.1.2. Using <code class="interfacename">javax.sql.DataSource</code></h3></div></div></div><p>
+                Hibernate can also use a <code class="interfacename">javax.sql.DataSource</code> to obtain
+                connections.  To do so, Hibernate expects to be able to locate the
+                <code class="interfacename">javax.sql.DataSource</code> in <code class="literal">JNDI</code>.  The
+                <span class="property">hibernate.connection.datasource</span> setting tells Hibernate the <code class="literal">JNDI</code>
+                namespace at which it can find the the <code class="interfacename">javax.sql.DataSource</code>.
+            </p><p>
+                Generally speaking a <code class="interfacename">javax.sql.DataSource</code> is configured to connect to
+                the database using a single set of credentials (username/password).  Sometimes, however, the
+                <code class="interfacename">javax.sql.DataSource</code> is set up so that the credentials have to be
+                used to obtain a <code class="interfacename">java.sql.Connection</code> from it.  In these cases
+                applications would specify the credentials via the <span class="property">hibernate.connection.username</span>
+                and <span class="property">hibernate.connection.password</span> settings, which Hibernate would pass along to the
+                <code class="interfacename">javax.sql.DataSource</code> when obtaining a
+                <code class="interfacename">java.sql.Connection</code> from it.
+            </p></div></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="hibernate-dev-database-dialect"/>1.2. Database Dialects</h2></div></div></div><p>
+            A <em class="firstterm"><span>Dialect</span></em> informs Hibernate of the capabilities of the
+            underlying database.  This role is fulfilled by an instance of a
+            <code class="classname">org.hibernate.dialect.Dialect</code> subclass.  The Dialect is one of the most important
+            pieces of information given to the Hibernate <code class="interfacename">org.hibernate.Sessionfactory</code>
+            during startup as it allows Hibernate to properly plan how it needs to communicate with the database.
+        </p><div class="section" lang="en-US"><div class="titlepage"><div><div><h3 class="title"><a id="hibernate-dev-database-dialect-config"/>1.2.1. Specifying the Dialect to use</h3></div></div></div><p>
+                The developer may manually specify the Dialect to use by setting the
+                <span class="property">hibernate.dialect</span> configuration property to the name of the specific
+                <code class="classname">org.hibernate.dialect.Dialect</code> class to use.
+            </p></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h3 class="title"><a id="hibernate-dev-database-dialect-resolution"/>1.2.2. Dialect resolution</h3></div></div></div><p>
+                Assuming a <code class="interfacename">org.hibernate.connection.ConnectionProvider</code> has been
+                set up according to <a class="xref" href="hibernate-dev-database.html#hibernate-dev-database-connect" title="1.1. JDBC Connections">Section 1.1, “JDBC Connections”</a> then Hibernate will attempt
+                to automatically determine the Dialect to use based on the
+                <code class="interfacename">java.sql.DatabaseMetaData</code> reported by a
+                <code class="interfacename">java.sql.Connection</code> obtained from that
+                <code class="interfacename">org.hibernate.connection.ConnectionProvider</code>.
+            </p><p>
+                This functionality is provided by a series of
+                <code class="interfacename">org.hibernate.dialect.resolver.DialectResolver</code> instances registered
+                with Hibernate internally.  Hibernate comes with a standard set of recognitions.  If your application
+                requires extra Dialect resolution capabilities, it would simply register a custom implementation
+                of <code class="interfacename">org.hibernate.dialect.resolver.DialectResolver</code> as follows
+            </p><div class="example"><a id="hibernate-dev-database-dialect-resolution-registration"/><p class="title"><b>Example 1.1. Registering a custom <code class="interfacename">org.hibernate.dialect.resolver.DialectResolver</code></b></p><div class="example-contents"><pre xmlns="" xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="JAVA"></span>
+<!--  --><br/><span class="java_plain">&nbsp;&nbsp;&nbsp;&nbsp;org</span><span class="java_separator">.</span><span class="java_plain">hibernate</span><span class="java_separator">.</span><span class="java_plain">dialect</span><span class="java_separator">.</span><span class="java_plain">resolver</span><span class="java_separator">.</span><span class="java_type">DialectFactory</span><span class="java_separator">.</span><span class="java_plain">registerDialectResolver</span><span class="java_separator">(</span><span class="java_plain">&nbsp;</span><span class="java_literal">&quot;org.hibernate.example.CustomDialectResolver&quot;</span><span class="java_plain">&nbsp;</span><span class="java_separator">);</span>
+</pre></div></div><br class="example-break"/><p>
+                Registered <code class="interfacename">org.hibernate.dialect.resolver.DialectResolver</code> are
+                <span class="emphasis"><em>prepended</em></span> to an internal list of resolvers, so they take precedence
+                before any already registered resolvers including the standard one. 
+            </p></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h3 class="title"><a id="hibernate-dev-database-dialect-custom"/>1.2.3. Custom Dialects</h3></div></div></div><p>
+                It is sometimes necessary for developers to write a custom Dialect for Hibernate to use.  Generally
+                this is as simple as selecting a particular <code class="classname">org.hibernate.dialect.Dialect</code>
+                implementation that is closest to your needs and subclassing it and overriding where necessary.
+            </p><p>
+                Custom dialects may be manually specified as outlined in
+                <a class="xref" href="hibernate-dev-database.html#hibernate-dev-database-dialect-config" title="1.2.1. Specifying the Dialect to use">Section 1.2.1, “Specifying the Dialect to use”</a> as well as registered through a resolver as
+                outlined in <a class="xref" href="hibernate-dev-database.html#hibernate-dev-database-dialect-resolution-registration" title="Example 1.1. Registering a custom org.hibernate.dialect.resolver.DialectResolver">Example 1.1, “Registering a custom org.hibernate.dialect.resolver.DialectResolver”</a>.
+            </p></div></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="hiberate-dev-database-schema"/>1.3. Database Schema</h2></div></div></div><p>
+            
+            To be continued...
+        </p></div></div><HR xmlns=""/><a xmlns="" href=""><p xmlns="http://www.w3.org/1999/xhtml" class="copyright">Copyright © 2004 Red Hat, Inc.</p></a><ul class="docnav"><li class="previous"><a accesskey="p" href="hibernate-gsg-preface.html"><strong>Prev</strong>Preface</a></li><li class="up"><a accesskey="u" href="#"><strong>Top of page</strong></a></li><li class="home"><a accesskey="h" href="index.html"><strong>Front page</strong></a></li></ul></body></html>

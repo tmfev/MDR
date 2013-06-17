@@ -1,0 +1,753 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="Keywords" content="FreeMarker, template, templates, HTML, HTML template, page template, text, macro, macros, preprocessor, MVC, view, servlet, Java, free, open source, JSP, taglib, Velocity, WebMacro">
+    <meta name="Description" content="Java template engine; a generic tool to generate text output (HTML, RTF, source code, etc.). Practical for servlet-based Web applications following the MVC pattern. Free.">
+    <meta name="verify-v1" content="OU7KNU7q+wGizVoaX/MNUo/tZ5o5RC06VfCjQIRRJu4=">
+    <link rel="STYLESHEET" type="text/css" href="site.css">
+    <title>FreeMarker: Java Template Engine Library - Powered By FreeMarker</title>
+  </head>
+  <body>
+    <table border="0" cellspacing="0" cellpadding="0" width="100%">
+      <tr>
+        <td align="left" valign="top" width="20%">
+  <table bgcolor="#E0E0E0" cellspacing="0" cellpadding="0" border="0" width="100%">
+    <tr valign="top">
+      <td height="1" width="1" bgcolor="black"><img src="images/none.gif" width="1" height="1" alt="" hspace="0" vspace="0" border="0"></td>
+      <td height="1" bgcolor="black"><img src="images/none.gif" width="1" height="1" alt="" hspace="0" vspace="0" border="0"></td>
+      <td height="1" width="1" bgcolor="black"><img src="images/none.gif" width="1" height="1" alt="" hspace="0" vspace="0" border="0"></td>
+    </tr>
+    <tr>
+      <td width="1" bgcolor="black"><img src="images/none.gif" width="1" height="1" alt="" hspace="0" vspace="0" border="0"/></td>
+      <td>
+        <table bgcolor="#E0E0E0" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 0px">
+          <tr><td>
+
+  <table bgcolor="#E0E0E0" border="0" cellspacing="10" cellpadding="0" width="100%">
+    <tr><td colspan="2" align="center">
+        <a href="http://freemarker.org"><img border="0" src="images/logo_e0e0e0.png" alt="FreeMarker logo"></a><br>&nbsp;
+    </td></tr>
+
+  
+    <tr><td>
+  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr><td width="100%">
+      <b>About</b>
+    </td></tr>
+  </table>
+  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="index.html">Overview</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="features.html">Features</a>
+    </td>
+  </tr>
+
+      </table>
+</td></tr>
+
+    <tr><td>
+  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr><td width="100%">
+      <b>Download</b>
+    </td></tr>
+  </table>
+  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="freemarkerdownload.html">FreeMarker</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="editors.html">Editor/IDE plugins</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="fmpp.html">File generator tool (FMPP)</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="usCavalry.html">Migrating from Velocity</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="libraries.html">FTL Libraries</a>
+    </td>
+  </tr>
+
+      </table>
+</td></tr>
+
+    <tr><td>
+  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr><td width="100%">
+      <b>Documentation</b>
+    </td></tr>
+  </table>
+  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="docs/index.html">Table of Contents</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="docs/api/index.html">Short-cut to: Java API</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="docs/app_faq.html">Short-cut to: FAQ</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="docs/alphaidx.html">Short-cut to: Index</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="docs/app_versions.html">Short-cut to: Versions</a>
+    </td>
+  </tr>
+
+      </table>
+</td></tr>
+
+    <tr><td>
+  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr><td width="100%">
+      <b>Community, help</b>
+    </td></tr>
+  </table>
+  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="http://sourceforge.net/tracker/?func=add&amp;group_id=794&amp;atid=100794">REPORT BUGS HERE!</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="http://sourceforge.net/mail/?group_id=794">Mailing list subscription</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="gmane.html">Browse/search the mailing list archives</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="gmane.html">News (nntp) interface</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="https://sourceforge.net/forum/?group_id=794">Web forums</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="http://freemarker.org/builds/">Development builds (automatic)</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="http://freemarker.org/wiki">Wiki</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="http://freemarker.blogspot.com/">Blog</a>
+    </td>
+  </tr>
+
+      </table>
+</td></tr>
+
+    <tr><td>
+  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr><td width="100%">
+      <b>Miscellaneous</b>
+    </td></tr>
+  </table>
+  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="poweredBy.html">Powered by FreeMarker</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="http://sourceforge.net/projects/freemarker">SourceForge project page</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="whoWeAre.html">Who we are</a>
+    </td>
+  </tr>
+
+      </table>
+</td></tr>
+
+  
+  </table>
+
+          </td></tr>
+        </table>
+      </td>
+      <td width="1" bgcolor="black"><img src="images/none.gif" width="1" height="1" alt="" hspace="0" vspace="0" border="0"/></td>
+    </tr>
+    <tr valign="top">
+      <td height="1" width="1" bgcolor="black"><img src="images/none.gif" width="1" height="1" alt="" hspace="0" vspace="0" border="0"></td>
+      <td height="1" bgcolor="black"><img src="images/none.gif" width="1" height="1" alt="" hspace="0" vspace="0" border="0"></td>
+      <td height="1" width="1" bgcolor="black"><img src="images/none.gif" width="1" height="1" alt="" hspace="0" vspace="0" border="0"></td>
+    </tr>
+  </table>            
+        </td>
+        <td align="left" valign="top" width="5%">
+          &nbsp;
+        </td>
+        <td align="left" valign="top" width="72%">
+          <table border="0" cellspacing="0" cellpadding="0" width="100%">
+            <tr><td align="right"><span class="pageTitle">Powered By FreeMarker</span></td></tr>
+            <tr bgcolor="#000000"><td><img src="images/none.gif" width=1 height=1 hspace="0" vspace="0" border="0" alt=""></td></tr>
+          </table>
+
+  
+    <p>
+      Below is a non-comprehensive list of sites and products that use
+      FreeMarker. If you are a developer (or otherwise a representative) of a site or a production-ready
+      product that should appear here, <a href="mailto:freemarker-devel@lists.sourceforge.net">drop us a
+      note</a> that includes a short description (preferably less than 250 characters, or 500 for complex
+      frameworks) and an URL.
+    </p>
+    <p>
+      We'll also be glad if you display one of the following Powered by FreeMarker logos
+      on your website in recognition of our work:
+    </p>
+    <table border="0" cellpadding="0" cellspacing="6">
+      <tr>
+        <td align="left">
+          <a href="http://freemarker.org/"><img alt="Powered by FreeMarker" border="0" src="images/poweredby_big_ffffff.png" /></a><br />
+        </td>
+      </tr>
+      <tr>
+        <td align="left">
+          <a href="http://freemarker.org/"><img alt="Powered by FreeMarker" border="0" height="31" src="images/poweredby_ffffff.png" width="88" /></a>
+        </td>
+      </tr>
+      <tr>
+        <td align="left">
+          <a href="http://freemarker.org/"><img alt="Powered by FreeMarker" border="0" height="31" src="images/poweredby_sq_simple.png" width="88" /></a>
+          <a href="http://freemarker.org/"><img alt="Powered by FreeMarker" border="0" height="31" src="images/poweredby_sq_bluespot.png" width="88" /></a>
+          <a href="http://freemarker.org/"><img alt="Powered by FreeMarker" border="0" height="31" src="images/poweredby_sq_sunset.png" width="88" /></a>
+        </td>
+      </tr>
+    </table>
+    <p>
+      The logo should be a link to freemarker.org. Please use a copy of the image file on your server.<br />
+    </p>
+    <p>
+      <code>&lt;a href="http://freemarker.org/">&lt;img src="..."<br />
+      alt="Powered by FreeMarker" border="0">&lt;/a></code>
+    </p>
+  
+  
+  
+  
+    <h2>Software that incorporates FreeMarker</h2>
+
+      <table border="0" cellpadding="4">
+
+        <tr valign="top">
+    <td><a href="http://alfresco.org/">Alfresco</a></td>
+    <td>
+            Alfresco offers open source enterprise content management (ECM) - Document
+            Management, Collaboration, Records Management, Knowledge Management,
+            Web Content Management and Imaging.  Alfresco was founded in 
+            June 2005 by John Newton, co-founder of Documentum, and 
+            John Powell, former COO of Business Objects. Alfresco's templating system
+            is based on exposing their custom object model to FreeMarker templates.
+            See <a href="http://www.alfresco.org/mediawiki/index.php/Template_Guide">here</a> for more information.
+         </td>
+  </tr>
+
+        <tr valign="top">
+    <td><a href="http://apt-jelly.sourceforge.net/">APT-Jelly</a></td>
+    <td>
+            APT-Jelly is an engine for generating artifacts (e.g. source code, config files)
+            from Java source code. APT-Jelly provides a template-oriented approach to artifact generation
+            by providing an interface for Sun's Annotation Processing Tool (APT) to your
+            favorite templating engine.
+         </td>
+  </tr>
+
+        <tr valign="top">
+    <td><a href="http://www.clapper.org/software/java/curn/">Curn</a></td>
+    <td>
+            Curn is an RSS reader. It scans a configured set of RSS feeds, and summarizes the
+            results in files generated with FreeMarker templates. It is a command-line utility,
+            intended to be run periodically in the background.
+         </td>
+  </tr>
+
+        <tr valign="top">
+    <td><a href="http://www.dbsight.net">DBSight</a></td>
+    <td>
+            With DBSight you can quickly create a working scalable full-text
+            search engine based on your own database, just by writing SQL and
+            configuring via browser. DBSight provides a customizable scaffolding
+            engine to scaffold search result templates.
+         </td>
+  </tr>
+
+        <tr valign="top">
+    <td><a href="http://www.basilv.com/psd/software">EnvGen</a></td>
+    <td>
+            EnvGen is an <a href="http://ant.apache.org/">Ant</a> task for 
+            generating different versions of the same file parameterized for 
+            different environments (i.e. development, test, and production) using 
+            FreeMarker.
+         </td>
+  </tr>
+
+        <tr valign="top">
+    <td><a href="http://fmpp.sourceforge.net/">FMPP</a></td>
+    <td>
+            FMPP is a general purpose text file preprocessor tool (command-line, Ant task).
+            It can generate complete homepages (full directory structure with HTML-s, images, etc.).
+            It is extendable to display data from any data sources (as database).
+         </td>
+  </tr>
+
+        <tr valign="top">
+    <td><a href="http://www.alphaworks.ibm.com/tech/hirixml">Hierarchical Inherited Rule-Interpreted XML</a></td>
+    <td>
+            Hierarchical Inherited Rule-Interpreted XML is A dynamic XML Engine that creates
+            dynamic DOMs built on dynamic rules and expressions where the expression may use
+            FreeMarker as the expression interpreter.
+         </td>
+  </tr>
+
+        <tr valign="top">
+    <td><a href="http://jcopist.sourceforge.net/">JCopist</a></td>
+    <td>
+            JCopist is a template-based document generation server based on
+            <a href="http://www.openoffice.org/">OpenOffice.org</a>.
+            JCopist templates are regular OpenDocuments, enhanced with the FreeMarker scripting language.
+         </td>
+  </tr>
+
+        <tr valign="top">
+    <td><a href="http://www.jforum.net/">JForum</a></td>
+    <td>
+            JForum is an open source discussion board system. The lead developer is Rafael Steil.
+         </td>
+  </tr>
+
+        <tr valign="top">
+    <td><a href="http://www.jmetra.com">JMetra</a></td>
+    <td>
+            JMetra is a source code analysis tool. It leverages FreeMarker to display the
+            source code metrics that it gathers.
+         </td>
+  </tr>
+
+        <tr valign="top">
+    <td><a href="http://jodreports.sourceforge.net/">JODReports</a></td>
+    <td>
+            JODReports is an open source solution for creating office documents and reports in Java,
+            using OpenOffice.org.
+         </td>
+  </tr>
+
+        <tr valign="top">
+    <td><a href="http://www.qmecom.com/">Kinetic Fusion (Qmecom)</a></td>
+    <td>
+            KineticFusion (now part of the Qmecom platform) is an application for the creation and manipulation of SWF files,
+            the native format for movies that run within the Flash<sup>TM</sup> platform.
+            It leverages FreeMarker to provide templating capabilities.
+         </td>
+  </tr>
+
+        <tr valign="top">
+    <td><a href="http://www.lutece.paris.fr">Lutece (2.0+)</a></td>
+    <td>
+            Lutece is a portal engine which allows you to easily create your websites or
+            intranets based upon HTML, XML, etc content. It provides a user friendly interface for
+            portal management so no specific technical skills are required. BSD-like license.
+         </td>
+  </tr>
+
+        <tr valign="top">
+    <td><a href="http://www.magnolia-cms.com">Magnolia</a></td>
+    <td>
+           Magnolia powers the websites of government as well as leading Fortune
+           500 enterprises in more than 100 countries on all continents of the
+           world. It is a Content Management System favored for its ease-of-use
+           and availability under an Open Source license. Magnolia  
+           contains best-of-breed Java technology based on open standards to
+           allow for tailor-made solutions.         
+         </td>
+  </tr>
+
+        <tr valign="top">
+    <td><a href="http://mango.serotoninsoftware.com/">Mango</a></td>
+    <td>
+            Mango is browser-based, Ajax-enabled software that enables users to access and control
+            electronic sensors, devices, and machines. It provides an interface with which diverse data
+            sources can be created and configured along with an intuitive rules engine for setting up
+            access, monitoring, alerts, data logging, control, transformation, and communication. It
+            uses Freemarker to dynamically generate content for notification emails.
+         </td>
+  </tr>
+
+        <tr valign="top">
+    <td><a href="http://www.runmyprocess.com/">RunMyProcess</a></td>
+    <td>
+            RunMyProcess is a SaaS (software as a service) Web 2.0 integration platform which allow  to
+            automate, without any programming, the exchange between your internal
+            information system, your partners or your SaaS software. 
+            Freemarker is used to define data mappings and as a template tool for  
+            connectors' design.
+         </td>
+  </tr>
+
+        <tr valign="top">
+    <td><a href="http://www.superx-projekt.de">SuperX</a></td>
+    <td>
+           [German language only.] A German dataware house for university administrations.
+           Uses FreeMarker to dynamically create SQL queries.
+         </td>
+  </tr>
+
+        <tr valign="top">
+    <td><a href="http://www.trackstudio.com/">TrackStudio</a></td>
+    <td>
+            TrackStudio is a hierarchical issue tracking and bug tracking system, created specifically
+            for software development companies. It uses FreeMarker to format the e-mail notification messages.
+         </td>
+  </tr>
+
+        <tr valign="top">
+    <td><a href="http://www.webperformanceinc.com/load_testing/">Web Performance Load Tester</a></td>
+    <td>
+            Web Performance Load Tester<sup>TM</sup> software brings ease of use, automatic
+            configuration and sophisticated analysis to performance testing at
+            an affordable price.
+         </td>
+  </tr>
+
+        <tr valign="top">
+    <td><a href="http://www.zerocode.com">ZeroCode</a></td>
+    <td>
+            ZeroCode allows you to build large, scalable, database-backed web 
+            applications with no programming effort, in minutes, from your browser.
+         </td>
+  </tr>
+
+      </table>   
+  
+    
+    
+    <h2>Web application frameworks that support FreeMarker</h2>
+
+      <p>Note that this list is not complete, since we only list products where the
+      framework authors explicitly state that their product supports FreeMarker.
+      For some frameworks not listed here, it is easy to plug any view component,
+      and thus FreeMarker.</p>
+      <p>Also, for most "Model 2" frameworks (like Maverick or Struts)
+      it is easy to use FreeMarker templates instead of the MVC-oriented JSP pages.
+      For more information <a href="docs/pgui_misc_servlet.html">click here...</a></p>
+        <table border="0" cellpadding="4">
+
+          <tr valign="top">
+    <td><a href="http://canyamo.sourceforge.net">Cáñamo</a></td>
+    <td>
+            [Spanish language only.] Canyamo is a framework for creating portals. The main 
+            developer is Alberto Molpeceres and it is the framework underlying the
+            Spanish-language java portal <a href="http://javahispano.org">JavaHispano.</a>
+          </td>
+  </tr>
+
+          <tr valign="top">
+    <td><a href="http://www.inductionframework.org">Induction</a></td>
+    <td>
+            Induction is a request-based MVC web application
+            framework for Java with support for dynamic
+            application reloading, type-based dependency injection
+            and dependency analysis between models, views and
+            controllers using popular IDEs.
+          </td>
+  </tr>
+
+          <tr valign="top">
+    <td><a href="http://jet.sourceforge.net/">JET</a></td>
+    <td>
+            JET (Java Enterprise Turbine) is a web framework which offers an easy to use web
+            development environment. The focus is on building and reusing forms instead of hole
+            pages like JSP. It uses FreeMarker templates to generate HTML pages.
+          </td>
+  </tr>
+
+          <tr valign="top">
+    <td><a href="http://www.jpublish.org/">JPublish</a></td>
+    <td>
+          Starting from version 2.0b1, JPublish supports FreeMarker as a
+          view layer. JPublish is a powerful web publishing system designed to 
+          ensure a clean separation of developer roles.
+          </td>
+  </tr>
+
+          <tr valign="top">
+    <td><a href="http://ofbiz.apache.org/">Open for Business</a></td>
+    <td>
+            <em>Open for Business</em> is an ongoing project to create a suite 
+          of open-source enterprise/e-commerce applications and modules built 
+          on a common framework. In 2003 the project decided to switch from JSP
+          to FreeMarker for their view component.
+          </td>
+  </tr>
+
+          <tr valign="top">
+    <td><a href="http://www.restlet.org">Restlet</a></td>
+    <td>
+            A framework that brings the simplicity and efficiency of the REST
+            architectural style to Java developers. As an alternative to Servlet and JSP
+            technologies, it uses FreeMarker to generate dynamic representations.
+          </td>
+  </tr>
+
+          <tr valign="top">
+    <td><a href="http://www.springframework.org/">Spring</a></td>
+    <td>
+          Spring is a complete Java/J2EE application framework based around a
+          lightweight Inversion of Control container.  Spring includes, among many
+          other things, a full AOP interception framework, JDBC and ORM support, 
+          declarative transaction management (even without an application server) and 
+          a rich, flexible MVC framework with various view technologies integrated.
+          </td>
+  </tr>
+
+          <tr valign="top">
+    <td><a href="http://tammi.sourceforge.net">Tammi</a></td>
+    <td>
+           Tammi is a development framework and run-time container for 
+          JMX based web applications. Tammi MBeans can implement business 
+          logic themselves or act as proxies to native libraries, remote programs 
+          and other manageable systems. Tammi applications can be executed 
+          either as a servlet or filter chain under a J2EE compatible servlet container.
+          In addition, it contains an internal HTTP(S) 1.1 capable connector with competent performance.           
+           </td>
+  </tr>
+
+          <tr valign="top">
+    <td><a href="http://velocityweb.sourceforge.net/">VelocityWeb</a></td>
+    <td>
+              VelocityWeb is a zero-configuration web framework for J2EE. It's easy to debug/unit test without
+              J2EE server, create view with Velocity/Freemarker, create DAO with Apache Common DBUtils,
+              SQL pagination, and transaction following <tt>TRANSACTION_PER_REQUEST</tt>. 
+           </td>
+  </tr>
+
+          <tr valign="top">
+    <td><a href="http://www.opensymphony.com/webwork/">WebWork</a></td>
+    <td>
+            WebWork is a web-application framework built specifically with developer productivity and code simplicity in mind. It builds on top of XWork, which provides a generic command pattern framework and an Inversion of Control container. WebWork offers robust support for building reusable UI templates, such as form controls, UI themes, internationalization, dynamic form parameter mapping to JavaBeans, client and server side validation, and more. WebWork 2.2 switched to FreeMarker as its main view technology.
+          </td>
+  </tr>
+
+          <tr valign="top">
+    <td><a href="http://www.ztemplates.org/">ztemplates</a></td>
+    <td>
+              ztemplates is a web framework that uses Java 5 annotations and autodiscovery for virtually
+              everything, so there is almost no configuration. It features a new and unique action
+              processing module that allows clean, technology agnostic URL-s with URL-variables. It has
+              annotation-based AJAX and JavaScript support.
+           </td>
+  </tr>
+
+        </table>   
+
+    
+    
+    <h2>Websites generated by FreeMarker</h2>
+
+      <table border="0" cellpadding="4">
+        <tr valign="top">
+          <td><a href="http://www.abclinuxu.cz">www.abclinuxu.cz</a></td>
+          <td>Linux portal for czech and slovak users. Articles,
+              tutorials, hardware advices, discussion forum
+              and much more...</td>
+        </tr>
+        <tr valign="top">
+          <td><a href="http://www.atina.cl">www.atina.cl</a></td>
+          <td>A website oriented to young, in Spanish.</td>
+        </tr>
+        <tr valign="top">
+          <td><a href="http://www.chemistaustralia.com.au">www.chemistaustralia.com.au</a></td>
+          <td>Chemist Australia - an online pharmacy in Australia. Uses the WebWork2 framework.</td>
+        </tr>
+        <tr valign="top">
+          <td><a href="http://www.chile.com">www.chile.com</a></td>
+          <td>This portal for everything Chilean serves way many hits every day.</td>
+        </tr>
+        <tr valign="top">
+          <td><a href="http://www.drivenow.com.au">www.drivenow.com.au</a></td>
+          <td>DriveNow - A car rental website that allows customers to book rental
+          cars from major suppliers at discounted last minute rates. Datacodex have 
+          developed a site DriveNow that utilises FreeMarker for it's view layer 
+          inside it's framework, WebWork2.</td>
+        </tr>
+        <tr valign="top">
+          <td><a href="http://freemarker.org">freemarker.org</a></td>
+          <td>Not surprisingly, the pages you view right now are generated using
+          FreeMarker. We do eat our own dog food!</td>
+        </tr>
+        <tr valign="top">
+          <td><a href="http://www.hesteinfo.dk">www.hesteinfo.dk</a></td>
+          <td>Denmark's largest equestrian site, where you will find 
+          everything related to horses: latest world news, sales, jobs,
+          forums, studs, results, and breeding.</td>
+        </tr>
+        <tr valign="top">
+          <td><a href="http://dvd.indianajones.com">dvd.indianajones.com</a></td>
+          <td>The official site for the online content accompanying the 
+          "Complete Indiana Jones DVD Set".</td>
+        </tr>
+        <tr valign="top">
+          <td><a href="http://www.javahispano.org">www.javahispano.org</a></td>
+          <td>This is a popular Spanish-language portal for java developers. It is built
+          on top of the <a href="http://canyamo.sourceforge.net">Canyamo</a> framework
+          which uses FreeMarker templates for its presentation functionality.</td>
+        </tr>
+        <tr valign="top">
+          <td><a href="http://www.kikeres.hu">www.kikeres.hu</a></td>
+          <td>The Hungarian Governmental Information Locator System website.
+          Features both static pages that are offline generated from XML using
+          the FreeMarker XML support and a true servlet-served dynamic content.</td>
+        </tr>
+        <tr valign="top">
+          <td><a href="http://lastwords.com/">lastwords.com</a></td>
+          <td>A writer's workshop.
+          The vision: create an environment where authors of all ages and skills could read, submit, and critique the works of their peers.</td>
+        </tr>
+        <tr valign="top">
+          <td><a href="http://musikk.telenormobil.no">musikk.telenormobil.no</a> and <a href="http://mp3.platekompaniet.no">mp3.platekompaniet.no</a></td>
+          <td>Together form Norway's second largest MP3-download shop.</td>
+        </tr>
+        <tr valign="top">
+          <td><a href="http://www.nadir.org">www.nadir.org</a></td>
+          <td>Nadir is a German political news portal that uses the 
+          above-listed, FreeMarker based Mir CMS.</td>
+        </tr>
+        <tr valign="top">
+          <td><a href="http://www.shopobot.com">www.shopobot.com</a></td>
+          <td>A comparison shopping site that shows prices over time and lets you
+          set up price alerts.</td>
+        </tr>
+      </table>
+    
+  
+        </td>
+        <td align="left" valign="top" width="3%" rowspan=3>
+          &nbsp;
+        </td>
+      </tr>
+    </table>
+
+    <p>&nbsp;
+    
+    <table border=0 cellspacing=0 cellpadding=0 width="100%">
+      <tr><td height=1 bgcolor="#C0C0C0"><img src="images/none.gif" width=1 height=1 alt=""></td></tr>
+    </table>
+    <table border=0 cellspacing=0 cellpadding=0 width="100%">
+      <tr>
+      <td align=left valign=top class="footnote"><font size="1">&nbsp;<br></font>
+        <b>Found broken link or other problem with this site?</b><br>
+        Report to: <a href="mailto:ddekanyREMOVEME@freemail.hu">ddekanyREMOVEME@freemail.hu</a><br>
+        (remove the "REMOVEME" from the address)<br>
+      </td>
+      <td align=right valign=top class="footnote"><font size="1">&nbsp;<br></font>
+        Page last generated: 2009-12-08 08:39:00 GMT<br>
+        All content on this page is copyrighted by the FreeMarker project.<br>
+        &nbsp;
+      </td>
+    </table>
+
+    <table border=0 cellspacing=0 cellpadding=0 width="100%">
+      <tr>
+        <td width="100%">&nbsp;</td>
+        <td valign="middle" align="right">
+            <a href="http://sourceforge.net"><img src="images/sflogo.png" border="0" alt="SourceForge Logo"></a>
+        </td>
+        <td>
+          &nbsp;&nbsp;
+        </td>
+        <td valign="middle" align="right">
+          <a href="http://freemarker.org"><img src="images/poweredby_ffffff.png" alt="Powered by FreeMarker" border="0"></a>
+        </td>
+    </table>
+  </body>
+</html>
+
+
+

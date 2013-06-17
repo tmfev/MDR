@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="320"
+   height="320"
+   id="svg2990"
+   version="1.1"
+   inkscape:version="0.48.1 r9760"
+   inkscape:export-filename="/Users/ms/Development/Projects/XClinical/MDR/ItemDesigner/src/com/xclinical/mdr/client/res/dropDown.png"
+   inkscape:export-xdpi="5.4099998"
+   inkscape:export-ydpi="5.4099998"
+   sodipodi:docname="dropDown.svg">
+  <defs
+     id="defs2992" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.11875"
+     inkscape:cx="-443.35196"
+     inkscape:cy="160"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1883"
+     inkscape:window-height="1049"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata2995">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-732.36218)">
+    <rect
+       style="fill:#909090;stroke:#646464;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;fill-opacity:1"
+       id="rect2998"
+       width="260"
+       height="260"
+       x="30"
+       y="762.36218"
+       rx="12"
+       ry="12"
+       inkscape:export-filename="/Users/ms/Development/Projects/XClinical/MDR/ItemDesigner/src/com/xclinical/mdr/client/res/dropDown_hot.png"
+       inkscape:export-xdpi="4.5"
+       inkscape:export-ydpi="4.5" />
+    <path
+       sodipodi:type="star"
+       style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="path3768"
+       sodipodi:sides="3"
+       sodipodi:cx="-199.32961"
+       sodipodi:cy="106.36872"
+       sodipodi:r1="104.64211"
+       sodipodi:r2="52.321053"
+       sodipodi:arg1="1.5707963"
+       sodipodi:arg2="2.6179939"
+       inkscape:flatsided="true"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m -199.3296,211.01083 -90.62273,-156.963163 181.24545,-5e-6 z"
+       transform="translate(359.32961,759.83293)"
+       inkscape:transform-center-y="26.160527"
+       inkscape:export-filename="/Users/ms/Development/Projects/XClinical/MDR/ItemDesigner/src/com/xclinical/mdr/client/res/dropDown_hot.png"
+       inkscape:export-xdpi="4.5"
+       inkscape:export-ydpi="4.5" />
+    <rect
+       style="fill:none;stroke:none"
+       id="rect3770"
+       width="320"
+       height="320"
+       x="0"
+       y="732.36218"
+       inkscape:export-filename="/Users/ms/Development/Projects/XClinical/MDR/ItemDesigner/src/com/xclinical/mdr/client/res/dropDown_hot.png"
+       inkscape:export-xdpi="4.5"
+       inkscape:export-ydpi="4.5" />
+    <g
+       id="g3777"
+       transform="translate(-338.77095,0)">
+      <rect
+         style="fill:none;stroke:#646464;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+         id="rect3779"
+         width="260"
+         height="260"
+         x="30"
+         y="762.36218"
+         rx="12"
+         ry="12" />
+      <path
+         sodipodi:type="star"
+         style="fill:#646464;fill-opacity:1;stroke:#646464;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+         id="path3781"
+         sodipodi:sides="3"
+         sodipodi:cx="-199.32961"
+         sodipodi:cy="106.36872"
+         sodipodi:r1="104.64211"
+         sodipodi:r2="52.321053"
+         sodipodi:arg1="1.5707963"
+         sodipodi:arg2="2.6179939"
+         inkscape:flatsided="true"
+         inkscape:rounded="0"
+         inkscape:randomized="0"
+         d="m -199.3296,211.01083 -90.62273,-156.963163 181.24545,-5e-6 z"
+         transform="translate(359.32961,759.83293)"
+         inkscape:transform-center-y="26.160527" />
+      <rect
+         style="fill:none;stroke:none"
+         id="rect3783"
+         width="320"
+         height="320"
+         x="0"
+         y="732.36218" />
+    </g>
+    <rect
+       style="fill:none;stroke:#e6e6e6;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect2991"
+       width="260"
+       height="260"
+       x="-680.6145"
+       y="759.6806"
+       rx="12"
+       ry="12"
+       inkscape:export-filename="/Users/ms/Development/Projects/XClinical/MDR/ItemDesigner/src/com/xclinical/mdr/client/res/dropDown_light.png"
+       inkscape:export-xdpi="4.5"
+       inkscape:export-ydpi="4.5" />
+    <path
+       sodipodi:type="star"
+       style="fill:#e6e6e6;fill-opacity:1;stroke:#e6e6e6;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="path2993"
+       sodipodi:sides="3"
+       sodipodi:cx="-199.32961"
+       sodipodi:cy="106.36872"
+       sodipodi:r1="104.64211"
+       sodipodi:r2="52.321053"
+       sodipodi:arg1="1.5707963"
+       sodipodi:arg2="2.6179939"
+       inkscape:flatsided="true"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m -199.3296,211.01083 -90.62273,-156.963163 181.24545,-5e-6 z"
+       transform="translate(-351.28492,757.15137)"
+       inkscape:transform-center-y="26.160527"
+       inkscape:export-filename="/Users/ms/Development/Projects/XClinical/MDR/ItemDesigner/src/com/xclinical/mdr/client/res/dropDown_light.png"
+       inkscape:export-xdpi="4.5"
+       inkscape:export-ydpi="4.5" />
+    <rect
+       style="fill:none;stroke:none"
+       id="rect2995"
+       width="320"
+       height="320"
+       x="-710.6145"
+       y="729.6806"
+       inkscape:export-filename="/Users/ms/Development/Projects/XClinical/MDR/ItemDesigner/src/com/xclinical/mdr/client/res/dropDown_light.png"
+       inkscape:export-xdpi="4.5"
+       inkscape:export-ydpi="4.5" />
+  </g>
+</svg>

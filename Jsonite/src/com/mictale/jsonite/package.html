@@ -1,0 +1,32 @@
+<html>
+<body>
+
+<h2>Package Specification</h2>
+
+This is yet another implementation of the <em>Java Script Object Notation</em>em> (JSON), as specified
+in section 15.12.1.2 of <a href="http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf">ECMA-262</a>.
+<p>
+While many implementations of this standard exist for the Java programming language, we still felt a motivation
+to add our own. The most prominent, <code>org.json</code> (and some others) lack a common superclass and produce
+many compiler warnings due to the absence of generics.    
+<p>
+We did not follow the specification word by word. At obvious places, we took reasonable shortcuts, e.g. when parsing
+a number we use Java's <code>Double.parseDouble()</code> instead of crafting our own.
+<p>
+Most classes in the object tree extend {@link com.mictale.jsonite.JsonValue} and this class also
+contains a factory method {@link com.mictale.jsonite.JsonValue#of()} to produce new instances.
+<p>
+A value can either be a primitive or a composite. Primitive values are immutable. Primitives are either one of
+the three literals {@link com.mictale.jsonite.JsonValue#NULL}, {@link com.mictale.jsonite.JsonValue#TRUE} and
+{@link com.mictale.jsonite.JsonValue#FALSE}, an instance of {@link com.mictale.jsonite.JsonString} or an
+instance of {@link com.mictale.jsonite.JsonNumber}. The two composite types are {@link com.mictale.jsonite.JsonArray}
+and {@link com.mictale.jsonite.JsonObject}. 
+<p>
+If you want to stream a JSON graph, have a loot at <code>com.mictale.jsonite.stream</code>
+
+<h2>Related Documentation</h2>
+
+<a href="http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf">ECMA-262</a>
+
+</body>
+</html>

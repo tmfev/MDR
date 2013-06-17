@@ -1,0 +1,526 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory">Hibernate Getting Started Guide</title><link rel="stylesheet" href="css/hibernate-single.css" type="text/css"/><meta xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" name="generator" content="DocBook XSL Stylesheets V1.74.0"/></head><body><div class="book" lang="en-US"><div class="titlepage"><div><p id="title"><a href="http://www.hibernate.org" class="site_href"><strong>Hibernate.org</strong></a><a href="http://hibernate.org/Documentation/DocumentationOverview" class="doc_href"><strong>Community Documentation</strong></a></p><div><h1 class="title"><a id="d0e1"/>Hibernate Getting Started Guide</h1></div><div><div xmlns="" xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="authorgroup"><div class="authors">by <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">Gavin</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">King</span>, <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">Christian</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">Bauer</span>, <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">Emmanuel</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">Bernard</span>, and <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">Steve</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">Ebersole</span></div><div class="editors"/><div class="others">and thanks to <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">James</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">Cobb</span> (Graphic Design) and <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">Cheyenne</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">Weaver</span> (Graphic Design)</div></div></div><div><p class="releaseinfo">3.6.7.Final</p></div><div><p class="copyright">Copyright © 2004 Red Hat, Inc.</p></div><div><p class="pubdate">August 17, 2011</p></div></div><hr/></div><div class="toc"><dl><dt><span class="preface"><a href="#hibernate-gsg-preface">Preface</a></span></dt><dd><dl><dt><span class="section"><a href="#d0e94">1. Get Involved</a></span></dt><dt><span class="section"><a href="#d0e121">2. Tutorial code</a></span></dt></dl></dd><dt><span class="chapter"><a href="#hibernate-gsg-obtain">1. Obtaining Hibernate</a></span></dt><dd><dl><dt><span class="section"><a href="#hibernate-gsg-setup-releaseBundle">1.1. Release Bundle Downloads</a></span></dt><dt><span class="section"><a href="#hibernate-gsg-setup-mavenRepoArtifacts">1.2. Maven Repository Artifacts</a></span></dt></dl></dd><dt><span class="chapter"><a href="#hibernate-gsg-tutorial-basic">2. Tutorial Using Native Hibernate APIs and hbm.xml Mappings</a></span></dt><dd><dl><dt><span class="section"><a href="#hibernate-gsg-tutorial-basic-config">2.1. The Hibernate configuration file</a></span></dt><dt><span class="section"><a href="#hibernate-gsg-tutorial-basic-entity">2.2. The entity Java class</a></span></dt><dt><span class="section"><a href="#hibernate-gsg-tutorial-basic-mapping">2.3. The mapping file</a></span></dt><dt><span class="section"><a href="#hibernate-gsg-tutorial-basic-test">2.4. Example code</a></span></dt><dt><span class="section"><a href="#hibernate-gsg-tutorial-annotations-further">2.5. Take it further!</a></span></dt></dl></dd><dt><span class="chapter"><a href="#hibernate-gsg-tutorial-annotations">3. Tutorial Using Native Hibernate APIs and Annotation Mappings</a></span></dt><dd><dl><dt><span class="section"><a href="#hibernate-gsg-tutorial-annotations-config">3.1. The Hibernate configuration file</a></span></dt><dt><span class="section"><a href="#hibernate-gsg-tutorial-annotations-entity">3.2. The annotated entity Java class</a></span></dt><dt><span class="section"><a href="#hibernate-gsg-tutorial-annotations-test">3.3. Example code</a></span></dt><dt><span class="section"><a href="#hibernate-gsg-tutorial-annotations-further">3.4. Take it further!</a></span></dt></dl></dd><dt><span class="chapter"><a href="#hibernate-gsg-tutorial-jpa">4. Tutorial Using the Java Persistence API (JPA)</a></span></dt><dd><dl><dt><span class="section"><a href="#hibernate-gsg-tutorial-jpa-config">4.1. persistence.xml</a></span></dt><dt><span class="section"><a href="#hibernate-gsg-tutorial-jpa-entity">4.2. The annotated entity Java class</a></span></dt><dt><span class="section"><a href="#hibernate-gsg-tutorial-jpa-test">4.3. Example code</a></span></dt></dl></dd><dt><span class="chapter"><a href="#hibernate-gsg-tutorial-envers">5. Tutorial Using Envers</a></span></dt><dd><dl><dt><span class="section"><a href="#hibernate-gsg-tutorial-envers-config">5.1. persistence.xml</a></span></dt><dt><span class="section"><a href="#hibernate-gsg-tutorial-envers-entity">5.2. The annotated entity Java class</a></span></dt><dt><span class="section"><a href="#hibernate-gsg-tutorial-envers-test">5.3. Example code</a></span></dt></dl></dd></dl></div><div class="preface" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="hibernate-gsg-preface"/>Preface</h2></div></div></div><p>
+        Working with both Object-Oriented software and Relational Databases can be cumbersome and time consuming.
+        Development costs are significantly higher due to a paradigm mismatch between how data is represented in
+        objects versus relational databases.  Hibernate is an Object/Relational Mapping solution for Java environments.
+        The term Object/Relational Mapping refers to the technique of mapping data from an object model representation
+        to a relational data model representation (and visa versa).  See
+        <a class="ulink" href="http://en.wikipedia.org/wiki/Object-relational_mapping">http://en.wikipedia.org/wiki/Object-relational_mapping</a> for a good high-level discussion.
+    </p><div xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="note"><h2>Note</h2><p>
+            While having a strong background in SQL is not required to use Hibernate, having a basic understanding of
+            the concepts can greatly help you understand Hibernate more fully and quickly.  Probably the single
+            best background is an understanding of data modeling principles.  You might want to consider these resources
+            as a good starting point:
+            </p><div class="itemizedlist"><ul><li><p>
+                        <a class="ulink" href="http://www.agiledata.org/essays/dataModeling101.html">http://www.agiledata.org/essays/dataModeling101.html</a>
+                    </p></li><li><p>
+                        <a class="ulink" href="http://en.wikipedia.org/wiki/Data_modeling">http://en.wikipedia.org/wiki/Data_modeling</a>
+                    </p></li></ul></div><p>
+        </p></div><p>
+        Hibernate not only takes care of the mapping from Java classes to database tables (and from Java data types to
+        SQL data types), but also provides data query and retrieval facilities. It can significantly reduce
+        development time otherwise spent with manual data handling in SQL and JDBC.  Hibernate’s design goal is to
+        relieve the developer from 95% of common data persistence-related programming tasks by eliminating the need for
+        manual, hand-crafted data processing using SQL and JDBC.  However, unlike many other persistence solutions,
+        Hibernate does not hide the power of SQL from you and guarantees that your investment in relational technology
+        and knowledge is as valid as always.
+    </p><p>
+        Hibernate may not be the best solution for data-centric applications that only use stored-procedures to
+        implement the business logic in the database, it is most useful with object-oriented domain models and business
+        logic in the Java-based middle-tier. However, Hibernate can certainly help you to remove or encapsulate
+        vendor-specific SQL code and will help with the common task of result set translation from a tabular
+        representation to a graph of objects.
+    </p><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="d0e94"/>1. Get Involved</h2></div></div></div><div class="itemizedlist"><ul><li><p>
+                    Use Hibernate and report any bugs or issues you find. See
+                    <a class="ulink" href="http://hibernate.org/issuetracker.html">http://hibernate.org/issuetracker.html</a> for details.
+                </p></li><li><p>
+                    Try your hand at fixing some bugs or implementing enhancements. Again, see
+                    <a class="ulink" href="http://hibernate.org/issuetracker.html">http://hibernate.org/issuetracker.html</a>.
+                </p></li><li><p>
+                    Engage with the community using mailing lists, forums, IRC, or other ways listed at
+                    <a class="ulink" href="http://hibernate.org/community.html">http://hibernate.org/community.html</a>.
+                </p></li><li><p>
+                    Help improve or translate this documentation. Contact us on
+                    the developer mailing list if you have interest.
+                </p></li><li><p>
+                    Spread the word. Let the rest of your organization know about the benefits of
+                    Hibernate.
+                </p></li></ul></div></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="d0e121"/>2. Tutorial code</h2></div></div></div><p>
+            The referenced projects and code for the tutorials in this guide are available at
+            <a class="ulink" href="files/hibernate-tutorials.zip">files/hibernate-tutorials.zip</a>.
+        </p></div></div><div class="chapter" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="hibernate-gsg-obtain"/>Chapter 1. Obtaining Hibernate</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="#hibernate-gsg-setup-releaseBundle">1.1. Release Bundle Downloads</a></span></dt><dt><span class="section"><a href="#hibernate-gsg-setup-mavenRepoArtifacts">1.2. Maven Repository Artifacts</a></span></dt></dl></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="hibernate-gsg-setup-releaseBundle"/>1.1. Release Bundle Downloads</h2></div></div></div><p>
+            The Hibernate team provides release bundles hosted on the SourceForge File Release System, in
+            <code class="literal">ZIP</code>
+            and
+            <code class="literal">TGZ</code>
+            formats. Each release bundle contains<code class="literal">JARs</code>,
+            documentation, source code, and other information.
+        </p><p>
+            You can download releases of Hibernate, in your chosen format, from the list at
+            <a class="ulink" href="http://sourceforge.net/projects/hibernate/files/hibernate3/">http://sourceforge.net/projects/hibernate/files/hibernate3/</a>.
+        </p><div class="itemizedlist"><ul><li><p>
+                    <code class="filename">hibernate3.jar</code>
+                    is an aggregation of all the Hibernate Core classes.
+                    This must be included in your project's classpath.
+                </p></li><li><p>
+                    The
+                    <code class="filename">lib/required/</code>
+                    directory contains JARs Hibernate requires. All the jars in this directory must also be included in
+                    your project's classpath as well.
+                </p><div xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="important"><h2>Important</h2><p>
+                        The
+                        <code class="filename">slf4j</code>
+                        JAR has additional
+                        requirements for it to function properly. The exact
+                        requirements depend on your logging back-end. See
+                        <a class="ulink" href="http://slf4j.org/">slf4j site
+                        </a>
+                        for details.
+                    </p></div></li><li><p>
+                    The
+                    <code class="filename">/lib/jpa/</code>
+                    directory contains the
+                    <a class="ulink" href="http://jcp.org/en/jsr/detail?id=317">JPA</a>
+                    API JAR. This JAR needs to be in your project's classpath if
+                    you want to use the JPA APIs or JPA annotations.
+                </p></li></ul></div></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="hibernate-gsg-setup-mavenRepoArtifacts"/>1.2. Maven Repository Artifacts</h2></div></div></div><div xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="note"><h2>Note</h2><p>
+                The authoritative repository for Hibernate artifacts is the
+                JBoss Maven repository. The team responsible for the JBoss
+                Maven repository maintains a number of Wiki pages that contain
+                important information.
+            </p><div class="itemizedlist"><p class="title"><b>Maven Repository Wiki Pages</b></p><ul><li><p>
+                        <a class="ulink" href="http://community.jboss.org/docs/DOC-14900">http://community.jboss.org/docs/DOC-14900</a> -
+                        General information about the repository.
+                    </p></li><li><p>
+                        <a class="ulink" href="http://community.jboss.org/docs/DOC-15170">http://community.jboss.org/docs/DOC-15170</a> -
+                        Information about setting up the JBoss repositories in
+                        order to do development work on JBoss projects themselves.
+                    </p></li><li><p>
+                        <a class="ulink" href="http://community.jboss.org/docs/DOC-15169">http://community.jboss.org/docs/DOC-15169</a> -
+                        Information about setting up access to the repository to
+                        use JBoss projects as part of your own software.
+                    </p></li></ul></div></div><p>
+            Hibernate produces a number of artifacts (all under the org.hibernate groupId):
+        </p><div class="variablelist"><p class="title"><b>Hibernate Artifacts under groupId <code class="systemitem">org.hibernate</code>
+            </b></p><dl><dt><span class="term">hibernate-core</span></dt><dd><p>
+                        The main artifact, which contains all the Hibernate classes, in
+                        package<span class="package">org.hibernate</span>. You need these to
+                        build applications using the native Hibernate APIs. It includes
+                        capabilities for using native Hibernate mapping in
+                        <code class="filename">hbm.xml</code>
+                        files, as well as annotations.
+                    </p></dd><dt><span class="term">hibernate-entitymanager</span></dt><dd><p>
+                        Represents Hibernate's implementation of <span>JPA</span>, as specified at
+                        <a class="ulink" href="http://jcp.org/en/jsr/detail?id=317">http://jcp.org/en/jsr/detail?id=317</a>.
+                    </p><p>
+                        This artifact depends on <code class="systemitem">hibernate-core</code>
+                    </p></dd><dt><span class="term">hibernate-envers</span></dt><dd><p>
+                        An optional module that provides historical auditing of changes
+                        to your entities.
+                    </p><p>
+                        This artifact depends on both <code class="systemitem">hibernate-core</code>
+                        and <code class="systemitem">hibernate-entitymanager</code>.
+                    </p></dd><dt><span class="term">hibernate-c3p0</span></dt><dd><p>
+                        Provides integration between Hibernate and the <span class="application"><strong>C3P0</strong></span> connection
+                        pool library.  See <a class="ulink" href="http://sourceforge.net/projects/c3p0/">http://sourceforge.net/projects/c3p0/</a> for information
+                        about <span class="application"><strong>C3P0</strong></span>.
+                    </p><p>
+                        This artifact depends on <code class="systemitem">hibernate-core</code>, but is generally included
+                        in a project as a runtime dependency.  It pulls in the <span class="application"><strong>C3P0</strong></span>
+                        dependencies automatically.
+                    </p></dd><dt><span class="term">hibernate-proxool</span></dt><dd><p>
+                        Provides integration between Hibernate and the <span class="application"><strong>Proxool</strong></span> connection
+                        pool library. See <a class="ulink" href="http://proxool.sourceforge.net/">http://proxool.sourceforge.net/</a> for more information about
+                        this library.
+                    </p><p>
+                        This artifact depends on <code class="systemitem">hibernate-core</code>, but is generally included
+                        in a project as a runtime dependency. It pulls in the <span class="application"><strong>Proxool</strong></span>
+                        dependencies automatically..
+                    </p></dd><dt><span class="term">hibernate-ehcache</span></dt><dd><p>
+                        Privides integration between Hibernate and <span class="application"><strong>EhCache</strong></span>, as a
+                        second-level cache. See <a class="ulink" href="http://ehcache.sourceforge.net/">http://ehcache.sourceforge.net/</a> for more
+                        information about<span class="application"><strong>EhCache</strong></span>.
+                    </p><p>
+                        This artifact depends on <code class="systemitem">hibernate-core</code>, but is generally included
+                        in a project as a runtime dependency. It pulls in the <span class="application"><strong>Ehcache</strong></span>
+                        dependencies automatically.
+                    </p></dd><dt><span class="term">hibernate-infinispan</span></dt><dd><p>
+                        Provides integration between Hibernate and <span class="application"><strong>Infinispan</strong></span>, as a
+                        second-level cache. See <a class="ulink" href="http://jboss.org/infinispan">http://jboss.org/infinispan</a> for more information
+                        about <span class="application"><strong>Infinispan</strong></span>.
+                    </p><p>
+                        This artifact depends on <code class="systemitem">hibernate-core</code>, but is generally included
+                        in a project as a runtime dependency. It pulls in the <span class="application"><strong>Infinispan</strong></span>
+                        dependencies automatically.
+                    </p></dd><dt><span class="term">hibernate-jbosscache</span></dt><dd><p>
+                        Provides integration between Hibernate and <span class="application"><strong>JBossCache</strong></span>, as a
+                        second-level cache. See <a class="ulink" href="http://jboss.org/jbosscache">http://jboss.org/jbosscache</a> for information about
+                        <span class="application"><strong>JBossCache</strong></span>.
+                    </p><p>
+                        This artifact depends on <code class="systemitem">hibernate-core</code>, but is generally included
+                        in a project as a runtime dependency.  It pulls in the <span class="application"><strong>JBossCache</strong></span>
+                        dependencies automatically.
+                    </p></dd><dt><span class="term">hibernate-oscache</span></dt><dd><p>
+                        Provides integration between Hibernate and <span class="application"><strong>OSCache</strong></span> as a
+                        second-level cache. See <a class="ulink" href="http://www.opensymphony.com/oscache/">http://www.opensymphony.com/oscache/</a> for information
+                        about <span class="application"><strong>OSCache</strong></span>.
+                    </p><p>
+                        This artifact depends on <code class="systemitem">hibernate-core</code>, but is generally included
+                        in a project as a runtime dependency.  It pulls in the <span class="application"><strong>OSCache</strong></span>
+                        dependencies automatically.
+                    </p></dd><dt><span class="term">hibernate-swarmcache</span></dt><dd><p>
+                        Provides integration between Hibernate and <span class="application"><strong>SwarmCache</strong></span>, as a
+                        second-level cache. See <a class="ulink" href="http://swarmcache.sourceforge.net/">http://swarmcache.sourceforge.net/</a> for more information
+                        about <span class="application"><strong>SwarmCache</strong></span>.
+                    </p><p>
+                        This artifact depends on <code class="systemitem">hibernate-core</code>, but is generally included
+                        in a project as a runtime dependency. It pulls in the <span class="application"><strong>SwarmCache</strong></span>
+                        dependencies automatically.
+                    </p></dd></dl></div></div></div><div class="chapter" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="hibernate-gsg-tutorial-basic"/>Chapter 2. Tutorial Using Native Hibernate APIs and <span>hbm.xml</span> Mappings</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="#hibernate-gsg-tutorial-basic-config">2.1. The Hibernate configuration file</a></span></dt><dt><span class="section"><a href="#hibernate-gsg-tutorial-basic-entity">2.2. The entity Java class</a></span></dt><dt><span class="section"><a href="#hibernate-gsg-tutorial-basic-mapping">2.3. The mapping file</a></span></dt><dt><span class="section"><a href="#hibernate-gsg-tutorial-basic-test">2.4. Example code</a></span></dt><dt><span class="section"><a href="#hibernate-gsg-tutorial-annotations-further">2.5. Take it further!</a></span></dt></dl></div><p>
+        This tutorial is located within the download bundle under <code class="filename">basic</code> and illustrates
+        </p><div class="itemizedlist"><ul><li><p>
+                    using Hibernate mapping files (<span>hbm.xml</span>) to provide mapping information
+                </p></li><li><p>
+                    using the <span>native</span> Hibernate APIs
+                </p></li></ul></div><p>
+    </p><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="hibernate-gsg-tutorial-basic-config"/>2.1. The Hibernate configuration file</h2></div></div></div><p>
+            The resource file <code class="filename">hibernate.cfg.xml</code> defines Hibernate configuration
+            information.
+        </p><p>
+            The <code class="literal">connection.driver_class</code>, <code class="literal">connection.url</code>,
+            <code class="literal">connection.username</code> and <code class="literal">connection.password</code>
+            <code class="literal">property</code> elements define JDBC connection information. These tutorials
+            utilize the H2 in-memory database. So these are all specific to running H2 in its in-memory mode.
+             <code class="literal">connection.pool_size</code> is used to configure Hibernate's built-in connection pool
+            how many connections to pool.
+        </p><div xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="important"><h2>Important</h2><p>
+                The built-in Hibernate connection pool is in no way intended for production use. It
+                lacks several features found on any decent connection pool.  See the section discussion in 
+                <em class="citetitle">Hibernate Developer Guide</em> for further information.
+            </p></div><p>
+            The <code class="literal">dialect</code> property specifies the particular SQL variant Hibernate with which
+            Hibernate will converse.
+        </p><div xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="tip"><h2>Tip</h2><p>
+                In most cases, Hibernate is able to properly determine which dialect to use which is invaluable if
+                your application targets multiple databases.  This is discussed in detail in the
+                <em class="citetitle">Hibernate Developer Guide</em>
+            </p></div><p>
+            The <code class="literal">hbm2ddl.auto</code> property turns on automatic generation of database schemas directly
+            into the database.
+        </p><p>
+            Finally, add the mapping file(s) for persistent classes to the configuration.  The <code class="literal">resource</code>
+            attribute of the <code class="literal">mapping</code> element says to attempt to locate that mapping as a
+            classpath resource (via a <code class="classname">java.lang.ClassLoader</code> lookup).
+        </p></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="hibernate-gsg-tutorial-basic-entity"/>2.2. The entity Java class</h2></div></div></div><p>
+            The entity class for this tutorial is <code class="classname">org.hibernate.tutorial.hbm.Event</code>.
+            </p><div class="itemizedlist"><p class="title"><b>Notes About the Entity</b></p><ul><li><p>
+                        This class uses standard JavaBean naming conventions
+                        for property getter and setter methods, as well as
+                        private visibility for the fields. Although this is
+                        the recommended design, it is not required.
+                    </p></li><li><p>
+                        The no-argument constructor, which is also a JavaBean
+                        convention, is a requirement for all persistent
+                        classes. Hibernate needs to create objects for you,
+                        using Java Reflection. The constructor can be
+                        private. However, package or public visibility is
+                        required for runtime proxy generation and efficient
+                        data retrieval without bytecode instrumentation.
+                    </p></li></ul></div><p>
+        </p></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="hibernate-gsg-tutorial-basic-mapping"/>2.3. The mapping file</h2></div></div></div><p>
+            The <span>hbm.xml</span> mapping file for this tutorial is the classpath resource
+            <code class="filename">org/hibernate/tutorial/hbm/Event.hbm.xml</code> as we saw in
+            <a class="xref" href="#hibernate-gsg-tutorial-basic-config" title="2.1. The Hibernate configuration file">Section 2.1, “The Hibernate configuration file”</a>
+        </p><p>
+            Hibernate uses the mapping metadata to find out how to load and
+            store objects of the persistent class. The Hibernate mapping
+            file is one choice for providing Hibernate with this metadata.
+        </p><div class="example"><a id="hibernate-gsg-tutorial-basic-mapping-class"/><p class="title"><b>Example 2.1. The <code class="literal">class</code> mapping element</b></p><div class="example-contents"><pre xmlns="" xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="XML"><!-- XML : generated by JHighlight v1.0 (http://jhighlight.dev.java.net) -->
+<span class="xml_tag_symbols">&lt;</span><span class="xml_tag_name">class</span><span class="xml_plain">&nbsp;</span><span class="xml_attribute_name">name</span><span class="xml_tag_symbols">=</span><span class="xml_attribute_value">&quot;Event&quot;</span><span class="xml_plain">&nbsp;</span><span class="xml_attribute_name">table</span><span class="xml_tag_symbols">=</span><span class="xml_attribute_value">&quot;EVENTS&quot;</span><span class="xml_tag_symbols">&gt;</span><span class="xml_plain"></span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;...</span><br />
+<span class="xml_tag_symbols">&lt;/</span><span class="xml_tag_name">class</span><span class="xml_tag_symbols">&gt;</span><span class="xml_plain"></span><br />
+</pre></div></div><br class="example-break"/><div xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="orderedlist"><p class="title"><b>Functions of the <code class="literal">class</code> mapping element</b></p><ol><li><p>
+                    The <code class="literal">name</code> attribute (combined here with the <code class="literal">package</code>
+                    attribute from the containing <code class="literal">hibernate-mapping</code> element) names the FQN of
+                    the class you want to define as an entity.
+                </p></li><li><p>
+                    The <code class="literal">table</code> attribute names the database table which contains the data for
+                    this entity.
+                </p></li></ol></div><p>
+            Instances of the <code class="classname">Event</code> class are now mapped to rows in the
+            <span class="database">EVENTS</span> table.
+        </p><div class="example"><a id="hibernate-gsg-tutorial-basic-mapping-id"/><p class="title"><b>Example 2.2. The <code class="literal">id</code> mapping element</b></p><div class="example-contents"><pre xmlns="" xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="XML"><!-- XML : generated by JHighlight v1.0 (http://jhighlight.dev.java.net) -->
+<span class="xml_tag_symbols">&lt;</span><span class="xml_tag_name">id</span><span class="xml_plain">&nbsp;</span><span class="xml_attribute_name">name</span><span class="xml_tag_symbols">=</span><span class="xml_attribute_value">&quot;id&quot;</span><span class="xml_plain">&nbsp;</span><span class="xml_attribute_name">column</span><span class="xml_tag_symbols">=</span><span class="xml_attribute_value">&quot;EVENT_ID&quot;</span><span class="xml_tag_symbols">&gt;</span><span class="xml_plain"></span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;...</span><br />
+<span class="xml_tag_symbols">&lt;/</span><span class="xml_tag_name">id</span><span class="xml_tag_symbols">&gt;</span><span class="xml_plain"></span><br />
+</pre></div></div><br class="example-break"/><p>
+            Hibernate uses the property named by the <code class="literal">id</code> element to uniquely identify rows
+            in the table.
+        </p><div xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="important"><h2>Important</h2><p>
+                It is not strictly necessary for the <code class="literal">id</code> element to map to the table's actual
+                primary key column(s), but it is the normal convention.  Tables mapped in Hibernate do not even
+                need to define primary keys. However, the Hibernate team <span class="emphasis"><em>strongly</em></span>
+                recommends that all schemas define proper referential integrity. Therefore <code class="literal">id</code>
+                and <span>primary key</span> are used interchangeably throughout Hibernate documentation.
+            </p></div><p>
+            The <code class="literal">id</code> element here identifies the <span class="database">EVENT_ID</span>
+            column as the primary key of the <span class="database">EVENTS</span> table. It also identifies
+            the <code class="literal">id</code> property of the <code class="classname">Event</code> class as the property
+            containing the identifier value.
+        </p><p>
+            The <code class="literal">generator</code> element nested inside the <code class="literal">id</code> element informs
+            Hibernate about which strategy is used to generated primary key values for this entity.  In this
+            example a simple incrementing count is used.
+        </p><div class="example"><a id="hibernate-gsg-tutorial-basic-mapping-property"/><p class="title"><b>Example 2.3. The <code class="literal">property</code> mapping element</b></p><div class="example-contents"><pre xmlns="" xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="XML"><!-- XML : generated by JHighlight v1.0 (http://jhighlight.dev.java.net) -->
+<span class="xml_tag_symbols">&lt;</span><span class="xml_tag_name">property</span><span class="xml_plain">&nbsp;</span><span class="xml_attribute_name">name</span><span class="xml_tag_symbols">=</span><span class="xml_attribute_value">&quot;date&quot;</span><span class="xml_plain">&nbsp;</span><span class="xml_attribute_name">type</span><span class="xml_tag_symbols">=</span><span class="xml_attribute_value">&quot;timestamp&quot;</span><span class="xml_plain">&nbsp;</span><span class="xml_attribute_name">column</span><span class="xml_tag_symbols">=</span><span class="xml_attribute_value">&quot;EVENT_DATE&quot;</span><span class="xml_tag_symbols">/&gt;</span><span class="xml_plain"></span><br />
+<span class="xml_tag_symbols">&lt;</span><span class="xml_tag_name">property</span><span class="xml_plain">&nbsp;</span><span class="xml_attribute_name">name</span><span class="xml_tag_symbols">=</span><span class="xml_attribute_value">&quot;title&quot;</span><span class="xml_tag_symbols">/&gt;</span><span class="xml_plain"></span><br />
+</pre></div></div><br class="example-break"/><p>
+            The two <code class="literal">property</code> elements declare the remaining two properties of the
+            <code class="classname">Event</code> class: <code class="literal">date</code> and<code class="literal">title</code>. The
+            <code class="literal">date</code> property mapping includes the <code class="literal">column</code> attribute, but the
+            <code class="literal">title</code> does not. In the absence of a <code class="literal">column</code> attribute, Hibernate
+            uses the property name as the column name. This is appropriate for <code class="literal">title</code>, but since
+            <code class="literal">date</code> is a reserved keyword in most databases, you need to specify a non-reserved
+            word for the column name.
+        </p><p>
+            The <code class="literal">title</code> mapping also lacks a <code class="literal">type</code> attribute. The types
+            declared and used in the mapping files are neither Java data types nor SQL database types. Instead,
+            they are <em class="firstterm"><span>Hibernate mapping types</span></em>. Hibernate mapping types are
+            converters which translate between Java and SQL data types. Hibernate attempts to determine the correct
+            conversion and mapping type autonomously if the <code class="literal">type</code> attribute is not present in the
+            mapping, by using Java reflection to determine the Java type of the declared property and using a
+            default mapping type for that Java type.
+        </p><p>
+            In some cases this automatic detection might not chose the default you expect or need, as seen with the
+            <code class="literal">date</code> property. Hibernate cannot know if the property, which is of type
+            <code class="classname">java.util.Date</code>, should map to a SQL <span class="database">DATE</span>,
+            <span class="database">TIME</span>, or <span class="database">TIMESTAMP</span> datatype.
+            Full date and time information is preserved by mapping the property to a <code class="literal">timestamp</code>
+            converter (which identifies an instance of the class
+            <code class="classname">org.hibernate.type.TimestampType</code>).
+        </p><div xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="tip"><h2>Tip</h2><p>
+                Hibernate makes this mapping type determination using reflection when the mapping files are
+                processed. This process can take time and resources. If startup performance is important, consider
+                explicitly defining the type to use.
+            </p></div></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="hibernate-gsg-tutorial-basic-test"/>2.4. Example code</h2></div></div></div><p>
+            The <code class="classname">org.hibernate.tutorial.hbm.NativeApiIllustrationTest</code> class illustrates using
+            the Hibernate <span>native API</span>.
+        </p><div xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="note"><h2>Note</h2><p>
+                The example code in these tutorials is done as JUnit tests mainly for ease of use.  However it is
+                nice in that <code class="methodname">setUp</code> and <code class="methodname">tearDown</code> roughly illustrate
+                how a <code class="interfacename">org.hibernate.SessionFactory</code> would be created at the start up
+                of an application and closed at the end of the application lifecycle.
+            </p></div><div class="example"><a id="hibernate-gsg-tutorial-basic-test-setUp"/><p class="title"><b>Example 2.4. Obtaining the <code class="interfacename">org.hibernate.SessionFactory</code></b></p><div class="example-contents"><pre xmlns="" xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="JAVA"><!-- <br/> --><span class="java_keyword">protected</span><!-- <br/> --><span class="java_plain">&nbsp;</span><!-- <br/> --><span class="java_type">void</span><!-- <br/> --><span class="java_plain">&nbsp;setUp</span><!-- <br/> --><span class="java_separator">()</span><!-- <br/> --><span class="java_plain">&nbsp;</span><!-- <br/> --><span class="java_keyword">throws</span><!-- <br/> --><span class="java_plain">&nbsp;</span><!-- <br/> --><span class="java_type">Exception</span><!-- <br/> --><span class="java_plain">&nbsp;</span><!-- <br/> --><span class="java_separator">{</span>
+<!--  --><br/><span class="java_plain">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="java_operator">//</span><span class="java_plain">&nbsp;A&nbsp;</span><span class="java_type">SessionFactory</span><span class="java_plain">&nbsp;is&nbsp;set&nbsp;up&nbsp;once&nbsp;</span><span class="java_keyword">for</span><span class="java_plain">&nbsp;an&nbsp;application</span>
+<!--  --><br/><span class="java_plain">&nbsp;&nbsp;&nbsp;&nbsp;sessionFactory&nbsp;</span><span class="java_operator">=</span><span class="java_plain">&nbsp;</span><span class="java_keyword">new</span><span class="java_plain">&nbsp;</span><span class="java_type">Configuration</span><span class="java_separator">()</span>
+<!--  --><br/><span class="java_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="java_separator">.</span><span class="java_plain">configure</span><span class="java_separator">()</span><span class="java_plain">&nbsp;</span><span class="java_operator">//</span><span class="java_plain">&nbsp;configures&nbsp;settings&nbsp;from&nbsp;hibernate</span><span class="java_separator">.</span><span class="java_plain">cfg</span><span class="java_separator">.</span><span class="java_plain">xml</span>
+<!--  --><br/><span class="java_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="java_separator">.</span><span class="java_plain">buildSessionFactory</span><span class="java_separator">();</span>
+<!--  --><br/><span class="java_separator">}</span></pre></div></div><br class="example-break"/><p>
+            The <code class="classname">org.hibernate.cfg.Configuration</code> class is the first thing to notice. In this
+            tutorial everything is simply configured via the <code class="filename">hibernate.cfg.xml</code> file
+            discussed in<a class="xref" href="#hibernate-gsg-tutorial-basic-config" title="2.1. The Hibernate configuration file">Section 2.1, “The Hibernate configuration file”</a>.
+        </p><p>
+            The <code class="classname">org.hibernate.cfg.Configuration</code> is then used to create the
+            <code class="interfacename">org.hibernate.SessionFactory</code> which is a thread-safe object that is
+            instantiated once to serve the entire application.
+        </p><p>
+            The <code class="interfacename">org.hibernate.SessionFactory</code> acts as a factory for
+            <code class="interfacename">org.hibernate.Session</code> instances as can be seen in the
+            <code class="methodname">testBasicUsage</code> method.  A <code class="interfacename">org.hibernate.Session</code>
+            should be thought of as a corollary to a "unit of work".
+            
+        </p><div class="example"><a id="hibernate-gsg-tutorial-basic-test-saving"/><p class="title"><b>Example 2.5. Saving entities</b></p><div class="example-contents"><pre xmlns="" xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="JAVA"><!-- <br/> --><span class="java_type">Session</span><!-- <br/> --><span class="java_plain">&nbsp;session&nbsp;</span><!-- <br/> --><span class="java_operator">=</span><!-- <br/> --><span class="java_plain">&nbsp;sessionFactory</span><!-- <br/> --><span class="java_separator">.</span><!-- <br/> --><span class="java_plain">openSession</span><!-- <br/> --><span class="java_separator">();</span>
+<!--  --><br/><span class="java_plain">session</span><span class="java_separator">.</span><span class="java_plain">beginTransaction</span><span class="java_separator">();</span>
+<!--  --><br/><span class="java_plain">session</span><span class="java_separator">.</span><span class="java_plain">save</span><span class="java_separator">(</span><span class="java_plain">&nbsp;</span><span class="java_keyword">new</span><span class="java_plain">&nbsp;</span><span class="java_type">Event</span><span class="java_separator">(</span><span class="java_plain">&nbsp;</span><span class="java_literal">&quot;Our&nbsp;very&nbsp;first&nbsp;event!&quot;</span><span class="java_separator">,</span><span class="java_plain">&nbsp;</span><span class="java_keyword">new</span><span class="java_plain">&nbsp;</span><span class="java_type">Date</span><span class="java_separator">()</span><span class="java_plain">&nbsp;</span><span class="java_separator">)</span><span class="java_plain">&nbsp;</span><span class="java_separator">);</span>
+<!--  --><br/><span class="java_plain">session</span><span class="java_separator">.</span><span class="java_plain">save</span><span class="java_separator">(</span><span class="java_plain">&nbsp;</span><span class="java_keyword">new</span><span class="java_plain">&nbsp;</span><span class="java_type">Event</span><span class="java_separator">(</span><span class="java_plain">&nbsp;</span><span class="java_literal">&quot;A&nbsp;follow&nbsp;up&nbsp;event&quot;</span><span class="java_separator">,</span><span class="java_plain">&nbsp;</span><span class="java_keyword">new</span><span class="java_plain">&nbsp;</span><span class="java_type">Date</span><span class="java_separator">()</span><span class="java_plain">&nbsp;</span><span class="java_separator">)</span><span class="java_plain">&nbsp;</span><span class="java_separator">);</span>
+<!--  --><br/><span class="java_plain">session</span><span class="java_separator">.</span><span class="java_plain">getTransaction</span><span class="java_separator">().</span><span class="java_plain">commit</span><span class="java_separator">();</span>
+<!--  --><br/><span class="java_plain">session</span><span class="java_separator">.</span><span class="java_plain">close</span><span class="java_separator">();</span></pre></div></div><br class="example-break"/><p>
+            <code class="methodname">testBasicUsage</code> first creates some new <code class="classname">Event</code> objects
+            and hands them over to Hibernate for "management" via the <code class="methodname">save</code> method.  At that
+            point, Hibernate takes responsibility to perform an <code class="literal">INSERT</code> on the database.
+        </p><div class="example"><a id="hibernate-gsg-tutorial-basic-test-list"/><p class="title"><b>Example 2.6. Obtaining a list of entities</b></p><div class="example-contents"><pre xmlns="" xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="JAVA"><!-- <br/> --><span class="java_plain">session&nbsp;</span><!-- <br/> --><span class="java_operator">=</span><!-- <br/> --><span class="java_plain">&nbsp;sessionFactory</span><!-- <br/> --><span class="java_separator">.</span><!-- <br/> --><span class="java_plain">openSession</span><!-- <br/> --><span class="java_separator">();</span>
+<!--  --><br/><span class="java_plain">session</span><span class="java_separator">.</span><span class="java_plain">beginTransaction</span><span class="java_separator">();</span>
+<!--  --><br/><span class="java_type">List</span><span class="java_plain">&nbsp;result&nbsp;</span><span class="java_operator">=</span><span class="java_plain">&nbsp;session</span><span class="java_separator">.</span><span class="java_plain">createQuery</span><span class="java_separator">(</span><span class="java_plain">&nbsp;</span><span class="java_literal">&quot;from&nbsp;Event&quot;</span><span class="java_plain">&nbsp;</span><span class="java_separator">).</span><span class="java_plain">list</span><span class="java_separator">();</span>
+<!--  --><br/><span class="java_keyword">for</span><span class="java_plain">&nbsp;</span><span class="java_separator">(</span><span class="java_plain">&nbsp;</span><span class="java_type">Event</span><span class="java_plain">&nbsp;event&nbsp;</span><span class="java_operator">:</span><span class="java_plain">&nbsp;</span><span class="java_separator">(</span><span class="java_type">List</span><span class="java_operator">&lt;</span><span class="java_type">Event</span><span class="java_operator">&gt;</span><span class="java_separator">)</span><span class="java_plain">&nbsp;result&nbsp;</span><span class="java_separator">)</span><span class="java_plain">&nbsp;</span><span class="java_separator">{</span>
+<!--  --><br/><span class="java_plain">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="java_type">System</span><span class="java_separator">.</span><span class="java_plain">out</span><span class="java_separator">.</span><span class="java_plain">println</span><span class="java_separator">(</span><span class="java_plain">&nbsp;</span><span class="java_literal">&quot;Event&nbsp;(&quot;</span><span class="java_plain">&nbsp;</span><span class="java_operator">+</span><span class="java_plain">&nbsp;event</span><span class="java_separator">.</span><span class="java_plain">getDate</span><span class="java_separator">()</span><span class="java_plain">&nbsp;</span><span class="java_operator">+</span><span class="java_plain">&nbsp;</span><span class="java_literal">&quot;)&nbsp;:&nbsp;&quot;</span><span class="java_plain">&nbsp;</span><span class="java_operator">+</span><span class="java_plain">&nbsp;event</span><span class="java_separator">.</span><span class="java_plain">getTitle</span><span class="java_separator">()</span><span class="java_plain">&nbsp;</span><span class="java_separator">);</span>
+<!--  --><br/><span class="java_separator">}</span>
+<!--  --><br/><span class="java_plain">session</span><span class="java_separator">.</span><span class="java_plain">getTransaction</span><span class="java_separator">().</span><span class="java_plain">commit</span><span class="java_separator">();</span>
+<!--  --><br/><span class="java_plain">session</span><span class="java_separator">.</span><span class="java_plain">close</span><span class="java_separator">();</span></pre></div></div><br class="example-break"/><p>
+            <code class="methodname">testBasicUsage</code> then illustrates use of the Hibernate Query Language (HQL) to
+            load all existing <code class="classname">Event</code> objects from the database.  Hibernate will generate the
+            appropriate <code class="literal">SELECT</code> SQL, send it to the database and populate
+            <code class="classname">Event</code> objects with the result set data.
+        </p></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="hibernate-gsg-tutorial-annotations-further"/>2.5. Take it further!</h2></div></div></div><p>
+            Try the following exercises:
+        </p><div class="itemizedlist"><ul><li><p>
+                    Reconfigure the examples to connect to your own persistent relational database.
+                </p></li><li><p>
+                    With help of the <em class="citetitle">Developer Guide</em>, add an association to
+                    the <code class="classname">Event</code> entity to model a message thread.
+                </p></li></ul></div></div></div><div class="chapter" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="hibernate-gsg-tutorial-annotations"/>Chapter 3. Tutorial Using Native Hibernate APIs and Annotation Mappings</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="#hibernate-gsg-tutorial-annotations-config">3.1. The Hibernate configuration file</a></span></dt><dt><span class="section"><a href="#hibernate-gsg-tutorial-annotations-entity">3.2. The annotated entity Java class</a></span></dt><dt><span class="section"><a href="#hibernate-gsg-tutorial-annotations-test">3.3. Example code</a></span></dt><dt><span class="section"><a href="#hibernate-gsg-tutorial-annotations-further">3.4. Take it further!</a></span></dt></dl></div><p>
+        This tutorial is located within the download bundle under <code class="filename">basic</code> and illustrates
+        </p><div class="itemizedlist"><ul><li><p>
+                    using annotations to provide mapping information
+                </p></li><li><p>
+                    using the <span>native</span> Hibernate APIs
+                </p></li></ul></div><p>
+    </p><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="hibernate-gsg-tutorial-annotations-config"/>3.1. The Hibernate configuration file</h2></div></div></div><p>
+            The contents are exactly the same as in <a class="xref" href="#hibernate-gsg-tutorial-basic-config" title="2.1. The Hibernate configuration file">Section 2.1, “The Hibernate configuration file”</a>.
+            The single difference is the <code class="literal">mapping</code> element at the very end naming the
+            annotated entity class using the <code class="literal">class</code> attribute.
+        </p></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="hibernate-gsg-tutorial-annotations-entity"/>3.2. The annotated entity Java class</h2></div></div></div><p>
+            The entity class in this tutorial is <code class="classname">org.hibernate.tutorial.annotations.Event</code>
+            which is still following JavaBean conventions.  In fact the class itself is exactly the same as we saw
+            in <a class="xref" href="#hibernate-gsg-tutorial-basic-entity" title="2.2. The entity Java class">Section 2.2, “The entity Java class”</a>, the only difference being the use of
+            annotations to provide the metadata instead of a separate <code class="filename">hbm.xml</code> file.
+        </p><div class="example"><a id="hibernate-gsg-tutorial-annotations-entity-entity"/><p class="title"><b>Example 3.1. Identifying the class as an entity</b></p><div class="example-contents"><pre xmlns="" xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="JAVA"><!-- <br/> --><span class="java_plain">@</span><!-- <br/> --><span class="java_type">Entity</span>
+<!--  --><br/><span class="java_plain">@</span><span class="java_type">Table</span><span class="java_separator">(</span><span class="java_plain">&nbsp;name&nbsp;</span><span class="java_operator">=</span><span class="java_plain">&nbsp;</span><span class="java_literal">&quot;EVENTS&quot;</span><span class="java_plain">&nbsp;</span><span class="java_separator">)</span>
+<!--  --><br/><span class="java_keyword">public</span><span class="java_plain">&nbsp;</span><span class="java_keyword">class</span><span class="java_plain">&nbsp;</span><span class="java_type">Event</span><span class="java_plain">&nbsp;</span><span class="java_separator">{</span>
+<!--  --><br/><span class="java_plain">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="java_separator">...</span>
+<!--  --><br/><span class="java_separator">}</span></pre></div></div><br class="example-break"/><p>
+            The <code class="interfacename">@javax.persistence.Entity</code> annotation is used to mark a
+            class as an entity.  It's function is essentially the same as the <code class="literal">class</code>
+            mapping element discussed in <a class="xref" href="#hibernate-gsg-tutorial-basic-mapping" title="2.3. The mapping file">Section 2.3, “The mapping file”</a>.
+            Additionally the <code class="interfacename">@javax.persistence.Table</code> annotation is
+            used to explicitly specify the table name (the default table name would have been
+            <span class="database">EVENT</span>).
+        </p><div class="example"><a id="hibernate-gsg-tutorial-annotations-entity-id"/><p class="title"><b>Example 3.2. Identifying the identifier property</b></p><div class="example-contents"><pre xmlns="" xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="JAVA"><!-- <br/> --><span class="java_plain">@</span><!-- <br/> --><span class="java_type">Id</span>
+<!--  --><br/><span class="java_plain">@</span><span class="java_type">GeneratedValue</span><span class="java_separator">(</span><span class="java_plain">generator</span><span class="java_operator">=</span><span class="java_literal">&quot;increment&quot;</span><span class="java_separator">)</span>
+<!--  --><br/><span class="java_plain">@</span><span class="java_type">GenericGenerator</span><span class="java_separator">(</span><span class="java_plain">name</span><span class="java_operator">=</span><span class="java_literal">&quot;increment&quot;</span><span class="java_separator">,</span><span class="java_plain">&nbsp;strategy&nbsp;</span><span class="java_operator">=</span><span class="java_plain">&nbsp;</span><span class="java_literal">&quot;increment&quot;</span><span class="java_separator">)</span>
+<!--  --><br/><span class="java_keyword">public</span><span class="java_plain">&nbsp;</span><span class="java_type">Long</span><span class="java_plain">&nbsp;getId</span><span class="java_separator">()</span><span class="java_plain">&nbsp;</span><span class="java_separator">{</span>
+<!--  --><br/><span class="java_plain">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="java_keyword">return</span><span class="java_plain">&nbsp;id</span><span class="java_separator">;</span>
+<!--  --><br/><span class="java_separator">}</span></pre></div></div><br class="example-break"/><p>
+            <code class="interfacename">@javax.persistence.Id</code> marks the property defining the
+            entity's identifier.  <code class="interfacename">@javax.persistence.GeneratedValue</code> and
+            <code class="interfacename">@org.hibernate.annotations.GenericGenerator</code> work in tandem
+            to indicate that Hibernate should use Hibernate's <code class="literal">increment</code> generation
+            strategy for this entity's identifier values.
+        </p><div class="example"><a id="hibernate-gsg-tutorial-annotations-entity-properties"/><p class="title"><b>Example 3.3. Identifying basic properties</b></p><div class="example-contents"><pre xmlns="" xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="JAVA"><!-- <br/> --><span class="java_keyword">public</span><!-- <br/> --><span class="java_plain">&nbsp;</span><!-- <br/> --><span class="java_type">String</span><!-- <br/> --><span class="java_plain">&nbsp;getTitle</span><!-- <br/> --><span class="java_separator">()</span><!-- <br/> --><span class="java_plain">&nbsp;</span><!-- <br/> --><span class="java_separator">{</span>
+<!--  --><br/><span class="java_plain">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="java_keyword">return</span><span class="java_plain">&nbsp;title</span><span class="java_separator">;</span>
+<!--  --><br/><span class="java_separator">}</span>
+</span>
+<!--  --><br/><span class="java_plain">@</span><span class="java_type">Temporal</span><span class="java_separator">(</span><span class="java_type">TemporalType</span><span class="java_separator">.</span><span class="java_plain">TIMESTAMP</span><span class="java_separator">)</span>
+<!--  --><br/><span class="java_plain">@</span><span class="java_type">Column</span><span class="java_separator">(</span><span class="java_plain">name&nbsp;</span><span class="java_operator">=</span><span class="java_plain">&nbsp;</span><span class="java_literal">&quot;EVENT_DATE&quot;</span><span class="java_separator">)</span>
+<!--  --><br/><span class="java_keyword">public</span><span class="java_plain">&nbsp;</span><span class="java_type">Date</span><span class="java_plain">&nbsp;getDate</span><span class="java_separator">()</span><span class="java_plain">&nbsp;</span><span class="java_separator">{</span>
+<!--  --><br/><span class="java_plain">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="java_keyword">return</span><span class="java_plain">&nbsp;date</span><span class="java_separator">;</span>
+<!--  --><br/><span class="java_separator">}</span></pre></div></div><br class="example-break"/><p>
+            Just as discussed in <a class="xref" href="#hibernate-gsg-tutorial-basic-mapping" title="2.3. The mapping file">Section 2.3, “The mapping file”</a>, the
+            <code class="literal">date</code> property needs special handling to account for its special naming
+            and its SQL type.
+        </p></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="hibernate-gsg-tutorial-annotations-test"/>3.3. Example code</h2></div></div></div><p>
+            <code class="classname">org.hibernate.tutorial.annotations.AnnotationsIllustrationTest</code> is essentially the
+            same as <code class="classname">org.hibernate.tutorial.hbm.NativeApiIllustrationTest</code> discussed in
+            <a class="xref" href="#hibernate-gsg-tutorial-basic-test" title="2.4. Example code">Section 2.4, “Example code”</a>.
+        </p></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="hibernate-gsg-tutorial-annotations-further"/>3.4. Take it further!</h2></div></div></div><p>
+            Try the following exercises:
+        </p><div class="itemizedlist"><ul><li><p>
+                    With help of the <em class="citetitle">Developer Guide</em>, add an association to
+                    the <code class="classname">Event</code> entity to model a message thread.
+                </p></li><li><p>
+                    With help of the <em class="citetitle">Developer Guide</em>, add a callback to
+                    receive notifications when an <code class="classname">Event</code> is created, updated or deleted.  Try 
+                    the same with an event listener.
+                </p></li></ul></div></div></div><div class="chapter" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="hibernate-gsg-tutorial-jpa"/>Chapter 4. Tutorial Using the <em class="firstterm"><span>Java Persistence API (JPA)</span></em></h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="#hibernate-gsg-tutorial-jpa-config">4.1. persistence.xml</a></span></dt><dt><span class="section"><a href="#hibernate-gsg-tutorial-jpa-entity">4.2. The annotated entity Java class</a></span></dt><dt><span class="section"><a href="#hibernate-gsg-tutorial-jpa-test">4.3. Example code</a></span></dt></dl></div><p>
+        This tutorial is located within the download bundle under <code class="filename">entitymanager</code> and illustrates
+        </p><div class="itemizedlist"><ul><li><p>
+                    using annotations to provide mapping information
+                </p></li><li><p>
+                    using <span>JPA</span>
+                </p></li></ul></div><p>
+    </p><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="hibernate-gsg-tutorial-jpa-config"/>4.1. <code class="filename">persistence.xml</code></h2></div></div></div><p>
+            The previous tutorials used the Hibernate-specific
+            <code class="filename"><em class="replaceable"><code>hibernate.cfg.xml</code></em></code> configuration file.  <span>JPA</span>,
+            however, defines a different <span>bootstrap</span> process that uses its own configuration file
+            named <code class="filename">persistence.xml</code>.  How this <span>bootstrapping</span> works is defined
+            by the <span>JPA</span> specification.  In <span class="trademark">Java</span>™ SE environments the
+            persistence provider (Hibernate in this case) is required to locate all <span>JPA</span>
+            configuration files by classpath lookup of the <code class="filename">META-INF/persistence.xml</code> resource
+            name.
+        </p><div class="example"><a id="hibernate-gsg-tutorial-jpa-config-pu"/><p class="title"><b>Example 4.1. <code class="filename">persistence.xml</code></b></p><div class="example-contents"><pre xmlns="" xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="XML"><!-- XML : generated by JHighlight v1.0 (http://jhighlight.dev.java.net) -->
+<span class="xml_tag_symbols">&lt;</span><span class="xml_tag_name">persistence</span><span class="xml_plain">&nbsp;</span><span class="xml_attribute_name">xmlns</span><span class="xml_tag_symbols">=</span><span class="xml_attribute_value">&quot;http://java.sun.com/xml/ns/persistence&quot;</span><span class="xml_plain"></span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="xml_attribute_name">xmlns:xsi</span><span class="xml_tag_symbols">=</span><span class="xml_attribute_value">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><span class="xml_plain"></span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="xml_attribute_name">xsi:schemaLocation</span><span class="xml_tag_symbols">=</span><span class="xml_attribute_value">&quot;http://java.sun.com/xml/ns/persistence&nbsp;http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd&quot;</span><span class="xml_plain"></span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="xml_attribute_name">version</span><span class="xml_tag_symbols">=</span><span class="xml_attribute_value">&quot;2.0&quot;</span><span class="xml_tag_symbols">&gt;</span><span class="xml_plain"></span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="xml_tag_symbols">&lt;</span><span class="xml_tag_name">persistence-unit</span><span class="xml_plain">&nbsp;</span><span class="xml_attribute_name">name</span><span class="xml_tag_symbols">=</span><span class="xml_attribute_value">&quot;org.hibernate.tutorial.jpa&quot;</span><span class="xml_tag_symbols">&gt;</span><span class="xml_plain"></span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...</span><br />
+<span class="xml_plain">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="xml_tag_symbols">&lt;/</span><span class="xml_tag_name">persistence-unit</span><span class="xml_tag_symbols">&gt;</span><span class="xml_plain"></span><br />
+<span class="xml_tag_symbols">&lt;/</span><span class="xml_tag_name">persistence</span><span class="xml_tag_symbols">&gt;</span><span class="xml_plain"></span><br />
+</pre></div></div><br class="example-break"/><p>
+            <code class="filename">persistence.xml</code> files should provide a unique name for each
+            <span>persistence unit</span>.  This name is how applications reference the configuration
+            while obtaining an <code class="interfacename">javax.persistence.EntityManagerFactory</code> reference.
+        </p><p>
+            The settings defined in the <code class="literal">properties</code> element were already discussed in
+            <a class="xref" href="#hibernate-gsg-tutorial-basic-config" title="2.1. The Hibernate configuration file">Section 2.1, “The Hibernate configuration file”</a>.  Here the <code class="literal">javax.persistence</code>-prefixed
+            varieties are used when possible.  For the remaining Hibernate-specific configuration setting names notice
+            that they are now prefixed with <code class="literal">hibernate.</code>.
+        </p><p>
+            Additionally, the <code class="literal">class</code> element functions the same as discussed in
+            <a class="xref" href="#hibernate-gsg-tutorial-annotations-config" title="3.1. The Hibernate configuration file">Section 3.1, “The Hibernate configuration file”</a>.
+        </p></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="hibernate-gsg-tutorial-jpa-entity"/>4.2. The annotated entity Java class</h2></div></div></div><p>
+            The entity is exactly the same as that from the annotations tutorial.  See
+            <a class="xref" href="#hibernate-gsg-tutorial-annotations-entity" title="3.2. The annotated entity Java class">Section 3.2, “The annotated entity Java class”</a>
+        </p></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="hibernate-gsg-tutorial-jpa-test"/>4.3. Example code</h2></div></div></div><p>
+            The previous tutorials used the Hibernate APIs.  This tutorial uses the <span>JPA</span> APIs.
+        </p><div class="example"><a id="hibernate-gsg-tutorial-jpa-test-setUp"/><p class="title"><b>Example 4.2. Obtaining the <code class="interfacename">javax.persistence.EntityManagerFactory</code></b></p><div class="example-contents"><pre xmlns="" xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="JAVA"><!-- <br/> --><span class="java_keyword">protected</span><!-- <br/> --><span class="java_plain">&nbsp;</span><!-- <br/> --><span class="java_type">void</span><!-- <br/> --><span class="java_plain">&nbsp;setUp</span><!-- <br/> --><span class="java_separator">()</span><!-- <br/> --><span class="java_plain">&nbsp;</span><!-- <br/> --><span class="java_keyword">throws</span><!-- <br/> --><span class="java_plain">&nbsp;</span><!-- <br/> --><span class="java_type">Exception</span><!-- <br/> --><span class="java_plain">&nbsp;</span><!-- <br/> --><span class="java_separator">{</span>
+<!--  --><br/><span class="java_plain">&nbsp;&nbsp;&nbsp;&nbsp;entityManagerFactory&nbsp;</span><span class="java_operator">=</span><span class="java_plain">&nbsp;</span><span class="java_type">Persistence</span><span class="java_separator">.</span><span class="java_plain">createEntityManagerFactory</span><span class="java_separator">(</span><span class="java_plain">&nbsp;</span><span class="java_literal">&quot;org.hibernate.tutorial.jpa&quot;</span><span class="java_plain">&nbsp;</span><span class="java_separator">);</span>
+<!--  --><br/><span class="java_separator">}</span></pre></div></div><br class="example-break"/><p>
+            Notice again the use of <code class="literal">org.hibernate.tutorial.jpa</code> as the
+            <span>persistence unit</span> name, which matches from <a class="xref" href="#hibernate-gsg-tutorial-jpa-config-pu" title="Example 4.1. persistence.xml">Example 4.1, “persistence.xml”</a>
+        </p><div class="example"><a id="hibernate-gsg-tutorial-jpa-test-saving"/><p class="title"><b>Example 4.3. Saving (persisting) entities</b></p><div class="example-contents"><pre xmlns="" xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="JAVA"><!-- <br/> --><span class="java_type">EntityManager</span><!-- <br/> --><span class="java_plain">&nbsp;entityManager&nbsp;</span><!-- <br/> --><span class="java_operator">=</span><!-- <br/> --><span class="java_plain">&nbsp;entityManagerFactory</span><!-- <br/> --><span class="java_separator">.</span><!-- <br/> --><span class="java_plain">createEntityManager</span><!-- <br/> --><span class="java_separator">();</span>
+<!--  --><br/><span class="java_plain">entityManager</span><span class="java_separator">.</span><span class="java_plain">getTransaction</span><span class="java_separator">().</span><span class="java_plain">begin</span><span class="java_separator">();</span>
+<!--  --><br/><span class="java_plain">entityManager</span><span class="java_separator">.</span><span class="java_plain">persist</span><span class="java_separator">(</span><span class="java_plain">&nbsp;</span><span class="java_keyword">new</span><span class="java_plain">&nbsp;</span><span class="java_type">Event</span><span class="java_separator">(</span><span class="java_plain">&nbsp;</span><span class="java_literal">&quot;Our&nbsp;very&nbsp;first&nbsp;event!&quot;</span><span class="java_separator">,</span><span class="java_plain">&nbsp;</span><span class="java_keyword">new</span><span class="java_plain">&nbsp;</span><span class="java_type">Date</span><span class="java_separator">()</span><span class="java_plain">&nbsp;</span><span class="java_separator">)</span><span class="java_plain">&nbsp;</span><span class="java_separator">);</span>
+<!--  --><br/><span class="java_plain">entityManager</span><span class="java_separator">.</span><span class="java_plain">persist</span><span class="java_separator">(</span><span class="java_plain">&nbsp;</span><span class="java_keyword">new</span><span class="java_plain">&nbsp;</span><span class="java_type">Event</span><span class="java_separator">(</span><span class="java_plain">&nbsp;</span><span class="java_literal">&quot;A&nbsp;follow&nbsp;up&nbsp;event&quot;</span><span class="java_separator">,</span><span class="java_plain">&nbsp;</span><span class="java_keyword">new</span><span class="java_plain">&nbsp;</span><span class="java_type">Date</span><span class="java_separator">()</span><span class="java_plain">&nbsp;</span><span class="java_separator">)</span><span class="java_plain">&nbsp;</span><span class="java_separator">);</span>
+<!--  --><br/><span class="java_plain">entityManager</span><span class="java_separator">.</span><span class="java_plain">getTransaction</span><span class="java_separator">().</span><span class="java_plain">commit</span><span class="java_separator">();</span>
+<!--  --><br/><span class="java_plain">entityManager</span><span class="java_separator">.</span><span class="java_plain">close</span><span class="java_separator">();</span></pre></div></div><br class="example-break"/><p>
+            The code is pretty similar to <a class="xref" href="#hibernate-gsg-tutorial-basic-test-saving" title="Example 2.5. Saving entities">Example 2.5, “Saving entities”</a>.  Here
+            we use an <code class="interfacename">javax.persistence.EntityManager</code> as opposed to a
+            <code class="interfacename">org.hibernate.Session</code>.  <span>JPA</span> calls this operation
+            <code class="literal">persist</code> instead of <code class="literal">save</code>.
+        </p><div class="example"><a id="hibernate-gsg-tutorial-jpa-test-list"/><p class="title"><b>Example 4.4. Obtaining a list of entities</b></p><div class="example-contents"><pre xmlns="" xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="JAVA"><!-- <br/> --><span class="java_plain">entityManager&nbsp;</span><!-- <br/> --><span class="java_operator">=</span><!-- <br/> --><span class="java_plain">&nbsp;entityManagerFactory</span><!-- <br/> --><span class="java_separator">.</span><!-- <br/> --><span class="java_plain">createEntityManager</span><!-- <br/> --><span class="java_separator">();</span>
+<!--  --><br/><span class="java_plain">entityManager</span><span class="java_separator">.</span><span class="java_plain">getTransaction</span><span class="java_separator">().</span><span class="java_plain">begin</span><span class="java_separator">();</span>
+<!--  --><br/><span class="java_type">List</span><span class="java_operator">&lt;</span><span class="java_type">Event</span><span class="java_operator">&gt;</span><span class="java_plain">&nbsp;result&nbsp;</span><span class="java_operator">=</span><span class="java_plain">&nbsp;entityManager</span><span class="java_separator">.</span><span class="java_plain">createQuery</span><span class="java_separator">(</span><span class="java_plain">&nbsp;</span><span class="java_literal">&quot;from&nbsp;Event&quot;</span><span class="java_separator">,</span><span class="java_plain">&nbsp;</span><span class="java_type">Event</span><span class="java_separator">.</span><span class="java_keyword">class</span><span class="java_plain">&nbsp;</span><span class="java_separator">).</span><span class="java_plain">getResultList</span><span class="java_separator">();</span>
+<!--  --><br/><span class="java_keyword">for</span><span class="java_plain">&nbsp;</span><span class="java_separator">(</span><span class="java_plain">&nbsp;</span><span class="java_type">Event</span><span class="java_plain">&nbsp;event&nbsp;</span><span class="java_operator">:</span><span class="java_plain">&nbsp;result&nbsp;</span><span class="java_separator">)</span><span class="java_plain">&nbsp;</span><span class="java_separator">{</span>
+<!--  --><br/><span class="java_plain">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="java_type">System</span><span class="java_separator">.</span><span class="java_plain">out</span><span class="java_separator">.</span><span class="java_plain">println</span><span class="java_separator">(</span><span class="java_plain">&nbsp;</span><span class="java_literal">&quot;Event&nbsp;(&quot;</span><span class="java_plain">&nbsp;</span><span class="java_operator">+</span><span class="java_plain">&nbsp;event</span><span class="java_separator">.</span><span class="java_plain">getDate</span><span class="java_separator">()</span><span class="java_plain">&nbsp;</span><span class="java_operator">+</span><span class="java_plain">&nbsp;</span><span class="java_literal">&quot;)&nbsp;:&nbsp;&quot;</span><span class="java_plain">&nbsp;</span><span class="java_operator">+</span><span class="java_plain">&nbsp;event</span><span class="java_separator">.</span><span class="java_plain">getTitle</span><span class="java_separator">()</span><span class="java_plain">&nbsp;</span><span class="java_separator">);</span>
+<!--  --><br/><span class="java_separator">}</span>
+<!--  --><br/><span class="java_plain">entityManager</span><span class="java_separator">.</span><span class="java_plain">getTransaction</span><span class="java_separator">().</span><span class="java_plain">commit</span><span class="java_separator">();</span>
+<!--  --><br/><span class="java_plain">entityManager</span><span class="java_separator">.</span><span class="java_plain">close</span><span class="java_separator">();</span></pre></div></div><br class="example-break"/><p>
+            Again, the code is pretty similar to <a class="xref" href="#hibernate-gsg-tutorial-basic-test-list" title="Example 2.6. Obtaining a list of entities">Example 2.6, “Obtaining a list of entities”</a>.
+        </p></div></div><div class="chapter" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="hibernate-gsg-tutorial-envers"/>Chapter 5. Tutorial Using Envers</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="#hibernate-gsg-tutorial-envers-config">5.1. persistence.xml</a></span></dt><dt><span class="section"><a href="#hibernate-gsg-tutorial-envers-entity">5.2. The annotated entity Java class</a></span></dt><dt><span class="section"><a href="#hibernate-gsg-tutorial-envers-test">5.3. Example code</a></span></dt></dl></div><p>
+        This tutorial is located within the download bundle under <code class="filename">envers</code> and illustrates
+        </p><div class="itemizedlist"><ul><li><p>
+                    configuring Envers
+                </p></li><li><p>
+                    using the Envers APIs to look back through history
+                </p></li></ul></div><p>
+    </p><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="hibernate-gsg-tutorial-envers-config"/>5.1. <code class="filename">persistence.xml</code></h2></div></div></div><p>
+            This file was discussed in the <span>JPA</span> tutorial, and is largely the same here.  The major
+            difference is the set of properties defining <em class="firstterm"><span>listeners</span></em>.
+            Essentially this enables Envers to recieve notfications from Hibernate processing of certain
+            <em class="firstterm"><span>events</span></em> such as an entity being saved or updated.
+        </p></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="hibernate-gsg-tutorial-envers-entity"/>5.2. The annotated entity Java class</h2></div></div></div><p>
+            Again, the entity is largely the same as seen in the <span>JPA</span> tutorial.  The major
+            difference to notice is the addition of the <code class="interfacename">@org.hibernate.envers.Audited</code>
+            annotation which tells Envers to automatically track changes to this entity.
+        </p></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="hibernate-gsg-tutorial-envers-test"/>5.3. Example code</h2></div></div></div><p>
+            Again, this tutorial makes use of the <span>JPA</span> APIs.  However, the code also makes a
+            change to one of the entites and then uses the Envers API to pull back the initial revision (version)
+            as well as the updated revision.
+        </p><div class="example"><a id="hibernate-gsg-tutorial-envers-test-api"/><p class="title"><b>Example 5.1. Using the <code class="interfacename">org.hibernate.envers.AuditReader</code></b></p><div class="example-contents"><pre xmlns="" xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="JAVA"><!-- <br/> --><span class="java_keyword">public</span><!-- <br/> --><span class="java_plain">&nbsp;</span><!-- <br/> --><span class="java_type">void</span><!-- <br/> --><span class="java_plain">&nbsp;testBasicUsage</span><!-- <br/> --><span class="java_separator">()</span><!-- <br/> --><span class="java_plain">&nbsp;</span><!-- <br/> --><span class="java_separator">{</span>
+<!--  --><br/><span class="java_plain">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="java_separator">...</span>
+<!--  --><br/><span class="java_plain">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="java_type">AuditReader</span><span class="java_plain">&nbsp;reader&nbsp;</span><span class="java_operator">=</span><span class="java_plain">&nbsp;</span><span class="java_type">AuditReaderFactory</span><span class="java_separator">.</span><span class="java_plain">get</span><span class="java_separator">(</span><span class="java_plain">&nbsp;entityManager&nbsp;</span><span class="java_separator">);</span>
+<!--  --><br/><span class="java_plain">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="java_type">Event</span><span class="java_plain">&nbsp;firstRevision&nbsp;</span><span class="java_operator">=</span><span class="java_plain">&nbsp;reader</span><span class="java_separator">.</span><span class="java_plain">find</span><span class="java_separator">(</span><span class="java_plain">&nbsp;</span><span class="java_type">Event</span><span class="java_separator">.</span><span class="java_keyword">class</span><span class="java_separator">,</span><span class="java_plain">&nbsp;</span><span class="java_literal">2L</span><span class="java_separator">,</span><span class="java_plain">&nbsp;</span><span class="java_literal">1</span><span class="java_plain">&nbsp;</span><span class="java_separator">);</span>
+<!--  --><br/><span class="java_plain">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="java_separator">...</span>
+<!--  --><br/><span class="java_plain">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="java_type">Event</span><span class="java_plain">&nbsp;secondRevision&nbsp;</span><span class="java_operator">=</span><span class="java_plain">&nbsp;reader</span><span class="java_separator">.</span><span class="java_plain">find</span><span class="java_separator">(</span><span class="java_plain">&nbsp;</span><span class="java_type">Event</span><span class="java_separator">.</span><span class="java_keyword">class</span><span class="java_separator">,</span><span class="java_plain">&nbsp;</span><span class="java_literal">2L</span><span class="java_separator">,</span><span class="java_plain">&nbsp;</span><span class="java_literal">2</span><span class="java_plain">&nbsp;</span><span class="java_separator">);</span>
+<!--  --><br/><span class="java_plain">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="java_separator">...</span>
+<!--  --><br/><span class="java_separator">}</span></pre></div></div><br class="example-break"/><p>
+            First an <code class="interfacename">org.hibernate.envers.AuditReader</code> is obtained
+            from the <code class="classname">org.hibernate.envers.AuditReaderFactory</code> wrapping the
+            <code class="interfacename">javax.persistence.EntityManager</code>.
+        </p><p>
+            Then the <code class="methodname">find</code> method is used to retrieve specific revisions of the entity.  The
+            first call reads "find revision number 1 of Event with id 2".  The second call reads "find revision
+            number 2 of Event with id 2".
+        </p></div></div></div><HR xmlns=""/><a xmlns="" href=""><p xmlns="http://www.w3.org/1999/xhtml" class="copyright">Copyright © 2004 Red Hat, Inc.</p></a></body></html>

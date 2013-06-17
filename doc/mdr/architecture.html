@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Architecture</title>
+</head>
+<body>
+	
+<h1>Architecture</h1>
+<p>
+	The Metadata Repository is a browser-based 3-tier application. It is based on an SQL database
+	(currently Apache Derby). On top of Derby runs Hibernate as an ORM which implements the domain model. 
+	The project is restricted to the JPA implementation of Hibernate. Check the 
+	<a href="dependencies.html">list of dependencies</a> for a complete set of all third party libraries.
+</p>
+<p>
+	There is a JSON Restful API for both browser and automation clients available. This API is hosted as a
+	servlet that runs commands in the business layer. 
+</p>
+<p>
+	The browser runs a GWT application and features a partial and simplified model of the domain model.  
+</p>
+
+<h1>Data Interfaces</h1>
+<p>
+	The MDR features 2 distinct interfaces to bring data into and out of the server. <a href="mdt.html">Meta Data Templates</a>
+	map XML data to the MDR domain model and help you to integrate external data present as XML. The 
+	<a href="rest.html">MDR Rest API</a> defines a remote API to fetch content at runtime by making HTTP JSON
+	calls.
+</p>
+
+</body>
+</html>

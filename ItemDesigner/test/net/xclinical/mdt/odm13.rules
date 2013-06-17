@@ -1,0 +1,249 @@
+/* ODM 1.3
+ *
+ */
+@urn "urn:mdr:data#odm130"
+@name "ODM 1.3 Import Template"
+@version "1.0"
+@author "Michael Schollmeyer"
+@email "ms@xclinical.com"
+
+import net.xclinical.iso11179.BaseItem;
+import net.xclinical.iso11179.DescribedValueDomain;
+import net.xclinical.iso11179.Context;
+import net.xclinical.iso11179.DataType;
+import net.xclinical.iso11179.DataElementConcept;
+import net.xclinical.iso11179.DataElement;
+import net.xclinical.iso11179.Designation;
+import net.xclinical.iso11179.Namespace;
+import net.xclinical.iso11179.Relation;
+import net.xclinical.iso11179.ScopedIdentifier;
+import net.xclinical.iso11179.LanguageIdentification;
+import net.xclinical.iso11179.ConceptSystem;
+import net.xclinical.iso11179.ConceptualDomain;
+import net.xclinical.iso11179.DescribedConceptualDomain;
+import net.xclinical.iso11179.ValueDomain;
+import net.xclinical.iso11179.IdentifiedItem;
+
+import net.xclinical.mdt.Utils;
+import net.xclinical.mdt.Log;
+
+[/] {
+
+var lang = Namespace : Namespace.find("urn:ietf:rfc:4646") {
+	oneNamePerItem = true;
+	oneItemPerName = true;
+	mandatoryNamingConvention = true;
+	shorthandPrefix = "lang";
+	namespaceSchemeReference = "urn:ietf:rfc:4646";
+}
+
+var enUS = LanguageIdentification.findOrCreate("en-US");
+var deDE = LanguageIdentification.findOrCreate("de_DE");
+
+var mdr = Context.root();
+
+var odmTypes = Namespace {
+	oneNamePerItem = true;
+	oneItemPerName = true;
+	mandatoryNamingConvention = true;
+	shorthandPrefix = "mdr";
+	namespaceSchemeReference = "http://www.cdisc.org/ns/odm/v1.3";
+}
+
+DataType {
+	scopedIdentifier = ScopedIdentifier { scope = odmTypes; identifier = "text"; }
+	name = "text";
+	description = "any sequence of characters";
+	schemeReference = "ODM 1.3";
+}
+
+DataType {
+	scopedIdentifier = ScopedIdentifier { scope = odmTypes; identifier = "integer"; }
+	name = "integer";
+	description = "-?digit+";
+	schemeReference = "ODM 1.3";
+}
+
+DataType {
+	scopedIdentifier = ScopedIdentifier { scope = odmTypes; identifier = "float"; }
+	name = "float";
+	description = "-?digit+(.digit+)?";
+	schemeReference = "ODM 1.3";
+}
+
+DataType {
+	scopedIdentifier = ScopedIdentifier { scope = odmTypes; identifier = "date"; }
+	name = "date";
+	description = "YYYY-MM-DD";
+	schemeReference = "ODM 1.3";
+}
+
+DataType {
+	scopedIdentifier = ScopedIdentifier { scope = odmTypes; identifier = "time"; }
+	name = "time";
+	description = "hh:mm:ss(.n+)? ((+|-)hh:mm)?";
+	schemeReference = "ODM 1.3";
+}
+
+DataType {
+	scopedIdentifier = ScopedIdentifier { scope = odmTypes; identifier = "datetime"; }
+	name = "datetime";
+	description = "YYYY-MM-DD T hh:mm:ss(.n+)? ((+|-)hh:mm)?";
+	schemeReference = "ODM 1.3";
+}
+
+DataType {
+	scopedIdentifier = ScopedIdentifier { scope = odmTypes; identifier = "string"; }
+	name = "string";
+	description = "Semantically equivalent to text but directly supported as XML schema datatype";
+	schemeReference = "ODM 1.3";
+}
+
+DataType {
+	scopedIdentifier = ScopedIdentifier { scope = odmTypes; identifier = "boolean"; }
+	name = "boolean";
+	description = "(true | false | 1 | 0)";
+	schemeReference = "ODM 1.3";
+}
+
+DataType {
+	scopedIdentifier = ScopedIdentifier { scope = odmTypes; identifier = "double"; }
+	name = "double";
+	description = "(((\\+|-)?[0-9]+(\\.[0-9]+)?((D|d|E|e)(\\+|-)[0-9]+)?)|(-?INF)|(NaN))";
+	schemeReference = "ODM 1.3";
+}
+
+DataType {
+	scopedIdentifier = ScopedIdentifier { scope = odmTypes; identifier = "hexBinary"; }
+	name = "hexBinary";
+	description = "hex-encoded binary stream data";
+	schemeReference = "ODM 1.3";
+}
+
+DataType {
+	scopedIdentifier = ScopedIdentifier { scope = odmTypes; identifier = "base64Binary"; }
+	name = "base64Binary";
+	description = "binary stream encoded using Base64 Alphabet";
+	schemeReference = "ODM 1.3";
+}
+
+DataType {
+	scopedIdentifier = ScopedIdentifier { scope = odmTypes; identifier = "hexFloat"; }
+	name = "hexFloat";
+	description = "up to 16 characters";
+	schemeReference = "ODM 1.3";
+}
+
+DataType {
+	scopedIdentifier = ScopedIdentifier { scope = odmTypes; identifier = "base64Float"; }
+	name = "base64Float";
+	description = "up to 12 characters";
+	schemeReference = "ODM 1.3";
+}
+
+DataType {
+	scopedIdentifier = ScopedIdentifier { scope = odmTypes; identifier = "partialDate"; }
+	name = "partialDate";
+	description = "YYYY[-MM[-DD ]]";
+	schemeReference = "ODM 1.3";
+}
+
+DataType {
+	scopedIdentifier = ScopedIdentifier { scope = odmTypes; identifier = "partialTime"; }
+	name = "partialTime";
+	description = "hh[:mm[:ss(.n+)? ((+|-)hh:mm)?]]";
+	schemeReference = "ODM 1.3";
+}
+
+DataType {
+	scopedIdentifier = ScopedIdentifier { scope = odmTypes; identifier = "partialDatetime"; }
+	name = "partialDatetime";
+	description = "YYYY[-MM[-DD ]]T hh[:mm[:ss(.n+)? ((+|-)hh:mm)?]]";
+	schemeReference = "ODM 1.3";
+}
+
+DataType {
+	scopedIdentifier = ScopedIdentifier { scope = odmTypes; identifier = "durationDatetime"; }
+	name = "durationDatetime";
+	description = "(((+|-)?P((((n(n+)?)Y)?((nn+)?)M)?((nn+)?)D)?)(T(((n(n+)?)H)?((n(n+)?)M)?((n(n+)?)((\\.n+)?)S)?)?)?|(((n(n+)?)W))))";
+	schemeReference = "ODM 1.3";
+}
+
+DataType {
+	scopedIdentifier = ScopedIdentifier { scope = odmTypes; identifier = "intervalDatetime"; }
+	name = "intervalDatetime";
+	description = "partialDatetime/partialDatetime)|(durationDatetime/partialDatetime)|(partialDatetime/durationDatetime)";
+	schemeReference = "ODM 1.3";
+}
+
+DataType {
+	scopedIdentifier = ScopedIdentifier { scope = odmTypes; identifier = "incompleteDatetime"; }
+	name = "incompleteDatetime";
+	description = "[YYYY|-]-[MM |-]-[DD|-]]]T[hh|-]:[mm|-]:[ss.s|-][?(+|-)nn:nn|Z]";
+	schemeReference = "ODM 1.3";
+}
+
+DataType {
+	scopedIdentifier = ScopedIdentifier { scope = odmTypes; identifier = "URI"; }
+	name = "URI";
+	description = "a URI formatted string";
+	schemeReference = "ODM 1.3";
+}
+
+[//Study] {
+	var study = ConceptSystem {
+		mdr.designate(this, Utils.concat("Study ", [GlobalVariables/StudyName]), enUS);
+	
+		var studyContext = Context {
+			mdr.designate(this, Utils.concat("Context of ", [GlobalVariables/StudyName]), enUS);
+		}
+	
+		var ns = Namespace {
+			oneNamePerItem = true;
+			oneItemPerName = true;
+			mandatoryNamingConvention = true;
+			namespaceSchemeReference = Utils.concat("urn:mdr:study:", [@OID]);
+		}
+		
+		[.//ItemDef] {
+			var context = Context {
+				studyContext.designate(this, "ItemDef", enUS);
+			}
+
+			var concept = DataElementConcept {
+				scopedIdentifier = ScopedIdentifier { identifier = [@OID]; scope = ns;}
+				mdr.designate(this, [@Name], enUS);
+			}			
+			ConceptSystem.addMember(concept);
+			
+			var dataElement = DataElement {
+			}
+			concept.addRepresentation(dataElement);
+			
+			[Description] {
+				[TranslatedText] {
+					context.designate(dataElement, [text()], LanguageIdentification.findOrCreate([@lang]));
+				}
+			}
+
+			[Question] {
+				[TranslatedText] {
+					context.designate(dataElement, [text()], LanguageIdentification.findOrCreate([@lang]));
+				}
+			}
+			
+			var conceptualDomain = DescribedConceptualDomain {
+			}	
+			
+			concept.addConceptualDomain(conceptualDomain);
+			
+			DescribedValueDomain {
+				dataType = BaseItem.find(odmTypes, [@DataType]);
+				meaning = conceptualDomain;
+			}
+		}		
+	}
+}
+
+}
+

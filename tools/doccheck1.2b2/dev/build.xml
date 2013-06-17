@@ -1,0 +1,147 @@
+<project name="DocCheck Doclet" default="compile" basedir=".">
+
+  <!-- This build file compiles the Doc Check source files,
+       builds a library jar file, and runs a sample test.  
+       This file was derived from build.xml in Sun's Doc Check 
+       workspace. -->
+        
+
+  <!-- Create properties for variables that are used more than once -->
+  
+  <property name="src"                value="./src"                />
+  <property name="build"              value="./build"              />
+  <property name="build.classes"      value="${build}/classes"     />
+  <property name="sample"             value="sample"               />
+  <property name="api"                value="api-mod"              />
+  <property name="doccheck.jar"       value="doccheck-mod.jar"     />
+
+  <!-- The "properties" target displays the values for diagnostics -->
+
+  <target name="properties" description="Lists build properties">
+      <echo message="List the property values"                 />
+      <echo message="  'src'=${src}"                           />
+      <echo message="  'build'=${build}"                       />
+      <echo message="  'build.classes'=${build.classes}"       />
+      <echo message="  'sample'=${sample}"                     />
+      <echo message="  'api'=${api}"                           />
+      <echo message="  'doccheck.jar'=${doccheck.jar}"         />
+      <dirname property="currentdir" file="build.xml"          />
+      <echo message="  'currentdir'=${currentdir}"             />
+  </target>
+
+  <!-- The "targets" target displays the build dependencies -->
+  
+  <target name="targets" description="Displays graph of major build targets">
+      <echo message="Targets with build dependencies shown by arrows " />
+      <echo message="   all -> | targets                     " />
+      <echo message="          | properties                  " />
+      <echo message="          | clean                       " />
+      <echo message="          | runsample -> jar -> compile " />
+      <echo message="          | apidocs                     " />
+  </target>
+
+  <target name="clean" 
+      description="Removes the build and bundle directories">
+      <delete dir="${build}" />
+  </target>
+
+  <target name="compile"
+      description="Compiles everything">
+
+      <mkdir dir="${build.classes}" />
+      <echo message="Compiling utilities..."/>
+      <!-- 
+        debug for line numbers in stack traces
+        -->    
+      <javac 
+          debug="yes"
+          srcdir="${src}"
+          destdir="${build.classes}"
+
+          includes="com/sun/tools/doclets/StandardDoclet1_3_HtmlWriter.java
+                    com/sun/tools/doclets/util/Specifier.java
+                    com/sun/tools/doclets/util/PathSpecifier.java
+                    com/sun/tools/doclets/util/FileSpecifier.java
+                    com/sun/tools/doclets/util/PackageList.java
+                    com/sun/tools/doclets/util/HtmlTagWriter .java
+                    com/sun/tools/doclets/doccheck/DocCheckConstants.java
+                    com/sun/tools/doclets/doccheck/HtmlWriterExt.java
+                    com/sun/tools/doclets/doccheck/Form.java
+                    com/sun/tools/doclets/doccheck/ErrorTracker.java
+                    com/sun/tools/doclets/doccheck/PkgTracker.java
+                    com/sun/tools/doclets/doccheck/ClassTracker.java
+                    com/sun/tools/doclets/doccheck/IfaceTracker.java
+                    com/sun/tools/doclets/doccheck/FieldTracker.java
+                    com/sun/tools/doclets/doccheck/ConstrTracker.java
+                    com/sun/tools/doclets/doccheck/MethodTracker.java
+                    com/sun/tools/doclets/doccheck/PkgGroupTracker.java
+                    com/sun/tools/doclets/doccheck/DocCheck.java"
+          >
+      </javac>
+      <echo message="Compiling the program..."/>
+      <!-- 
+        debug for line numbers in stack traces
+        -->    
+      <javac 
+          debug="yes"
+          srcdir="${src}"
+          destdir="${build.classes}"
+          includes="src/com/sun/tools/doclets/**/*.java" >
+      </javac>
+  </target>
+
+  <target name="jar" depends="compile" 
+      description="Builds the jar file that contains the class files">
+      <echo message="Building the jar file...."/>
+      <delete file="${build}/${doccheck.jar}" /> 
+      <jar jarfile="${build}/${doccheck.jar}" >
+          <fileset dir="${build.classes}">
+          </fileset>
+      </jar>
+  </target>
+
+  <target name="runsample" depends="jar"
+      description="Generate sample documents to be sure the doclet runs">
+      <!-- Don't put sampleOut in build dir, as links from DocCheck.html would be broken -->
+      <delete dir = "./${sample}/sampleOut" />
+      <mkdir  dir = "./${sample}/sampleOut" />
+      <javadoc
+          docletpath      = "${build}/${doccheck.jar}"
+          doclet          = "com.sun.tools.doclets.doccheck.DocCheck"
+          defaultexcludes = "yes"
+          sourcepath      = "./${sample}/sampleSrc"
+          destdir         = "./${sample}/sampleOut"
+          packagenames    = "goodpkg, ignore, ignore.ignore, okpkg, testPkg1, 
+                             testPkg2, testPkg2.testPkg3"
+          additionalparam = "-classlist
+                             -docletID
+                             -title 'DocCheck Sample Code' 
+                             -skipClass 'test*.Skip*:t*.t*.Skip*' 
+                             -skipPkg 'ig*ore:ignore.*'"
+      />
+  </target>
+
+  <target name="apidocs" 
+      description="Generate API docs for the DocCheck source">
+      <mkdir  dir = "./${build}/${api}" />
+      <javadoc
+          defaultexcludes  = "yes"
+          use              = "yes"
+          header           = "DocCheck 1.2 Beta 2"
+          doctitle         = "DocCheck - Comment Checking Doclet"
+          nodeprecatedlist = "yes"
+          sourcepath       = "./${src}"
+          destdir          = "./${build}/${api}"
+          packagenames     = "com.sun.tools.doclets.doccheck, com.sun.tools.doclets.util"
+          linkoffline      = "http://java.sun.com/j2se/1.4/docs/api
+                              /usr/web/work/j2se/1.4/docs/api"
+          additionalparam  = "-breakiterator "
+          bottom           = '&lt;font size="-1"&gt; &lt;a href="mailto:doccheck-feedback@java.sun.com"&gt;Report a bug or suggest a feature&lt;/a&gt;&lt;br&gt; Copyright 2000-2003 Sun Microsystems, Inc. 4150 Network Circle&lt;br&gt; Santa Clara, CA 95054, U.S.A. All Rights Reserved.&lt;/font&gt;'
+      />
+  </target>
+
+  <target name="all" depends="targets, properties, clean, runsample, apidocs"
+      description="Compile source files and build jar file" />
+
+</project>
+

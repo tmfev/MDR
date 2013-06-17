@@ -1,0 +1,936 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+*****************************************************
+     Written by XClinical ODM Study Composer
+     Author: Philippe Verplancke <philippe.verplancke@xclinical.com> XClinical GmbH
+     Info:   this is the first license
+*****************************************************
+-->
+<!-- edited with XMLSpy v2005 rel. 3 U (http://www.altova.com) by  () -->
+<ODM xmlns="http://www.cdisc.org/ns/odm/v1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xc="http://www.xclinical.com/xmlns/odm/xc-1-4" AsOfDateTime="2010-06-08T07:10:04+02:00" CreationDateTime="2007-05-18T11:10:00" Description="Demo presentation of MARVIN features" FileOID="Demo" FileType="Snapshot" Granularity="All" ODMVersion="1.2" XClinicalVersion="marvin-2.3" xsi:schemaLocation="http://www.cdisc.org/ns/odm/v1.2 http://wolf.servers.internal/marvin/HEAD/dtds/xc-odm-1-4-packed.xsd">  
+  <Study OID="SPONSOR.Trial.2007"> 
+    <GlobalVariables> 
+      <StudyName>Test Trial</StudyName>  
+      <StudyDescription>Implantation of Stents</StudyDescription>  
+      <ProtocolName>Trial Protocol</ProtocolName> 
+    </GlobalVariables>  
+    <BasicDefinitions> 
+      <MeasurementUnit Name="kilogram" OID="mu.kg"> 
+        <Symbol> 
+          <TranslatedText xml:lang="de">kg</TranslatedText>  
+          <TranslatedText xml:lang="en">kg</TranslatedText>  
+        </Symbol>  
+      </MeasurementUnit>  
+      <MeasurementUnit Name="centimeter" OID="mu.cm"> 
+        <Symbol> 
+          <TranslatedText xml:lang="de">cm</TranslatedText>  
+          <TranslatedText xml:lang="en">cm</TranslatedText>  
+        </Symbol>  
+      </MeasurementUnit>  
+      <MeasurementUnit Name="milligram" OID="mu.mg"> 
+        <Symbol> 
+          <TranslatedText xml:lang="de">mg</TranslatedText>  
+        </Symbol>  
+      </MeasurementUnit>  
+      <MeasurementUnit OID="mu.mmHg" Name="mmHg"> 
+        <Symbol> 
+          <TranslatedText xml:lang="de">mmHg</TranslatedText>  
+          <TranslatedText xml:lang="en">mmHg</TranslatedText>  
+          <TranslatedText xml:lang="fr">mmHg</TranslatedText> 
+        </Symbol>  
+      </MeasurementUnit> 
+    </BasicDefinitions>  
+    <MetaDataVersion Name="Version 0.1" OID="MDV.0.1"> 
+      <Protocol> 
+        <StudyEventRef Mandatory="Yes" OrderNumber="1" StudyEventOID="e.BASELINE"/>  
+        <StudyEventRef Mandatory="Yes" OrderNumber="2" StudyEventOID="e.FOLLOWUP"/>  
+        <xc:DisplayName> 
+          <TranslatedText xml:lang="de">ID in MARVIN: {hid} | Initialen: {basedata0}</TranslatedText>  
+          <TranslatedText xml:lang="en">ID in MARVIN: {hid} | Initials: {basedata0}</TranslatedText>  
+        </xc:DisplayName>  
+        <xc:DisplayName Type="basedata0"> 
+          <TranslatedText xml:lang="de">Initialen</TranslatedText>  
+          <TranslatedText xml:lang="en">Initials</TranslatedText>  
+        </xc:DisplayName>  
+        <xc:DisplayName Type="basedata1"> 
+          <TranslatedText xml:lang="de">Geburtsdat.</TranslatedText>  
+          <TranslatedText xml:lang="en">DOB</TranslatedText>  
+        </xc:DisplayName>  
+        <xc:DisplayName Type="basedata2"> 
+          <TranslatedText xml:lang="de">Geschlecht</TranslatedText>  
+          <TranslatedText xml:lang="en">Gender</TranslatedText>  
+        </xc:DisplayName>  
+        <xc:BaseDataItemRef ItemOID="i.DM.INITIALS" OrderNumber="1"/>  
+        <xc:BaseDataItemRef ItemOID="i.DM.BRTHDTC" OrderNumber="2"/>  
+        <xc:BaseDataItemRef ItemOID="i.DM.SEX" OrderNumber="3"/>  
+        <xc:ActionRef ActionOID="a.CalculateBMI"/>  
+      </Protocol>  
+      <StudyEventDef Name="Baseline" OID="e.BASELINE" Repeating="No" Type="Unscheduled"> 
+        <FormRef FormOID="f.BASE" Mandatory="Yes" OrderNumber="1"/>  
+        <xc:DisplayName> 
+          <TranslatedText xml:lang="de">Baseline</TranslatedText>  
+          <TranslatedText xml:lang="en">Baseline</TranslatedText>  
+        </xc:DisplayName>  
+        <xc:EventDateItemRef ItemOID="i.VISITDATE"/>  
+      </StudyEventDef>  
+      <StudyEventDef Name="Follow-Up" OID="e.FOLLOWUP" Repeating="Yes" Type="Unscheduled"> 
+        <FormRef FormOID="f.FUSTATUS" Mandatory="Yes" OrderNumber="1"/>  
+        <xc:DisplayName> 
+          <TranslatedText xml:lang="de">Follow-Up Untersuchung</TranslatedText>  
+          <TranslatedText xml:lang="en">Follow-Up Visit</TranslatedText>  
+        </xc:DisplayName>  
+        <xc:EventDateItemRef ItemOID="i.FUDATE"/>  
+      </StudyEventDef>  
+      <FormDef Name="Base data" OID="f.BASE" Repeating="No"> 
+        <ItemGroupRef ItemGroupOID="ig.DM" Mandatory="Yes" OrderNumber="1"/>  
+        <ItemGroupRef ItemGroupOID="ig.VS" Mandatory="Yes" OrderNumber="2"/>  
+        <xc:DisplayName> 
+          <TranslatedText xml:lang="de">Stammdaten</TranslatedText>  
+          <TranslatedText xml:lang="en">Base data</TranslatedText>  
+        </xc:DisplayName>  
+      </FormDef>  
+      <FormDef Name="Follow-up Status" OID="f.FUSTATUS" Repeating="No"> 
+        <ItemGroupRef ItemGroupOID="ig.FUSTAT" Mandatory="Yes" OrderNumber="1"/>  
+        <ItemGroupRef ItemGroupOID="ig.VS.FU" OrderNumber="2" Mandatory="Yes"/>
+        <xc:DisplayName> 
+          <TranslatedText xml:lang="de">Follow-up Status</TranslatedText>  
+          <TranslatedText xml:lang="en">Follow-up Status</TranslatedText>  
+        </xc:DisplayName>  
+      </FormDef>  
+      <ItemGroupDef Name="Stenosis data" OID="ig.STENOSE" Repeating="No"> 
+        <ItemRef ItemOID="i.ZIEL" Mandatory="No" OrderNumber="1"/>  
+        <ItemRef ItemOID="i.EKG" Mandatory="No" OrderNumber="2"/>  
+        <xc:DisplayName> 
+          <TranslatedText xml:lang="de">Stenosedaten, PTCA</TranslatedText>  
+          <TranslatedText xml:lang="en">Stenosis data, PTCA</TranslatedText>  
+        </xc:DisplayName>  
+      </ItemGroupDef>  
+      <ItemGroupDef Name="General inclusion criteria" OID="ig.INC.GENERAL" Repeating="No" SASDatasetName="GENIN"> 
+        <ItemRef ItemOID="i.IE.INFCONS" Mandatory="Yes" OrderNumber="1"/>  
+        <xc:DisplayName> 
+          <TranslatedText xml:lang="de">Einschlusskriterien Allgemein</TranslatedText>  
+          <TranslatedText xml:lang="en">General inclusion criteria</TranslatedText>  
+        </xc:DisplayName>  
+      </ItemGroupDef>  
+      <ItemGroupDef Name="Vessel specific inclusion criteria" OID="ig.INC.SPECIAL" Repeating="No" SASDatasetName="TVIN"> 
+        <ItemRef ItemOID="i.IE.DENOVO" Mandatory="Yes" OrderNumber="1"/>  
+        <ItemRef ItemOID="i.IE.NATIV" Mandatory="Yes" OrderNumber="2"/>  
+        <xc:DisplayName> 
+          <TranslatedText xml:lang="de">Einschlusskriterien Zielgefäß</TranslatedText>  
+          <TranslatedText xml:lang="en">Vessel specific inclusion criteria</TranslatedText>  
+        </xc:DisplayName>  
+      </ItemGroupDef>  
+      <ItemGroupDef Name="General exclusion criteria" OID="ig.EXC.GENERAL" Repeating="No" SASDatasetName="GENEX"> 
+        <ItemRef ItemOID="i.IE.OTHERSTENT" Mandatory="Yes" OrderNumber="1"/>  
+        <ItemRef ItemOID="i.IE.SURVLT9" Mandatory="Yes" OrderNumber="2"/>  
+        <xc:DisplayName> 
+          <TranslatedText xml:lang="de">Ausschlusskriterien Allgemein</TranslatedText>  
+          <TranslatedText xml:lang="en">General exclusion criteria</TranslatedText>  
+        </xc:DisplayName>  
+      </ItemGroupDef>  
+      <ItemGroupDef Name="Vessel specific exclusion criteria" OID="ig.EXC.SPECIAL" Repeating="No" SASDatasetName="TVEX"> 
+        <ItemRef ItemOID="i.IE.ACVB" Mandatory="Yes" OrderNumber="1"/>  
+        <ItemRef ItemOID="i.IE.BIFURCATIONS" Mandatory="Yes" OrderNumber="2"/>  
+        <xc:DisplayName> 
+          <TranslatedText xml:lang="de">Ausschlusskriterien Zielgefäß</TranslatedText>  
+          <TranslatedText xml:lang="en">Vessel specific exclusion criteria</TranslatedText>  
+        </xc:DisplayName>  
+      </ItemGroupDef>  
+      <ItemGroupDef Name="Vital Signs" OID="ig.VS" Repeating="No" SASDatasetName="VS"> 
+        <ItemRef ItemOID="i.VS.HEIGHT" Mandatory="No" OrderNumber="1"/>  
+        <ItemRef ItemOID="i.VS.WEIGHT" Mandatory="No" OrderNumber="2"/>  
+        <ItemRef ItemOID="i.VS.BMI" Mandatory="No" OrderNumber="3"/>  
+        <ItemRef ItemOID="i.VS.SYSBP" Mandatory="Yes" OrderNumber="4"/>  
+        <ItemRef ItemOID="i.VS.DIABP" Mandatory="Yes" OrderNumber="5"/>  
+        <xc:DisplayName> 
+          <TranslatedText xml:lang="de">Körperwerte</TranslatedText>  
+          <TranslatedText xml:lang="en">Vital Signs</TranslatedText>  
+        </xc:DisplayName>  
+      </ItemGroupDef>  
+      <ItemGroupDef Name="Follow-up Status" OID="ig.FUSTAT" Repeating="No" SASDatasetName="FUSTAT"> 
+        <ItemRef ItemOID="i.STATUSPATFU" Mandatory="Yes" OrderNumber="2"/>  
+        <ItemRef ItemOID="i.VISITDATE" Mandatory="Yes" OrderNumber="1"/>
+        <xc:DisplayName> 
+          <TranslatedText xml:lang="de">Follow-up Status</TranslatedText>  
+          <TranslatedText xml:lang="en">Follow-up Status</TranslatedText>  
+        </xc:DisplayName>  
+      </ItemGroupDef>  
+      <ItemGroupDef Name="FU Medication" OID="ig.FU_MEDICATION" Repeating="Yes" SASDatasetName="MED"> 
+        <ItemRef ItemOID="i.MED_TERM" Mandatory="Yes" OrderNumber="1"/>  
+        <ItemRef ItemOID="i.MED_PREVIOUS_DOSAGE" Mandatory="Yes" OrderNumber="2"/>  
+        <ItemRef ItemOID="i.MED_EVENT_TYPE" Mandatory="Yes" OrderNumber="3"/>  
+        <ItemRef ItemOID="i.MED_DATE" Mandatory="Yes" OrderNumber="4"/>  
+        <ItemRef ItemOID="i.MED_DOSAGE" Mandatory="Yes" OrderNumber="5"/>  
+        <xc:DisplayName> 
+          <TranslatedText xml:lang="de">Begleitmedikation</TranslatedText>  
+          <TranslatedText xml:lang="en">Concomitant Medication</TranslatedText>  
+        </xc:DisplayName>  
+        <xc:InformationText Type="help"> 
+          <TranslatedText xml:lang="de">Help info for medication</TranslatedText>  
+        </xc:InformationText>  
+      </ItemGroupDef>  
+      <!-- ********************************************************** -->  
+      <!-- 													     -->  
+      <!-- Double Data Entry cannot be defined on ItemGroup Level !                  -->  
+      <!-- 													     -->  
+      <!-- Only Events and Forms can be defined as DDE !                                 -->  
+      <!-- 													     -->  
+      <!-- If a "Daily Measurement" has to be DDE and repeating,                        -->  
+      <!-- then NOT the ItemGroup has to be repeating ,                                     -->  
+      <!-- but the associated Form or the associated Event  has to be repeating !    -->  
+      <!-- 													     -->  
+      <!-- ********************************************************** -->  
+      <!-- <ItemGroupDef OID="ig.DailyMeasurement" Name="Daily Measurement" Repeating="Yes"> -->  
+      <ItemGroupDef Name="Lab baseline data" OID="ig.LABBASLINE" Repeating="No" SASDatasetName="LAB"> 
+        <ItemRef ItemOID="i.LB.HGB" Mandatory="No" OrderNumber="1"/>  
+        <ItemRef ItemOID="i.LB.HBA1C" Mandatory="No" OrderNumber="2"/>  
+        <ItemRef ItemOID="i.LB.EOSLE" Mandatory="No" OrderNumber="3"/>  
+        <ItemRef ItemOID="i.ph" Mandatory="No" OrderNumber="4"/>  
+        <xc:DisplayName> 
+          <TranslatedText xml:lang="de">Labor (Aufnahmestatus)</TranslatedText>  
+          <TranslatedText xml:lang="en">Lab data</TranslatedText>  
+          <TranslatedText xml:lang="fr"> </TranslatedText> 
+        </xc:DisplayName>  
+      </ItemGroupDef>  
+      <ItemGroupDef Name="Demographics" OID="ig.DM" Repeating="No" SASDatasetName="DM"> 
+        <ItemRef ItemOID="i.VISITDATE" Mandatory="Yes" OrderNumber="1"/>  
+        <ItemRef ItemOID="i.DM.INITIALS" Mandatory="Yes" OrderNumber="2"/>  
+        <ItemRef ItemOID="i.DM.BRTHDTC" Mandatory="Yes" OrderNumber="3"/>  
+        <ItemRef ItemOID="i.DM.SEX" Mandatory="Yes" OrderNumber="4"/>  
+        <xc:DisplayName> 
+          <TranslatedText xml:lang="de">Demographie</TranslatedText>  
+          <TranslatedText xml:lang="en">Demographics</TranslatedText>  
+        </xc:DisplayName>  
+      </ItemGroupDef>  
+      <ItemGroupDef Name="Vital Signs Follow-up" OID="ig.VS.FU" Repeating="No" SASDatasetName="VSFU"> 
+        <ItemRef ItemOID="i.VS.WEIGHT" Mandatory="No" OrderNumber="1"/>  
+        <ItemRef ItemOID="i.VS.BMI" Mandatory="No" OrderNumber="2"/>  
+        <ItemRef ItemOID="i.VS.SYSBP" Mandatory="Yes" OrderNumber="3"/>  
+        <ItemRef ItemOID="i.VS.DIABP" Mandatory="Yes" OrderNumber="4"/>  
+        <xc:DisplayName> 
+          <TranslatedText xml:lang="de">Körperwerte</TranslatedText>  
+          <TranslatedText xml:lang="en">Vital Signs</TranslatedText>  
+        </xc:DisplayName>  
+      </ItemGroupDef>
+      <ItemDef DataType="text" Length="2" Name="Initials" OID="i.DM.INITIALS" SASFieldName="INITIALS"> 
+        <Question> 
+          <TranslatedText xml:lang="de">Initialen</TranslatedText>  
+          <TranslatedText xml:lang="en">Initials</TranslatedText>  
+        </Question>  
+        <xc:InformationText Type="help"> 
+          <TranslatedText xml:lang="de">&lt;B&gt;&lt;FONT FACE="Frutiger 55 Roman" SIZE=4&gt;&lt;P&gt;Definition der Initialen&lt;/P&gt; &lt;/B&gt;&lt;/FONT&gt;&lt;FONT FACE="Frutiger 55 Roman" SIZE=2&gt;&lt;P&gt;&amp;nbsp;&lt;/P&gt; &lt;P&gt;&amp;nbsp;&lt;/P&gt; &lt;/FONT&gt;&lt;FONT FACE="Frutiger 55 Roman" SIZE=4&gt;&lt;P&gt;Bitte verwenden Sie&lt;/P&gt; &lt;P&gt;- als 1. Buchstaben den ersten Buchstaben des ersten VORnamens und&lt;/P&gt; &lt;P&gt; als 2. Buchstaben den ersten Buchstaben des ersten NACHnamens&lt;/P&gt; &lt;/FONT&gt;</TranslatedText>  
+        </xc:InformationText>  
+      </ItemDef>  
+      <ItemDef DataType="date" Length="10" Name="Birth date" OID="i.DM.BRTHDTC" SASFieldName="BRTHDTC"> 
+        <Question> 
+          <TranslatedText xml:lang="de">Geburtsdatum</TranslatedText>  
+          <TranslatedText xml:lang="en">Date of birth</TranslatedText>  
+        </Question>  
+      </ItemDef>  
+      <ItemDef DataType="text" Length="10" Name="Sex" OID="i.DM.SEX" SASFieldName="SEX"> 
+        <Question> 
+          <TranslatedText xml:lang="de">Geschlecht</TranslatedText>  
+          <TranslatedText xml:lang="en">Sex</TranslatedText>  
+        </Question>  
+        <CodeListRef CodeListOID="cl.SEX"/>  
+        <xc:Config Key="display.style">radio</xc:Config>  
+      </ItemDef>  
+      <ItemDef DataType="integer" Length="1" Name="Informed Consent" OID="i.IE.INFCONS"> 
+        <Question> 
+          <TranslatedText xml:lang="de">Dokumentiertes Einverständnis zur Studienteilnahme</TranslatedText>  
+          <TranslatedText xml:lang="en">Documented Informed Consent of the patient</TranslatedText>  
+        </Question>  
+        <CodeListRef CodeListOID="cl.JN"/>  
+      </ItemDef>  
+      <ItemDef DataType="integer" Length="1" Name="Denovo Stenosis" OID="i.IE.DENOVO"> 
+        <Question> 
+          <TranslatedText xml:lang="de">De-Novo-Stenose</TranslatedText>  
+          <TranslatedText xml:lang="en">De novo stenosis</TranslatedText>  
+        </Question>  
+        <CodeListRef CodeListOID="cl.JN"/>  
+      </ItemDef>  
+      <ItemDef DataType="integer" Length="1" Name="Native vessel" OID="i.IE.NATIV"> 
+        <Question> 
+          <TranslatedText xml:lang="de">Nativgefäß</TranslatedText>  
+          <TranslatedText xml:lang="en">Native vessel</TranslatedText>  
+        </Question>  
+        <CodeListRef CodeListOID="cl.JN"/>  
+      </ItemDef>  
+      <ItemDef DataType="integer" Length="1" Name="Other Stent" OID="i.IE.OTHERSTENT"> 
+        <Question> 
+          <TranslatedText xml:lang="de">Implantation anderer Gefäßstützen</TranslatedText>  
+          <TranslatedText xml:lang="en">Implants of other vessel support systems</TranslatedText>  
+        </Question>  
+        <CodeListRef CodeListOID="cl.JN"/>  
+      </ItemDef>  
+      <ItemDef DataType="integer" Length="1" Name="Expected survival less than 9 months" OID="i.IE.SURVLT9"> 
+        <Question> 
+          <TranslatedText xml:lang="de">Lebenserwartung &lt;= 9 Monate</TranslatedText>  
+          <TranslatedText xml:lang="en">Expected survival &lt;= 9 Months</TranslatedText>  
+        </Question>  
+        <CodeListRef CodeListOID="cl.JN"/>  
+      </ItemDef>  
+      <ItemDef DataType="integer" Length="3" Name="Target vessel segment" OID="i.ZIEL"> 
+        <Question> 
+          <TranslatedText xml:lang="de">Zielkoronarsegment</TranslatedText>  
+          <TranslatedText xml:lang="en">Target vessel segment</TranslatedText>  
+        </Question>  
+        <CodeListRef CodeListOID="cl.Gefaess"/>  
+        <xc:InformationText Type="help"> 
+          <TranslatedText xml:lang="de">&lt;B&gt;&lt;FONT FACE="Frutiger 55 Roman" SIZE=4&gt;&lt;P&gt;Zielkoronarsegment:&lt;/P&gt; &lt;P&gt;(Definiton entsprechend der AHA/ACC Klassifikation)&lt;/P&gt; &lt;/B&gt;&lt;/FONT&gt;&lt;FONT FACE="Frutiger 55 Roman" SIZE=2&gt;&lt;P&gt;&amp;nbsp;&lt;/P&gt; &lt;P&gt;&amp;nbsp;&lt;/P&gt; &lt;/FONT&gt;&lt;FONT FACE="Frutiger 55 Roman" SIZE=4&gt;&lt;P&gt;Bitte dokumentieren Sie einen "Ramus intermedius" als "Ramus marginalis".&lt;/P&gt;&lt;/FONT&gt;</TranslatedText>  
+        </xc:InformationText>  
+        <xc:Config Key="display.map">cardstree</xc:Config>  
+      </ItemDef>  
+      <ItemDef Binary="Yes" DataType="text" Name="EKG" OID="i.EKG"> 
+        <Question> 
+          <TranslatedText xml:lang="de">EKG</TranslatedText>  
+          <TranslatedText xml:lang="en">ECG</TranslatedText>  
+        </Question>  
+      </ItemDef>  
+      <ItemDef DataType="integer" Length="1" Name="Bypass vessels" OID="i.IE.ACVB"> 
+        <Question> 
+          <TranslatedText xml:lang="de">Bypass-Gefäße</TranslatedText>  
+          <TranslatedText xml:lang="en">Bypass vessels</TranslatedText>  
+        </Question>  
+        <CodeListRef CodeListOID="cl.JN"/>  
+        <xc:InformationText Type="help"> 
+          <TranslatedText xml:lang="de">&lt;B&gt;&lt;FONT FACE="Frutiger 55 Roman" SIZE=4&gt;&lt;P&gt;Erläuterung zu Bypass-Gefäße&lt;/P&gt; &lt;/B&gt;&lt;/FONT&gt;&lt;FONT FACE="Frutiger 55 Roman" SIZE=2&gt;&lt;P&gt;&amp;nbsp;&lt;/P&gt; &lt;P&gt;&amp;nbsp;&lt;/P&gt; &lt;/FONT&gt;&lt;FONT FACE="Frutiger 55 Roman" SIZE=4&gt;&lt;P&gt;Dieses Ausschluss-kriterium betrifft sowohl venöse oder arterielle Bypass-Gefäße.&lt;/P&gt; &lt;/FONT&gt;</TranslatedText>  
+        </xc:InformationText>  
+      </ItemDef>  
+      <ItemDef DataType="integer" Length="1" Name="Bifurcations" OID="i.IE.BIFURCATIONS"> 
+        <Question> 
+          <TranslatedText xml:lang="de">Bifurkationen</TranslatedText>  
+          <TranslatedText xml:lang="en">Bifurcations</TranslatedText>  
+        </Question>  
+        <CodeListRef CodeListOID="cl.JN"/>  
+      </ItemDef>  
+      <ItemDef DataType="integer" Length="3" Name="Height" OID="i.VS.HEIGHT" SASFieldName="HEIGHT"> 
+        <Question> 
+          <TranslatedText xml:lang="de">Größe (Demo)</TranslatedText>  
+          <TranslatedText xml:lang="en">Height</TranslatedText>  
+        </Question>  
+        <MeasurementUnitRef MeasurementUnitOID="mu.cm"/>  
+      </ItemDef>  
+      <ItemDef DataType="integer" Length="3" Name="Weight" OID="i.VS.WEIGHT" SASFieldName="WEIGHT"> 
+        <Question> 
+          <TranslatedText xml:lang="de">Gewicht</TranslatedText>  
+          <TranslatedText xml:lang="en">Weight</TranslatedText>  
+        </Question>  
+        <MeasurementUnitRef MeasurementUnitOID="mu.kg"/>  
+      </ItemDef>  
+      <ItemDef DataType="float" Length="3" Name="BodyMassIndex" OID="i.VS.BMI" SASFieldName="BMI" SignificantDigits="1"> 
+        <Question> 
+          <TranslatedText xml:lang="de">BMI</TranslatedText>  
+          <TranslatedText xml:lang="en">BMI</TranslatedText>  
+        </Question>  
+      </ItemDef>  
+      <ItemDef DataType="date" Length="10" Name="Visit date" OID="i.VISITDATE" SASFieldName="GGDTC"> 
+        <Question> 
+          <TranslatedText xml:lang="de">Visitendatum</TranslatedText>  
+          <TranslatedText xml:lang="en">Visit Date</TranslatedText>  
+        </Question>  
+      </ItemDef>  
+      <ItemDef DataType="date" Length="10" Name="Follow-up Date" OID="i.FUDATE"> 
+        <Question> 
+          <TranslatedText xml:lang="de">Datum der Nachbeobachtung</TranslatedText>  
+          <TranslatedText xml:lang="en">Follow-up Date</TranslatedText>  
+        </Question>  
+      </ItemDef>  
+      <ItemDef DataType="integer" Length="1" Name="Patient Status" OID="i.STATUSPATFU" SASFieldName="PATSTAT"> 
+        <Question> 
+          <TranslatedText xml:lang="de">Status des Patienten</TranslatedText>  
+          <TranslatedText xml:lang="en">Patient status</TranslatedText>
+        </Question>  
+        <CodeListRef CodeListOID="cl.Status"/>  
+      </ItemDef>  
+      <ItemDef DataType="text" Length="100" Name="Medication" OID="i.MED_TERM"> 
+        <Question> 
+          <TranslatedText xml:lang="de">Medikation</TranslatedText>  
+          <TranslatedText xml:lang="en">Medication</TranslatedText>  
+        </Question>  
+        <CodeListRef CodeListOID="cl.Med.Terms"/>  
+      </ItemDef>  
+      <ItemDef DataType="text" Length="10" Name="Type" OID="i.BASE_MED_EVENT_TYPE"> 
+        <Question> 
+          <TranslatedText xml:lang="de">Status / Änderung</TranslatedText>  
+          <TranslatedText xml:lang="en">Status / Change</TranslatedText>  
+        </Question>  
+        <CodeListRef CodeListOID="cl.BASE_MED_EVENT_TYPE"/>  
+      </ItemDef>  
+      <ItemDef DataType="text" Length="10" Name="Type" OID="i.MED_EVENT_TYPE"> 
+        <Question> 
+          <TranslatedText xml:lang="de">Status / Änderung</TranslatedText>  
+          <TranslatedText xml:lang="en">Status / Change</TranslatedText>  
+        </Question>  
+        <CodeListRef CodeListOID="cl.MED_EVENT_TYPE"/>  
+      </ItemDef>  
+      <ItemDef DataType="float" Length="10" Name="Dosage" OID="i.MED_DOSAGE"> 
+        <Question> 
+          <TranslatedText xml:lang="de">Dosis</TranslatedText>  
+          <TranslatedText xml:lang="en">Dosage</TranslatedText>  
+        </Question>  
+        <MeasurementUnitRef MeasurementUnitOID="mu.mg"/>  
+      </ItemDef>  
+      <ItemDef DataType="date" Length="10" Name="Datum" OID="i.MED_DATE"> 
+        <Question> 
+          <TranslatedText xml:lang="de">Datum</TranslatedText>  
+          <TranslatedText xml:lang="en">Date</TranslatedText>  
+        </Question>  
+      </ItemDef>  
+      <ItemDef DataType="float" Length="10" Name="Previous Dosage" OID="i.MED_PREVIOUS_DOSAGE"> 
+        <Question> 
+          <TranslatedText xml:lang="de">Vorherige Dosis</TranslatedText>  
+          <TranslatedText xml:lang="en">Previous Dosage</TranslatedText>  
+        </Question>  
+      </ItemDef>  
+      <ItemDef DataType="float" Length="5" Name="Hemoglobin" OID="i.LB.HGB"> 
+        <Question> 
+          <TranslatedText xml:lang="de">Hemoglobin</TranslatedText>  
+          <TranslatedText xml:lang="en">Hemoglobin</TranslatedText>  
+          <TranslatedText xml:lang="fr"> </TranslatedText> 
+        </Question>  
+      </ItemDef>  
+      <ItemDef DataType="float" Length="6" Name="Hba1C" OID="i.LB.HBA1C"> 
+        <Question> 
+          <TranslatedText xml:lang="de">Hba1C</TranslatedText>  
+          <TranslatedText xml:lang="en">Hba1C</TranslatedText>  
+          <TranslatedText xml:lang="fr"> </TranslatedText> 
+        </Question>  
+      </ItemDef>  
+      <ItemDef DataType="float" Length="4" Name="Eosinophil To Leukocyte Ratio" OID="i.LB.EOSLE"> 
+        <Question> 
+          <TranslatedText xml:lang="de">Eosinophil To Leukocyte Ratio</TranslatedText>  
+          <TranslatedText xml:lang="en">Eosinophil To Leukocyte Ratio</TranslatedText>  
+          <TranslatedText xml:lang="fr"> </TranslatedText> 
+        </Question>  
+      </ItemDef>  
+      <ItemDef DataType="float" Length="4" Name="pH" OID="i.ph"> 
+        <Question> 
+          <TranslatedText xml:lang="de">pH-Wert</TranslatedText>  
+          <TranslatedText xml:lang="en">pH value</TranslatedText>  
+          <TranslatedText xml:lang="fr"> </TranslatedText> 
+        </Question>  
+      </ItemDef>  
+      <ItemDef OID="i.VS.SYSBP" Name="Systolic Blood Pressure" DataType="integer" Length="3" SASFieldName="SYSBP"> 
+        <Question> 
+          <TranslatedText xml:lang="de">Systolischer Blutdruck</TranslatedText>  
+          <TranslatedText xml:lang="en">Systolic Blood Pressure</TranslatedText>  
+        </Question>  
+        <MeasurementUnitRef MeasurementUnitOID="mu.mmHg"/>  
+      </ItemDef>  
+      <ItemDef OID="i.VS.DIABP" Name="Diastolic Blood Pressure" DataType="integer" Length="3" SASFieldName="DIABP"> 
+        <Question> 
+          <TranslatedText xml:lang="de">Diastolischer Blutdruck</TranslatedText>  
+          <TranslatedText xml:lang="en">Diastolic Blood Pressure</TranslatedText>  
+        </Question>  
+        <MeasurementUnitRef MeasurementUnitOID="mu.mmHg"/>  
+      </ItemDef>  
+      <ItemDef OID="AE.AEACN" Name="AE Action Taken" DataType="text" Length="20" SASFieldName="AEACN"> 
+        <Question> 
+          <TranslatedText xml:lang="en">Action Taken with Study Treatment:</TranslatedText>  
+          <TranslatedText xml:lang="de">Folge für die Studienmedikation:</TranslatedText>  
+        </Question>  
+        <CodeListRef CodeListOID="AEACN"/>  
+      </ItemDef>  
+      <ItemDef OID="AE.AEACNOTH" Name="AE Other Action" DataType="text" Length="250" SASFieldName="AEACNOTH"> 
+        <Question> 
+          <TranslatedText xml:lang="en">Other Action Taken:</TranslatedText>  
+          <TranslatedText xml:lang="de">Andere Folge:</TranslatedText>  
+        </Question>  
+      </ItemDef>  
+      <ItemDef OID="AE.AEENDTC" Name="Stop Date of AE" DataType="date" Length="10" SASFieldName="AEENDTC"> 
+        <Question> 
+          <TranslatedText xml:lang="en">End/Stop Date of Adverse Event</TranslatedText>  
+          <TranslatedText xml:lang="de">Enddatum des Adverse Events</TranslatedText>  
+        </Question>  
+      </ItemDef>  
+      <ItemDef OID="AE.AEENTM" Name="Stop Time of AE" DataType="time" Length="20" SASFieldName="AEENTM"> 
+        <Question> 
+          <TranslatedText xml:lang="en">At what time did Adverse Event end?</TranslatedText>  
+          <TranslatedText xml:lang="de">Um wieviel Uhr hat das Adverse Event geendet?</TranslatedText>  
+        </Question>  
+      </ItemDef>  
+      <ItemDef OID="AE.AEONGO" Name="Ongoing AE" DataType="text" Length="20" SASFieldName="AEONGO"> 
+        <Question> 
+          <TranslatedText xml:lang="en">Is Adverse Event ongoing/continuing?</TranslatedText>  
+          <TranslatedText xml:lang="de">Ist das Adverse Event noch da?</TranslatedText>  
+        </Question>  
+        <CodeListRef CodeListOID="YN"/>  
+        <xc:Config Key="display.style">radio</xc:Config>  
+      </ItemDef>  
+      <ItemDef OID="AE.AEOUT" Name="AE Outcome" DataType="text" Length="20" SASFieldName="AEOUT"> 
+        <Question> 
+          <TranslatedText xml:lang="en">Outcome of Adverse Event:</TranslatedText>  
+          <TranslatedText xml:lang="de">Ausgang des Adverse Events:</TranslatedText>  
+        </Question>  
+        <CodeListRef CodeListOID="AEOUT"/>  
+      </ItemDef>  
+      <ItemDef OID="AE.AEREL" Name="AE Relationship" DataType="text" Length="20" SASFieldName="AEREL"> 
+        <Question> 
+          <TranslatedText xml:lang="en">Relationship of Adverse Event with study drug:</TranslatedText>  
+          <TranslatedText xml:lang="de">Beziehung des Adverse Events zur Studienmedikation:</TranslatedText>  
+        </Question>  
+        <CodeListRef CodeListOID="AERELTP"/>  
+        <xc:Config Key="display.style">radio.vertical</xc:Config>  
+      </ItemDef>  
+      <ItemDef OID="AE.AESCAN" Name="Serious Event Type – Cancer" DataType="text" Length="1" SASFieldName="AESCAN"> 
+        <Question> 
+          <TranslatedText xml:lang="en">Was the event associated with cancer?</TranslatedText>  
+          <TranslatedText xml:lang="de">Steht das AE mit Krebs in Verbindung?</TranslatedText>  
+        </Question>  
+        <CodeListRef CodeListOID="YN"/>  
+        <xc:Config Key="display.style">radio</xc:Config>  
+      </ItemDef>  
+      <ItemDef OID="AE.AESCONG" Name="Serious Event Type – Congenital anomaly" DataType="text" Length="1" SASFieldName="AESCONG"> 
+        <Question> 
+          <TranslatedText xml:lang="en">Was the event associated with congenital anomaly?</TranslatedText>  
+          <TranslatedText xml:lang="de">Hängt das AE mit einer erblich bedingten Anomalie zusammen?</TranslatedText>  
+        </Question>  
+        <CodeListRef CodeListOID="YN"/>  
+        <xc:Config Key="display.style">radio</xc:Config>  
+      </ItemDef>  
+      <ItemDef OID="AE.AESDISAB" Name="5c Serious Event Type – disability/incapacity" DataType="text" Length="1" SASFieldName="AESDISAB"> 
+        <Question> 
+          <TranslatedText xml:lang="en">Did the event result in persistent or significant disability/incapacity?</TranslatedText>  
+          <TranslatedText xml:lang="de">Hatte das AE eine bleibende oder signifikante Behinderung zur Folge?</TranslatedText>  
+        </Question>  
+        <CodeListRef CodeListOID="YN"/>  
+        <xc:Config Key="display.style">radio</xc:Config>  
+      </ItemDef>  
+      <ItemDef OID="AE.AESDTH" Name="Serious Event Type – Death" DataType="text" Length="1" SDSVarName="AESDTH"> 
+        <Question> 
+          <TranslatedText xml:lang="en">Did the event result in death?</TranslatedText>  
+          <TranslatedText xml:lang="de">Ist der Patient an dem AE gestorben?</TranslatedText>  
+        </Question>  
+        <CodeListRef CodeListOID="YN"/>  
+        <xc:Config Key="display.style">radio</xc:Config>  
+      </ItemDef>  
+      <ItemDef OID="AE.AESER" Name="AE Serious" DataType="text" Length="20" SASFieldName="AESER"> 
+        <Question> 
+          <TranslatedText xml:lang="en">Is/Was the Adverse Event serious?</TranslatedText>  
+          <TranslatedText xml:lang="de">Ist/War es ein scwewiegendes Adverse Event?</TranslatedText>  
+        </Question>  
+        <CodeListRef CodeListOID="YN"/>  
+        <xc:Config Key="display.style">radio</xc:Config>  
+      </ItemDef>  
+      <ItemDef OID="AE.AESEV" Name="AE Severity" DataType="text" Length="20" SASFieldName="AESEV"> 
+        <Question> 
+          <TranslatedText xml:lang="en">Adverse Event Severity</TranslatedText>  
+          <TranslatedText xml:lang="de">Schweregrad des Adverse Event</TranslatedText>  
+        </Question>  
+        <CodeListRef CodeListOID="AESEV"/>  
+        <xc:Config Key="display.style">radio.vertical</xc:Config>  
+      </ItemDef>  
+      <ItemDef OID="AE.AESHOSP" Name="Serious Event Type - Hospitalization" DataType="text" Length="1" SASFieldName="AESHOSP"> 
+        <Question> 
+          <TranslatedText xml:lang="en">Did the event require or prolong hospitalization?</TranslatedText>  
+          <TranslatedText xml:lang="de">Hatte das AE einen Krankenhausaufenthalt oder die Verlängerung eines Krankenhausaufenhaltes zur Folge?</TranslatedText>  
+        </Question>  
+        <CodeListRef CodeListOID="YN"/>  
+        <xc:Config Key="display.style">radio</xc:Config>  
+      </ItemDef>  
+      <ItemDef OID="AE.AESLIFE" Name="Serious Event Type – Life threatening" DataType="text" Length="1" SASFieldName="AESLIFE"> 
+        <Question> 
+          <TranslatedText xml:lang="en">Was the event life threatening?</TranslatedText>  
+          <TranslatedText xml:lang="de">War das AE lebensbedrohlich?</TranslatedText>  
+        </Question>  
+        <CodeListRef CodeListOID="YN"/>  
+        <xc:Config Key="display.style">radio</xc:Config>  
+      </ItemDef>  
+      <ItemDef OID="AE.AESMIE" Name="Serious Event Type – Additional categories for seriousness" DataType="text" Length="1" SASFieldName="AESMIE"> 
+        <Question> 
+          <TranslatedText xml:lang="en">Do additional categories of seriousness apply?</TranslatedText>  
+          <TranslatedText xml:lang="de">Kann man zusätzliche Kateorien angeben?</TranslatedText>  
+        </Question>  
+        <CodeListRef CodeListOID="YN"/>  
+        <xc:Config Key="display.style">radio</xc:Config>  
+      </ItemDef>  
+      <ItemDef OID="AE.AESOD" Name="Serious Event Type – Overdose" DataType="text" Length="1" SASFieldName="AESOD"> 
+        <Question> 
+          <TranslatedText xml:lang="en">Did the event occur with an overdose?</TranslatedText>  
+          <TranslatedText xml:lang="de">Ist das AE im Zusammenhang mit einer Überdosis aufgetreten?</TranslatedText>  
+        </Question>  
+        <CodeListRef CodeListOID="YN"/>  
+        <xc:Config Key="display.style">radio</xc:Config>  
+      </ItemDef>  
+      <ItemDef OID="AE.AESTDTC" Name="Start Date of AE" DataType="date" Length="10" SASFieldName="AESTDTC"> 
+        <Question> 
+          <TranslatedText xml:lang="en">Start Date of Adverse Event</TranslatedText>  
+          <TranslatedText xml:lang="de">Startdatum des Adverse Events</TranslatedText>  
+        </Question>  
+      </ItemDef>  
+      <ItemDef OID="AE.AESTTM" Name="Start Time of AE" DataType="time" Length="20" SASFieldName="AESTTM"> 
+        <Question> 
+          <TranslatedText xml:lang="en">Start Time of Adverse Event</TranslatedText>  
+          <TranslatedText xml:lang="de">Startzeit des Adverse Events</TranslatedText>  
+        </Question>  
+      </ItemDef>  
+      <ItemDef OID="AE.AETERM" Name="AE Term" DataType="text" Length="20" SASFieldName="AETERM"> 
+        <Question> 
+          <TranslatedText xml:lang="en">Adverse Event Verbatim</TranslatedText>  
+          <TranslatedText xml:lang="de">Adverse Event Term</TranslatedText>  
+        </Question>  
+      </ItemDef>  
+      <ItemDef OID="ae.aedis" Name="aedis" DataType="text" Length="1" SASFieldName="aedis"> 
+        <Question> 
+          <TranslatedText xml:lang="en">Study discontinuation due to Adverse Event?</TranslatedText>  
+          <TranslatedText xml:lang="de">Wurde auf Grund des Adverse Events die Studie abgebrochen?</TranslatedText>  
+        </Question>  
+        <CodeListRef CodeListOID="YN"/>  
+        <xc:Config Key="display.style">radio</xc:Config>  
+      </ItemDef>  
+      <CodeList DataType="text" Name="Medication terms" OID="cl.Med.Terms"> 
+        <ExternalCodeList Dictionary="system.medication.terms"/>  
+      </CodeList>  
+      <CodeList DataType="text" Name="Base Medication Event type" OID="cl.BASE_MED_EVENT_TYPE"> 
+        <CodeListItem CodedValue="st-gt12"> 
+          <Decode> 
+            <TranslatedText xml:lang="de">Vor mehr als 12 Monaten angefangen</TranslatedText>  
+            <TranslatedText xml:lang="en">Start more than 12 months ago</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="st-6to12"> 
+          <Decode> 
+            <TranslatedText xml:lang="de">Vor 6 bis 12 Monaten angefangen</TranslatedText>  
+            <TranslatedText xml:lang="en">Start between 6 and 12 months ago</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="st-sm6"> 
+          <Decode> 
+            <TranslatedText xml:lang="de">In den letzten 6 Monaten angefangen</TranslatedText>  
+            <TranslatedText xml:lang="en">Start in last 6 months</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="st-evt"> 
+          <Decode> 
+            <TranslatedText xml:lang="de">Bei der Basisuntersuchung angefangen</TranslatedText>  
+            <TranslatedText xml:lang="en">Start at baseline event</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="st-othr"> 
+          <Decode> 
+            <TranslatedText xml:lang="de">Zu einem anderen Zeitpunkt angefangen</TranslatedText>  
+            <TranslatedText xml:lang="en">Start (other)</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+      </CodeList>  
+      <CodeList DataType="text" Name="Medication Event type" OID="cl.MED_EVENT_TYPE"> 
+        <CodeListItem CodedValue="st-evt"> 
+          <Decode> 
+            <TranslatedText xml:lang="de">Zum Zeitpunkt der Visite angefangen</TranslatedText>  
+            <TranslatedText xml:lang="en">Start at event</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="st-othr"> 
+          <Decode> 
+            <TranslatedText xml:lang="de">Zu einem anderen Zeitpunkt angefangen</TranslatedText>  
+            <TranslatedText xml:lang="en">Start (other)</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="stop-e"> 
+          <Decode> 
+            <TranslatedText xml:lang="de">Zum Zeitpunkt der Visite abgesetzt</TranslatedText>  
+            <TranslatedText xml:lang="en">Stop (Event)</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="stop-o"> 
+          <Decode> 
+            <TranslatedText xml:lang="de">Zu einem anderen Zeitpunkt abgesetzt</TranslatedText>  
+            <TranslatedText xml:lang="en">Stop (Other)</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="cont-nc"> 
+          <Decode> 
+            <TranslatedText xml:lang="de">Keine Veränderung</TranslatedText>  
+            <TranslatedText xml:lang="en">No-Change</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="cont-c-e"> 
+          <Decode> 
+            <TranslatedText xml:lang="de">Dosisänderung zum Zeitpunkt der Visite</TranslatedText>  
+            <TranslatedText xml:lang="en">Dose-Change (Event)</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="cont-c-o"> 
+          <Decode> 
+            <TranslatedText xml:lang="de">Dosisänderung zu einem anderen Zeitpunkt</TranslatedText>  
+            <TranslatedText xml:lang="en">Dose-Change (Other)</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+      </CodeList>  
+      <CodeList DataType="text" Name="Sex" OID="cl.SEX" SASFormatName="CLSEX"> 
+        <CodeListItem CodedValue="MALE"> 
+          <Decode> 
+            <TranslatedText xml:lang="de">Männlich</TranslatedText>  
+            <TranslatedText xml:lang="en">Male</TranslatedText>  
+            <TranslatedText xml:lang="fr">Masculin</TranslatedText> 
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="FEMALE"> 
+          <Decode> 
+            <TranslatedText xml:lang="de">Weiblich</TranslatedText>  
+            <TranslatedText xml:lang="en">Female</TranslatedText>  
+            <TranslatedText xml:lang="fr">Féminin</TranslatedText> 
+          </Decode> 
+        </CodeListItem>  
+      </CodeList>  
+      <CodeList DataType="integer" Name="JaNein" OID="cl.JN"> 
+        <CodeListItem CodedValue="1"> 
+          <Decode> 
+            <TranslatedText xml:lang="de">Ja</TranslatedText>  
+            <TranslatedText xml:lang="en">Yes</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="0"> 
+          <Decode> 
+            <TranslatedText xml:lang="de">Nein</TranslatedText>  
+            <TranslatedText xml:lang="en">No</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+      </CodeList>  
+      <CodeList DataType="integer" Name="Gefäß" OID="cl.Gefaess"> 
+        <CodeListItem CodedValue="1"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">pRCA</TranslatedText>  
+            <TranslatedText xml:lang="de">pRCA</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="2"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">mRCA</TranslatedText>  
+            <TranslatedText xml:lang="de">mRCA</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="3"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">dRCA</TranslatedText>  
+            <TranslatedText xml:lang="de">dRCA</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="4"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">PDA</TranslatedText>  
+            <TranslatedText xml:lang="de">PDA</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="5"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">LM</TranslatedText>  
+            <TranslatedText xml:lang="de">LM</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="6"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">pLAD</TranslatedText>  
+            <TranslatedText xml:lang="de">pLAD</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="7"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">mLAD</TranslatedText>  
+            <TranslatedText xml:lang="de">mLAD</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="8"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">dLAD</TranslatedText>  
+            <TranslatedText xml:lang="de">dLAD</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="9"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">1st Diag</TranslatedText>  
+            <TranslatedText xml:lang="de">1st Diag</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="10"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">2nd Diag</TranslatedText>  
+            <TranslatedText xml:lang="de">2nd Diag</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="11"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">pCIRC</TranslatedText>  
+            <TranslatedText xml:lang="de">pCIRC</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="12"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">1st OM</TranslatedText>  
+            <TranslatedText xml:lang="de">1st OM</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="13"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">CIRC</TranslatedText>  
+            <TranslatedText xml:lang="de">CIRC</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="14"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">Other obtuse segments</TranslatedText>  
+            <TranslatedText xml:lang="de">Other obtuse segments</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="15"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">Right posterolateral segment and branches</TranslatedText>  
+            <TranslatedText xml:lang="de">Right posterolateral segment and branches</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+      </CodeList>  
+      <CodeList DataType="integer" Name="Status" OID="cl.Status"> 
+        <CodeListItem CodedValue="1"> 
+          <Decode> 
+            <TranslatedText xml:lang="de">Lebt</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="2"> 
+          <Decode> 
+            <TranslatedText xml:lang="de">Kardiale Todesursache</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="3"> 
+          <Decode> 
+            <TranslatedText xml:lang="de">Nicht-kardiale Todesursache</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="9"> 
+          <Decode> 
+            <TranslatedText xml:lang="de">Unbekannte Todesursache</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+      </CodeList>  
+      <CodeList OID="AEACN" Name="AEACN" DataType="text" SASFormatName="AEACN"> 
+        <CodeListItem CodedValue="1"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">Drug withdrawn</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="2"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">Dose reduced</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="3"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">Dose increased</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="4"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">Dose not changed</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="5"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">Not applicable</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+      </CodeList>  
+      <CodeList OID="AEOUT" Name="AEOUT" DataType="text" SASFormatName="AEOUT"> 
+        <CodeListItem CodedValue="1"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">recovered/resolved</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="2"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">recovering/resolving</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="3"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">not recovered/not resolved</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="4"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">recovered/resolved with sequelae</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="5"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">fatal</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="6"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">unknown</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+      </CodeList>  
+      <CodeList OID="AERELTP" Name="AERELTP" DataType="text" SASFormatName="AERELTP"> 
+        <CodeListItem CodedValue="1"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">not related</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="2"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">unlikely related</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="3"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">possibly related</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="4"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">related</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+      </CodeList>  
+      <CodeList OID="AESEV" Name="AESEV" DataType="text" SASFormatName="AESEV"> 
+        <CodeListItem CodedValue="MILD"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">mild</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="MODERATE"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">moderate</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="SEVERE"> 
+          <Decode> 
+            <TranslatedText xml:lang="en">severe</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+      </CodeList>  
+      <CodeList OID="YN" Name="YN" DataType="text"> 
+        <CodeListItem CodedValue="y"> 
+          <Decode> 
+            <TranslatedText xml:lang="de">Yes</TranslatedText>  
+            <TranslatedText xml:lang="en">Yes</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+        <CodeListItem CodedValue="n"> 
+          <Decode> 
+            <TranslatedText xml:lang="de">No</TranslatedText>  
+            <TranslatedText xml:lang="en">No</TranslatedText>  
+          </Decode> 
+        </CodeListItem>  
+      </CodeList>  
+      <xc:ActionDef Action="calculate" OID="a.CalculateBMI"> 
+        <xc:LocationPath>//ItemData[@OID="i.VS.BMI"]</xc:LocationPath>  
+        <xc:Define Name="i_WEIGHT">../ItemData[@OID="i.VS.WEIGHT"]</xc:Define>  
+        <xc:Define Name="i_VS_HEIGHT">//ItemData[@OID="i.VS.HEIGHT"]</xc:Define>
+        <xc:Parameter> 
+          <xc:Script xml:space="preserve">($i_WEIGHT / ($i_VS_HEIGHT * $i_VS_HEIGHT)) * 10000</xc:Script> 
+        </xc:Parameter>  
+      </xc:ActionDef> 
+    </MetaDataVersion> 
+  </Study>  
+  <AdminData> 
+    <SignatureDef OID="Sig.001"> 
+      <Meaning>Sig.001 Meaning</Meaning>  
+      <LegalReason>LegalReason</LegalReason> 
+    </SignatureDef>  
+  </AdminData>  
+  <xc:EditorSetup xmlns:edit="http://www.xclinical.com/xmlns/editor/xc-1-0">  
+  </xc:EditorSetup> 
+</ODM>

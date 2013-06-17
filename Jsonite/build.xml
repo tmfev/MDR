@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="jsonite" basedir=".">
+
+	<path id="project.classpath">
+		<fileset dir="libs">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<target name="javac" depends="" description="Compiles Java source and copies other source files.">
+		<mkdir dir="bin/classes" />
+
+		<javac destdir="bin/classes" classpathref="project.classpath">
+			<src>
+				<pathelement path="src" />
+			</src>
+		</javac>
+	</target>
+
+	<target name="jar" depends="javac" description="Creates the library jar">
+		<echo message="**** BUILDING JSONITE" />
+		<mkdir dir="bin" />
+		<jar destfile="bin/jsonite.jar">
+			<fileset dir="bin/classes">
+				<exclude name="**/*Test.class" />
+			</fileset>
+		</jar>
+	</target>
+
+	<target name="clean" description="Removes all files that can be generated">
+		<delete dir="bin" />
+	</target>
+</project>

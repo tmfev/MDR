@@ -1,0 +1,118 @@
+<!-- 
+ ! Licensed to the Apache Software Foundation (ASF) under one
+ ! or more contributor license agreements.  See the NOTICE file
+ ! distributed with this work for additional information
+ ! regarding copyright ownership.  The ASF licenses this file
+ ! to you under the Apache License, Version 2.0 (the
+ ! "License"); you may not use this file except in compliance
+ ! with the License.  You may obtain a copy of the License at
+ !
+ ! http://www.apache.org/licenses/LICENSE-2.0
+ !
+ ! Unless required by applicable law or agreed to in writing,
+ ! software distributed under the License is distributed on an
+ ! "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ ! KIND, either express or implied.  See the License for the
+ ! specific language governing permissions and limitations
+ ! under the License.    
+ -->
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style ui:field="style"
+		type="com.xclinical.mdr.client.windows.FrameWindowPresentation.Style">
+			@def ACTIVE #92c1f0;
+			@def INACTIVE #d0e4f6;
+			
+			.wrapper {
+				position: relative;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.panel {
+				position: absolute;
+				left: 0pt;
+				top: 0pt;
+				right: 0pt;
+				bottom: 0pt;
+				border-radius: 3pt;
+				margin: 3pt;
+				border: 4pt solid INACTIVE;
+				overflow: auto;
+			}
+			
+			.panelActive {
+				border: 4pt solid ACTIVE;
+			}
+			
+			.header {
+				position: absolute;
+				left: 0pt;
+				top: 0pt;
+				right: 0pt;
+				height: 14pt;
+				margin: 0;
+				background-color: INACTIVE;
+				width: 100%;
+				font-weight: 600;
+				margin: 2pt solid INACTIVE;
+			}
+
+			.title {
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				overflow: hidden;
+			}
+			
+			.buttonBar {				
+				float: right;
+				height: 12pt;
+				padding: 0;
+				margin: 0;
+			}
+			
+			.body {
+				position: absolute;
+				top: 12pt;
+				bottom: 0pt;
+				left: 0pt;
+				right: 0pt;
+				padding: 2pt;
+			}
+			
+			.headerActive {
+				background-color: ACTIVE;
+			}
+			
+			.button {
+				padding: 0pt 2pt 0pt 2pt;
+				opacity: 0.6;
+			}
+			
+			.button:HOVER {
+				opacity: 1;
+			}
+		</ui:style>
+
+	<ui:with type="com.xclinical.mdr.client.silk.SilkImageBundle"
+		field="silk" />
+	<ui:with field='i'
+		type='com.xclinical.mdr.client.res.StandardImageBundle' />
+
+	<g:FlowPanel styleName="{style.wrapper}">
+		<g:FlowPanel ui:field="panel" styleName="{style.panel}">
+			<g:FlowPanel ui:field="header" styleName="{style.header}">
+				<g:FlowPanel styleName="{style.buttonBar}">
+					<g:Image ui:field="close" styleName="{style.button}"
+						resource="{i.windowClose}" />
+					<g:Image ui:field="minimize" styleName="{style.button}"
+						resource="{i.windowMin}" />
+					<g:Image ui:field="maximize" styleName="{style.button}"
+						resource="{i.windowMax}" />
+				</g:FlowPanel>
+				<g:Label styleName="{style.title}" ui:field="title" />
+			</g:FlowPanel>
+			<g:SimplePanel styleName="{style.body}" ui:field="bodyContainer" />
+		</g:FlowPanel>
+	</g:FlowPanel>
+</ui:UiBinder>

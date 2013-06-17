@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory">Chapter 10. Mapping exceptions</title><link rel="stylesheet" href="css/hibernate.css" type="text/css"/><meta xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" name="generator" content="DocBook XSL Stylesheets V1.74.0"/><link rel="home" href="index.html" title="Hibernate Envers - Easy Entity Auditing"/><link rel="up" href="index.html" title="Hibernate Envers - Easy Entity Auditing"/><link rel="prev" href="source.html" title="Chapter 9. Building from source and testing"/><link rel="next" href="migration.html" title="Chapter 11. Migration from Envers standalone"/><link rel="copyright" href="Legal_Notice.html" title="Legal Notice"/></head><body><p id="title"><a href="http://www.hibernate.org" class="site_href"><strong>Hibernate.org</strong></a><a href="http://hibernate.org/Documentation/DocumentationOverview" class="doc_href"><strong>Community Documentation</strong></a></p><ul class="docnav"><li class="previous"><a accesskey="p" href="source.html"><strong>Prev</strong></a></li><li class="next"><a accesskey="n" href="migration.html"><strong>Next</strong></a></li></ul><div class="chapter" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="exceptions"/>Chapter 10. Mapping exceptions</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="exceptions.html#exceptions-wontbesupported">10.1. What isn't and will not be supported</a></span></dt><dt><span class="section"><a href="exceptions.html#exceptions-willbesupported">10.2. What isn't and will be supported</a></span></dt><dt><span class="section"><a href="exceptions.html#exceptions-onetomanyjoincolumn">10.3. @OneToMany+@JoinColumn</a></span></dt></dl></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="exceptions-wontbesupported"/>10.1. What isn't and will not be supported</h2></div></div></div><p>
+            Bags (the corresponding Java type is List), as they can contain non-unique elements.
+            The reason is that persisting, for example a bag of String-s, violates a principle
+            of relational databases: that each table is a set of tuples. In case of bags,
+            however (which require a join table), if there is a duplicate element, the two
+            tuples corresponding to the elements will be the same. Hibernate allows this,
+            however Envers (or more precisely: the database connector) will throw an exception
+            when trying to persist two identical elements, because of a unique constraint violation.
+        </p><p>
+            There are at least two ways out if you need bag semantics:
+        </p><div xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="orderedlist"><ol><li><p>
+                    use an indexed collection, with the <code class="literal">@IndexColumn</code> annotation, or
+                </p></li><li><p>
+                    provide a unique id for your elements with the <code class="literal">@CollectionId</code> annotation.
+                </p></li></ol></div></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="exceptions-willbesupported"/>10.2. What isn't and <span class="emphasis"><em>will</em></span> be supported</h2></div></div></div><div xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="orderedlist"><ol><li><p>
+                    collections of components
+                </p></li></ol></div></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="exceptions-onetomanyjoincolumn"/>10.3. <code class="literal">@OneToMany</code>+<code class="literal">@JoinColumn</code></h2></div></div></div><p>
+            When a collection is mapped using these two annotations, Hibernate doesn't
+            generate a join table. Envers, however, has to do this, so that when you read the
+            revisions in which the related entity has changed, you don't get false results.
+        </p><p>
+            To be able to name the additional join table, there is a special annotation:
+            <code class="literal">@AuditJoinTable</code>, which has similar semantics to JPA's
+            <code class="literal">@JoinTable</code>.
+        </p><p>
+            One special case are relations mapped with <code class="literal">@OneToMany</code>+<code class="literal">@JoinColumn</code> on
+            the one side, and <code class="literal">@ManyToOne</code>+<code class="literal">@JoinColumn(insertable=false, updatable=false</code>)
+            on the many side.
+            Such relations are in fact bidirectional, but the owning side is the collection (see alse
+            <a class="ulink" href="http://docs.jboss.org/hibernate/stable/annotations/reference/en/html_single/#entity-hibspec-collection-extratype">here</a>).
+        </p><p>
+            To properly audit such relations with Envers, you can use the <code class="literal">@AuditMappedBy</code> annotation.
+            It enables you to specify the reverse property (using the <code class="literal">mappedBy</code> element). In case
+            of indexed collections, the index column must also be mapped in the referenced entity (using
+            <code class="literal">@Column(insertable=false, updatable=false)</code>, and specified using
+            <code class="literal">positionMappedBy</code>. This annotation will affect only the way
+            Envers works. Please note that the annotation is experimental and may change in the future.
+        </p></div></div><HR xmlns=""/><a xmlns="" href="legalnotice.html"><p xmlns="http://www.w3.org/1999/xhtml" class="copyright">Copyright © 2004 Red Hat Inc.</p></a><ul class="docnav"><li class="previous"><a accesskey="p" href="source.html"><strong>Prev</strong>Chapter 9. Building from source and testing</a></li><li class="up"><a accesskey="u" href="#"><strong>Top of page</strong></a></li><li class="home"><a accesskey="h" href="index.html"><strong>Front page</strong></a></li><li class="next"><a accesskey="n" href="migration.html"><strong>Next</strong>Chapter 11. Migration from Envers standalone</a></li></ul></body></html>

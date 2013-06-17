@@ -1,0 +1,31 @@
+-classpath
+'/Users/hardy/work/hibernate/git/validator/target/checkout/hibernate-validator/target/classes:/Users/hardy/tmp/m2/org/hibernate/javax/persistence/hibernate-jpa-2.0-api/1.0.0.Final/hibernate-jpa-2.0-api-1.0.0.Final.jar:/Users/hardy/tmp/m2/javax/xml/bind/jaxb-api/2.2/jaxb-api-2.2.jar:/Users/hardy/tmp/m2/joda-time/joda-time/1.6/joda-time-1.6.jar:/Users/hardy/tmp/m2/javax/xml/stream/stax-api/1.0-2/stax-api-1.0-2.jar:/Users/hardy/tmp/m2/com/sun/xml/bind/jaxb-impl/2.1.12/jaxb-impl-2.1.12.jar:/Users/hardy/tmp/m2/javax/activation/activation/1.1/activation-1.1.jar:/Users/hardy/tmp/m2/javax/validation/validation-api/1.0.0.GA/validation-api-1.0.0.GA.jar:/Users/hardy/tmp/m2/org/slf4j/slf4j-api/1.6.1/slf4j-api-1.6.1.jar:/Users/hardy/tmp/m2/com/googlecode/jtype/jtype/0.1.1/jtype-0.1.1.jar'
+-encoding
+'UTF-8'
+-protected
+-sourcepath
+'/Users/hardy/work/hibernate/git/validator/target/checkout/hibernate-validator/src/main/java:/Users/hardy/work/hibernate/git/validator/target/checkout/hibernate-validator/target/generated-sources:/Users/hardy/work/hibernate/git/validator/target/checkout/hibernate-validator/src/main/javadoc'
+-author
+-bottom
+'Copyright &copy; 2007-2011 <a href="http://redhat.com">Red Hat Middleware, LLC.</a>  All Rights Reserved'
+-charset
+'UTF-8'
+-d
+'/Users/hardy/work/hibernate/git/validator/target/checkout/hibernate-validator/target/apidocs'
+-docencoding
+'UTF-8'
+-docfilessubdirs
+-doctitle
+'Hibernate Validator 4.2.0.CR1'
+-link
+'http://java.sun.com/j2se/1.5.0/docs/api'
+-link
+'http://docs.jboss.org/hibernate/stable/beanvalidation/api'
+-packagesheader
+'Hibernate Validator Packages'
+-stylesheetfile
+'/Users/hardy/work/hibernate/git/validator/target/checkout/hibernate-validator/src/main/javadoc/stylesheet.css'
+-use
+-version
+-windowtitle
+'Hibernate Validator 4.2.0.CR1'

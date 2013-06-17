@@ -1,0 +1,317 @@
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:mdr="urn:import:com.xclinical.mdr.client.ui"
+	xmlns:client="urn:import:com.xclinical.mdr.client" xmlns:w="urn:import:com.xclinical.mdr.client.windows">
+
+	<ui:style ui:field="style" src="res/mdr.css">
+		.appPanel {
+			
+		}
+		
+		.logo {
+			margin: 4pt 0pt 2pt 4pt;
+			float: left;
+		}
+		
+		.dock {
+			width: 100%;
+			height: 3em;
+			background-color: rgb(224, 224, 224);
+			background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgb(223, 223,
+				223) ), color-stop(100%, rgb(208, 208, 208) ) );
+			background-image: -moz-linear-gradient(rgb(223, 223, 223),
+				rgb(208, 208, 208) );
+		}
+		
+		@external .gwt-TabLayoutPanelTab;
+		.gwt-TabLayoutPanelTab {
+			border-top-left-radius: 6pt;
+			border-top-right-radius: 6pt;
+		}
+		
+		@external .gwt-TabLayoutPanelContent;
+		.rightTab .gwt-TabLayoutPanelContent {
+			padding: 0pt 1pt 1pt 1pt;
+		}
+		
+		.list {
+			width: 100%;
+			height: 100%;
+			margin: 0pt;
+		}
+		
+		.rightTab {
+			width: 100%;
+		}
+		
+		.session {
+			position: absolute;
+			right: 0;
+			margin: 4pt 4pt 2pt 4pt;
+			z-index: 2;
+		}
+		
+		.ribbon {
+			width: 100%;
+			margin-top: 4pt;
+		}
+		
+		.ribbon .gwt-TabLayoutPanelContent {
+			padding: 0;
+		}
+		
+		.button {
+			float: right;
+			padding: 2pt;
+			margin-left: 1pt;
+		}
+		
+		.searchPanel {
+			margin: 2pt;
+			padding: 0pt;
+		}
+		
+		.searchElement {
+			width: 100%;
+			margin: 0;
+			padding: 0;
+			height: 18pt;
+		}
+		
+		.searchCategory {
+			color: #cdcdcd;
+			text-transform: uppercase;
+		}
+
+		.searchText {
+			display: block;
+			width: 100%;
+		}
+
+		.queryText {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0pt;
+		}
+
+		.header {
+			
+		}
+		
+		.topBar {
+			background: transparent;
+			border: none;
+		}
+		
+		.title {
+			position: relative;
+			border-bottom: thin solid BORDER;
+		}
+		
+		@external gwt-MenuItem;
+		@external gwt-MenuItem-selected;
+		.topBar .gwt-MenuItem {
+			border: thin solid transparent;
+			padding: 2pt 5pt;
+		}
+		
+		.topBar .gwt-MenuItem-selected {
+			border: thin solid rgb(179, 178, 178);
+			-moz-border-radius: 4pt;
+			border-radius: 4pt;
+			background-color: rgb(218, 218, 218);
+			background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgb(233, 233,
+				233) ), color-stop(100%, rgb(215, 214, 214) ) );
+			background-image: -moz-linear-gradient(rgb(233, 233, 233),
+				rgb(215, 214, 214) );
+		}
+
+		.ribbonBar {
+			width: 100%;
+			height: 55pt;
+		}
+
+		.ribbonButton {
+			margin: 2pt;
+			float: left;
+		}
+
+		.ribbonButtonLast {
+			margin: 2pt 1pt;
+		}
+
+		.ribbonGroup {
+			float: left;
+			padding: 4pt;
+			height: 24pt;
+			border-right: 2pt groove #ededed;
+		}
+
+		@external gwt-TabLayoutPanel;
+		@external gwt-TabLayoutPanelTabs;
+		@external gwt-TabLayoutPanelContent;
+		.gwt-TabLayoutPanel .gwt-TabLayoutPanelContent {
+			margin: 0;
+			padding: 0;
+		}
+		.title .gwt-TabLayoutPanelTabs {
+			margin-left: 26pt;
+		}
+
+	</ui:style>
+
+	<ui:with field='res'
+		type='com.xclinical.mdr.client.res.StandardImageBundle' />
+	<ui:with field='silk' type='com.xclinical.mdr.client.silk.SilkImageBundle' />
+
+	<g:DockLayoutPanel styleName="{style.appPanel}" unit="PT">
+		<g:north size="55">
+			<g:FlowPanel styleName="{style.title}">
+				<mdr:SessionWidget styleName="{style.session}" ui:field="session" />
+			    <g:Image styleName="{style.logo}" resource="{res.xclinicalSmall}"></g:Image>
+				<g:TabLayoutPanel barHeight="2.2" barUnit="EM" addStyleNames="{style.topBar} {style.ribbonBar}">
+					<g:tab>
+					     <g:header size='7'>New</g:header>
+
+					     <g:HTMLPanel styleName="{style.mdr-FadeGray}">
+					        <div class="{style.ribbonGroup}">
+					        	<g:PushButton addStyleNames="{style.ribbonButton}" ui:field="save2">Save</g:PushButton>					           					            
+					        	<g:PushButton addStyleNames="{style.ribbonButton}" ui:field="newImport">Import</g:PushButton>					           					            
+					        	<g:PushButton addStyleNames="{style.ribbonButton}" ui:field="newExport">Export</g:PushButton>					           					            
+					        						        </div>
+					        <div class="{style.ribbonGroup}">
+								<g:PushButton addStyleNames="{style.ribbonButton}" ui:field="newDataItem">Data Item</g:PushButton>
+						        <g:PushButton addStyleNames="{style.ribbonButton}" ui:field="newDataGroup">Data Group</g:PushButton>
+						        <g:PushButton addStyleNames="{style.ribbonButton}" ui:field="newValueDomain">Value Domain</g:PushButton>					               					                
+					        	<g:PushButton addStyleNames="{style.ribbonButton}" ui:field="newUnitOfMeasureList">Unit of Measure List</g:PushButton>
+					        	<g:PushButton addStyleNames="{style.ribbonButton}" ui:field="newDataTypeList">Data Type List</g:PushButton>
+					        </div>
+					        <div class="{style.ribbonGroup}">					        	
+					        	<g:PushButton addStyleNames="{style.ribbonButton}" ui:field="newIso11179">ISO11179▾</g:PushButton>					                
+					        </div>
+					        <div class="{style.ribbonGroup}">
+								<g:PushButton addStyleNames="{style.ribbonButton}" ui:field="newUserGroup">User Group</g:PushButton>
+					        </div>
+					        					        
+					     </g:HTMLPanel>
+					</g:tab>
+					<g:tab>
+					     <g:header size='7'>Edit</g:header>
+   					     <g:HTMLPanel styleName="{style.mdr-FadeGray}">
+					        <div class="{style.ribbonGroup}">
+					        	<g:PushButton addStyleNames="{style.ribbonButton}" ui:field="save">Save</g:PushButton>					           					            
+					        	<g:PushButton addStyleNames="{style.ribbonButton}" ui:field="home">Home</g:PushButton>					           					            
+					        </div>
+   					         					         
+					        <div class="{style.ribbonGroup}">
+					        	<g:PushButton addStyleNames="{style.ribbonButton}" ui:field="copy">Copy</g:PushButton>					           					            
+					        	<g:PushButton addStyleNames="{style.ribbonButton}" ui:field="paste">Paste</g:PushButton>					           					            
+					        	<g:PushButton addStyleNames="{style.ribbonButton}" ui:field="remove">Remove</g:PushButton>					           					            
+					        </div>
+					        
+					        <div class="{style.ribbonGroup}">
+					        	<g:PushButton addStyleNames="{style.ribbonButton}" ui:field="viewSimple">Simple</g:PushButton>					           					            
+					        	<g:PushButton addStyleNames="{style.ribbonButton}" ui:field="viewIso11179">ISO11179</g:PushButton>					           					            
+					        	<g:PushButton addStyleNames="{style.ribbonButton}" ui:field="viewBrowser">Browser</g:PushButton>					           					            
+					        	<g:PushButton addStyleNames="{style.ribbonButton}" ui:field="viewPreview">Preview</g:PushButton>					           					            
+					        	<g:PushButton addStyleNames="{style.ribbonButton}" ui:field="viewSource">Source</g:PushButton>					           					            
+					        </div>
+					        					        
+					        <div class="{style.ribbonGroup}">
+					        	<g:PushButton addStyleNames="{style.ribbonButtonLast}" ui:field="version">Version</g:PushButton>					           					            
+					        </div>
+					        					        
+					    </g:HTMLPanel>
+					</g:tab>
+				</g:TabLayoutPanel>
+			</g:FlowPanel>
+		</g:north>
+		<g:north size="30">
+			<w:DockedWindowPresenter ui:field="dock"
+				styleName="{style.dock}" />
+		</g:north>
+		<g:center>
+			<g:SplitLayoutPanel>
+				<g:east size="240">
+					<g:TabLayoutPanel barHeight="2.2" barUnit="EM"
+						addStyleNames="{style.rightTab}">
+						<g:tab>
+							<g:customHeader>
+								<g:Image title="Finds elements with a specific name"
+									resource="{silk.find}"></g:Image>
+							</g:customHeader>
+							<g:DockLayoutPanel unit="PT">
+							    <g:north size="58">
+							        <g:HTMLPanel>
+							            <span class="{style.searchCategory}">Filter By</span>
+										<g:ListBox styleName="{style.searchElement}" visibleItemCount="1" ui:field="searchType" />
+							            <span class="{style.searchCategory}">Order By</span>																	        
+										<g:ListBox styleName="{style.searchElement}" visibleItemCount="1" ui:field="searchAlgorithm" />																            
+							        </g:HTMLPanel>
+							    </g:north>
+							    <g:north size="30">
+									<g:HTMLPanel styleName="{style.searchElement}">
+							            <span class="{style.searchCategory}">Term</span>
+										<g:TextBox styleName="{style.searchText}" ui:field="searchTerm" />
+									</g:HTMLPanel>							        							        
+							    </g:north>
+							    <g:center>
+									<g:FlowPanel styleName="{style.searchPanel}">
+										<client:SearchList ui:field="searchList" styleName="{style.list}" />
+									</g:FlowPanel>							        
+							    </g:center>
+							</g:DockLayoutPanel>
+						</g:tab>
+						<g:tab>
+							<g:customHeader>
+								<g:Image title="Stores elements in a personal list"
+									resource="{silk.heart}"></g:Image>
+							</g:customHeader>
+							<g:FlowPanel>
+								<g:PushButton title="Removes all favorites"
+									styleName="{style.button}" ui:field="clearFavorites">
+									<g:upFace image="{silk.cross}"></g:upFace>
+								</g:PushButton>
+								<client:LazyItemList styleName="{style.list}" ui:field="favouritesList" />
+							</g:FlowPanel>
+						</g:tab>
+						<g:tab>
+							<g:customHeader>
+								<g:Image title="Shows recently accessed elements"
+									resource="{silk.bookOpen}"></g:Image>
+							</g:customHeader>
+							<g:FlowPanel>
+								<g:PushButton title="Removes all history items"
+									styleName="{style.button}" ui:field="clearHistory">
+									<g:upFace image="{silk.cross}"></g:upFace>
+								</g:PushButton>
+								<client:HistoryList styleName="{style.list}" />
+							</g:FlowPanel>
+						</g:tab>
+						<g:tab>
+							<g:customHeader>
+								<g:Image title="Runs database queries"
+									resource="{silk.databaseGo}"></g:Image>
+							</g:customHeader>
+							<g:DockLayoutPanel unit="EM">
+							    <g:north size="6">
+									<g:TextArea styleName="{style.queryText}" ui:field="query" />
+							    </g:north>
+							    <g:center>
+									<g:FlowPanel styleName="{style.searchPanel}">
+										<client:QueryList ui:field="queryList" styleName="{style.list}" />
+									</g:FlowPanel>							        
+							    </g:center>
+							</g:DockLayoutPanel>
+						</g:tab>
+						
+					</g:TabLayoutPanel>
+				</g:east>
+				<g:center>
+					<w:HorizontalWindowPresenter ui:field="canvas" />
+				</g:center>
+			</g:SplitLayoutPanel>
+		</g:center>
+	</g:DockLayoutPanel>
+</ui:UiBinder>

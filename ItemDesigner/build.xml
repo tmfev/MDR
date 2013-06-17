@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="ItemDesigner" default="build" basedir=".">
+	<!-- The basic version code. -->
+	<property name="mdr.version" value="0.8.38" />
+
+	<!-- Arguments to gwtc and devmode targets -->
+	<property name="gwt.args" value="-strict -gen gen-src -style PRETTY" />
+
+	<!-- Configure path to GWT SDK -->
+	<property name="gwt.sdk" location="${basedir}/../tools/gwt-2.5.1" />	
+	<property name="antlr.path" location="${basedir}/../tools/antlr-3.3/lib" />
+
+	<property name="classes.dir" location="war/WEB-INF/classes" />
+	<property name="war.file" value="ItemDesigner.war" />
+
+	<property name="jetty.path" location="${basedir}/../tools/jetty-distribution-8.0.4.v20111024" />
+
+	<property name="doc.path" value="${basedir}/../doc/mdr" />
+	<property name="apidoc.path" value="${doc.path}/api" />
+	<property name="doccheck.path" value="${doc.path}/doccheck" />
+	<property name="reports.path" value="${basedir}/doc/reports" />
+
+	<property name="source.path" value="${basedir}/src" />
+
+	<property name="tools.path" value="${basedir}/../tools" />
+	
+	<path id="project.class.path">
+		<pathelement location="${classes.dir}" />
+		<pathelement location="${gwt.sdk}/gwt-user.jar" />
+		<fileset dir="war/WEB-INF/lib" includes="**/*.jar" />
+	</path>
+
+	<path id="compile.class.path">
+		<pathelement location="${classes.dir}" />
+		<pathelement location="${gwt.sdk}/gwt-user.jar" />
+		<pathelement location="${gwt.sdk}/validation-api-1.0.0.GA.jar" />
+		<pathelement location="${gwt.sdk}/validation-api-1.0.0.GA-sources.jar" />				
+		<pathelement location="${antlr.path}/antlr-3.3-complete.jar" />
+		<fileset dir="${gwt.sdk}" includes="gwt-dev*.jar" />
+		<!-- Add any additional non-server libs (such as JUnit) -->
+		<fileset dir="war/WEB-INF/lib" includes="**/*.jar" />
+	</path>
+	
+	<target name="schemaexport" description="Exports a generated schema to DB and file">
+
+		<taskdef name="hibernatetool" classname="org.hibernate.tool.ant.HibernateToolTask" 
+			classpathref="compile.class.path" />
+
+		<hibernatetool destdir="${basedir}">
+			<jpaconfiguration persistenceunit="export" />
+			<classpath refid="project.class.path" />
+
+			<hbm2ddl drop="false" create="false" export="true" outputfilename="mdr-data.sql" delimiter=";" format="true" />
+		</hibernatetool>
+	</target>
+
+	<target name="antlr" description="Generates source code from Antlr grammars">
+		<echo message="building MDT" />
+		<java jar="${antlr.path}/antlr-3.3-complete.jar" fork="true" dir="src/net/xclinical/mdt">
+			<arg value="MDT.g" />
+		</java>
+		<echo message="building MDTTreeWalker" />
+		<java jar="${antlr.path}/antlr-3.3-complete.jar" fork="true" dir="src/net/xclinical/mdt">
+			<arg value="MDTTreeWalker.g" />
+		</java>
+		<echo message="building MDTMetaParser" />
+		<java jar="${antlr.path}/antlr-3.3-complete.jar" fork="true" dir="src/net/xclinical/mdt">
+			<arg value="MDTMetaParser.g" />
+		</java>
+	</target>
+
+	<target name="libs" description="Copy libs to WEB-INF/lib">
+		<mkdir dir="war/WEB-INF/lib" />
+		<copy todir="war/WEB-INF/lib" file="${gwt.sdk}/gwt-servlet.jar" />
+		<!-- Add any additional server libs that need to be copied -->
+	</target>
+
+	<target name="javac" depends="libs,antlr" description="Compile java source">
+		<mkdir dir="${classes.dir}" />
+		<javac srcdir="src" includes="**" encoding="utf-8" destdir="${classes.dir}" source="1.5" target="1.5" nowarn="true" debug="true" debuglevel="lines,vars,source">
+			<classpath refid="compile.class.path" />
+		</javac>
+		<copy todir="${classes.dir}">
+			<fileset dir="src" excludes="**/*.java" />
+		</copy>
+	</target>
+
+	<target name="mkver">
+		<echo message="Making version code" />
+		<tstamp>
+			<format property="now" pattern="yyyyMMdd-kkmmss" />
+		</tstamp>
+		<echo file="src/com/xclinical/mdr/client/res/version.txt" message="Version ${mdr.version}.${now}" />
+	</target>
+
+	<target name="gwtc" depends="javac,mkver" description="GWT compile to JavaScript">
+		<java failonerror="true" fork="true" classname="com.google.gwt.dev.Compiler">
+			<classpath>
+				<pathelement location="src" />
+				<path refid="compile.class.path" />
+			</classpath>
+			<!-- add jvmarg -Xss16M or similar if you see a StackOverflowError -->
+			<jvmarg value="-Xmx256M" />
+			<!-- Additional arguments like -style PRETTY or -logLevel DEBUG -->
+			<arg line="${gwt.args}" />
+			<arg value="com.xclinical.mdr.ItemDesigner" />
+		</java>
+	</target>
+
+	<target name="devmode" depends="javac" description="Run development mode">
+		<java failonerror="true" fork="true" classname="com.google.gwt.dev.DevMode">
+			<classpath>
+				<pathelement location="src" />
+				<path refid="compile.class.path" />
+			</classpath>
+			<jvmarg value="-Xmx256M" />
+			<arg value="-startupUrl" />
+			<arg value="ItemDesigner.html" />
+			<!-- Additional arguments like -style PRETTY or -logLevel DEBUG -->
+			<arg line="${gwt.args}" />
+			<arg value="com.xclinical.mdr.ItemDesigner" />
+		</java>
+	</target>
+
+	<target name="javac.tests" depends="javac" description="Compiles test code">
+		<javac srcdir="test" includes="**" encoding="utf-8" source="1.5" target="1.5" nowarn="true" debug="true" debuglevel="lines,vars,source">
+			<classpath refid="compile.class.path" />
+		</javac>
+	</target>
+
+	<target name="test.one" depends="javac.tests" description="Runs a specific test">
+		<junit fork="no" haltonfailure="yes" showoutput="yes">
+			<formatter usefile="false" type="plain" />
+			<classpath>
+				<pathelement location="src" />
+				<pathelement location="test" />
+				<path refid="project.class.path" />
+			</classpath>
+			<batchtest>
+				<fileset dir="test">
+					<include name="**/CoalesceTest.java" />
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+
+	<target name="test.dev" depends="javac.tests" description="Run development mode tests">
+		<mkdir dir="reports/htmlunit.dev" />
+		<junit fork="yes" printsummary="yes" haltonfailure="yes">
+			<jvmarg line="-Xmx256m" />
+			<sysproperty key="gwt.args" value="-standardsMode -logLevel WARN" />
+			<sysproperty key="java.awt.headless" value="true" />
+			<classpath>
+				<pathelement location="src" />
+				<pathelement location="test" />
+				<path refid="compile.class.path" />
+			</classpath>
+			<batchtest todir="reports/htmlunit.dev">
+				<fileset dir="test">
+					<include name="**/*Test.java" />
+				</fileset>
+			</batchtest>
+			<formatter type="plain" />
+			<formatter type="xml" />
+		</junit>
+	</target>
+
+	<target name="test.prod" depends="javac.tests" description="Run production mode tests">
+		<mkdir dir="reports/htmlunit.prod" />
+		<junit fork="yes" printsummary="yes" haltonfailure="yes">
+			<jvmarg line="-Xmx256m" />
+			<sysproperty key="gwt.args" value="-prod -standardsMode -logLevel WARN -standardsMode -out www-test" />
+			<sysproperty key="java.awt.headless" value="true" />
+			<classpath>
+				<pathelement location="src" />
+				<pathelement location="test" />
+				<path refid="project.class.path" />
+			</classpath>
+			<batchtest todir="reports/htmlunit.prod">
+				<fileset dir="test">
+					<include name="**/*Test.java" />
+				</fileset>
+			</batchtest>
+			<formatter type="plain" />
+			<formatter type="xml" />
+		</junit>
+	</target>
+
+	<target name="test" description="Run development and production mode tests">
+		<antcall target="test.dev" />
+		<antcall target="test.prod" />
+	</target>
+
+	<target name="build" depends="gwtc" description="Build this project" />
+
+	<target name="war" depends="build" description="Create a war file">
+		<zip destfile="${war.file}" basedir="war" />
+	</target>
+
+	<target name="clean" description="Cleans this project">
+		<delete dir="war/WEB-INF/classes" failonerror="false" />
+		<delete dir="war/itemeditor" failonerror="false" />
+	</target>
+
+	<target name="push" depends="war" description="Copies the war to the test server">
+		<exec dir="." executable="rsync" failonerror="true">
+			<arg line="-P ${war.file} mdr.xclinical.net:" />
+		</exec>
+	</target>
+	
+	<target name="local.deploy" depends="war" description="deploys onto the test server">
+		<copy file="ItemDesigner.war" todir="${jetty.path}/webapps" />
+	</target>
+
+	<target name="local.run" depends="local.deploy" description="deploys onto the test server">
+		<exec dir="${jetty.path}" executable="bin/jetty.sh" failonerror="true" >
+			<arg line="restart" />
+		</exec>
+	</target>
+
+	<target name="local.cont" depends="" description="deploys onto the test server">
+		<exec dir="${jetty.path}" executable="bin/jetty.sh" failonerror="true" >
+			<arg line="restart" />
+		</exec>
+	</target>
+	
+	<target name="local.stop" description="deploys onto the test server">
+		<exec dir="${jetty.path}" executable="bin/jetty.sh" failonerror="true" >
+			<arg line="stop" />
+		</exec>
+	</target>
+		
+	<target name="import" description="imports data">
+		<java classname="com.xclinical.mdr.server.Import" classpathref="project.class.path" fork="true">			
+			<jvmarg line="-Xmx4000M" />
+			<arg file="${mdt}"/>
+			<arg file="${data}"/>
+		</java>
+	</target>
+	
+	<!--
+		Create documentation: Javadoc, Doccheck, JUnit
+	-->
+	<target name="doc" description="generates the documentation">
+		<delete dir="${apidoc.path}" />
+
+		<javadoc classpathref="compile.class.path" destdir="${apidoc.path}" Package="true" defaultexcludes="yes" author="true" version="true" windowtitle="Metadata Repository">
+			<link href="http://logging.apache.org/log4j/docs/api/" />
+			<link href="http://docs.oracle.com/javase/1.5.0/docs/api/" />
+			
+			<packageset dir="${source.path}">
+				<include name="**"/>
+			</packageset>
+		</javadoc>
+
+		<delete dir="${doccheck.path}" />
+		<mkdir dir="${doccheck.path}" />
+
+		<javadoc classpathref="compile.class.path" destdir="${doccheck.path}" defaultexcludes="yes">
+			<doclet name="com.sun.tools.doclets.doccheck.DocCheck" path="${tools.path}/doccheck1.2b2/doccheck.jar">
+			</doclet>
+			<packageset dir="${source.path}">
+				<include name="**"/>
+			</packageset>
+		</javadoc>
+	</target>
+		
+</project>

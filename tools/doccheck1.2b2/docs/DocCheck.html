@@ -1,0 +1,486 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+
+<HEAD>
+	<META HTTP-EQUIV="Content-Type" CONTENT="text/html;CHARSET=iso-8859-1">
+	<TITLE>DocCheck Utility</TITLE>
+</HEAD>
+
+<BODY BGCOLOR="white">
+<H1>Doc Check Doclet - Checking Documentation Comments</H1>
+
+<P>The Sun Doc Check doclet (DocCheck) is an API doc-comment checker for Java source 
+  files. DocCheck is a Javadoc doclet that identifies errors and generates templates 
+  for missing comments and comment-tags. It has multiple severity levels so you 
+  can focus on the most important errors first, and it provides both summary counts 
+  and a statistical breakdown of errors found. DocCheck process directories are 
+  recursively, so you don't need to specify a long list of packages. (You can 
+  also specify packages and classes to skip using the <a href="pattern.html">pattern-matching 
+  classes for filenames</a>.)</P>
+<UL>
+  <LI><a href="#output">Output</a> 
+  <LI><A HREF="#Running DocCheck">Running DocCheck</A> 
+  <LI><A HREF="#Doclet Options">Doclet Options</A> 
+  <LI><A HREF="#JavaDoc Options">Javadoc Options</A> 
+  <LI><A HREF="#Text Control Options">Text-Control Options</A> 
+  <LI><a href="#skip">Skip List Specifications</a> 
+  <LI><A HREF="#Troubleshooting">Troubleshooting</A> 
+  <li><a href="#notes">Notes</a> 
+</UL>
+<blockquote></blockquote>
+<h2> 
+  <hr align="CENTER">
+  <a name="Output"></a>Output</h2>
+<p>DocCheck generates a series of Html files. Summaries are provided by package, 
+  by package group, and by class, with links to increasing levels of detail. In 
+  the detail pages, error message are shown on the left, and generated templates 
+  are shown on the right. On the right side, text that generated an errror is 
+  shown in red. Suggested-template text is shown in black.</p>
+<p><b>Sample Output</b> - For examples of the generated documents, see <a href="../sample/sampleOut/index.html">sampleOut/index.html</a>.</p>
+<p>For a list of errors that DocCheck finds, as well as those that it cannot find, 
+  and those it might possibly find in the future, see <a href="DocCheckErrors.html">Errors 
+  Identified by DocCheck</a>.</p>
+<H2>
+  <HR ALIGN="CENTER">
+  <A NAME="Running DocCheck"></A>Running DocCheck</H2>
+<P>This section gives an overview of DocCheck's runtime options. These options 
+  are explained in detail below.
+
+<p>
+  <b>Sample Script</b> -  See the <a href="../sample/run-doccheck">Sample script</a> that produced the output 
+  given above.
+<P>
+  You run DocCheck using the Javadoc -doclet and -docletpath switches:
+<p>
+
+<code>&nbsp;&nbsp;<b>javadoc&nbsp;-doclet</b>&nbsp;com.sun.tools.doclets.doccheck.DocCheck &nbsp;&nbsp;\<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>-docletpath</b> /home/user/doccheck1.2b2/doccheck.jar 
+    \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [ </code><i>packagenames</i><code> ]&nbsp;[ </code><I>sourcefilenames</I><code> ]&nbsp;[ -subpackages </code><I>pkg1</I><code>:</code><I>pkg2</I><code> ]&nbsp;[ </code><i>options</i><code> ] </code>
+
+
+<blockquote> 
+  <p> <b>Notes:</b> </p>
+  <ul>
+    <li>On Windows, the line continuation character is <font size="+1"><code>^</code></font> 
+      (caret).</li>
+    <li>Instead of using -docletpath, you can put that path in your search path.</li>
+  </ul>
+</blockquote>
+<P>Doclet options:</P>
+<blockquote> 
+  <table width="50%" border="0">
+    <tr> 
+      <td width="50%"><tt><a href="#classlist">-classlist</a> </tt></td>
+      <td width="50%"><tt><a href="#docletid">-docletID</a> </tt></td>
+    </tr>
+    <tr> 
+      <td><tt><a href="#author">-authorID</a> </tt><i>name</i></td>
+      <td><tt><a href="#version">-versionID</a> </tt><i>string</i></td>
+    </tr>
+    <tr> 
+      <td><tt><a href="#skippkg">-skipPkg</a> </tt><i>p1:p2:...</i></td>
+      <td><tt><a href="#skipclass">-skipClass</a> </tt><i>c1:c2:...</i></td>
+    </tr>
+    <tr> 
+      <td><tt><a href="#evident">-evident</a> </tt><i>level</i></td>
+      <td><tt><a href="#execdepth">-execDepth</a> </tt><i>level</i></td>
+    </tr>
+    <tr> 
+      <td><tt><a href="#target">-d</a> </tt><i>target</i></td>
+      <td><tt><a href="#help">-help</a> </tt></td>
+    </tr>
+  </table>
+  
+</blockquote>
+<P>Javadoc options:</P>
+<PRE>   <a href="#public">-public</a> <a href="#protected">-protected</a> <a href="#sourcepath">-sourcepath</a> <a href="#docletpath">-docletpath</a>
+</PRE>
+<P>Additional options for control of generated text:</P>
+<PRE>   <a href="#ifctxt">-ifcTxt</a> <a href="#gettxt">-getTxt</a> <a href="#settxt">-setTxt</a> <a href="#istxt">-isTxt</a> <a href="#valtxt">-valTxt</a> <a href="#cnrtxt">-cnrTxt</a> <a href="#objtxt">-objTxt</a> <a href="#bsettxt">-bSetTxt</a> <a href="#bvaltxt">-bValTxt</a></PRE>
+<P>Sample command line:</P>
+<pre>
+javadoc -J-Xmx200m                                        \
+        -doclet com.sun.tools.doclets.doccheck.DocCheck   \
+        -docletpath /home/user/doccheck1.2b2/doccheck.jar \         
+        -d jdkout2                                        \
+        -classlist                                        \
+        -docletID                                         \
+        -title "Java 2 Platform, v1.3"                    \
+        -skipPkg 'org.omg.CosNaming.*'                    \
+        -execDepth 2                                      \
+        -skipClass 'org.omg.*.*Helper:org.omg.*.*Holder'  \
+        -sourcepath /home/user/src                        \
+        com.package1  com.package2  MyClass.java</pre>
+</PRE>
+<P>These commands are illustrated in the <a href="../sample/makeSample">makeSample</a> 
+  command script (written using the Unix CSH command shell). When run on the packages 
+  in <b>sampleSrc</b> directory, they produce the results shown in <a href="../sample/sampleOut">sampleOut</a>. 
+
+<blockquote> 
+  <p><B>Note:</B> 
+    The options can be saved in a file and sent to javadoc with the @filename 
+    option. That reduces the command line to:</p>
+  <PRE>   javadoc @filename</PRE>
+  <p>Within the file, options can be on separate lines. (But an option that takes 
+    arguments must be on the same line with its arguments.) This option is most 
+    useful for specifying a long list of packages for Javadoc to process. </p>
+</blockquote>
+
+</blockquote>
+<h2> 
+  <hr align="CENTER">
+  <a name="Doclet Options"></a>Doclet Options</h2>
+<DL> 
+  <DT><B><a name="author"></a>-authorID</B> <i>name</i></DT>
+  <DD>Supplies the name used when an @author tag is generated. Default value is 
+    &quot;unknown&quot;.<BR>
+    You might specify this on the command line, for example: &nbsp;<tt>-authorID 
+    &quot;Your Name&quot;</tt> <br>
+    <i>[<b>Note:</b> As with all DocCheck options, case is insignificant.]</i>
+  <DT><B><a name="version"></a>-versionID </B><i>string</i></DT>
+  <DD>Supplies the version string when an @version tag is generated. Default value 
+    is the standard version string used at Sun with the Source Code Control System 
+    (SCCS) utility: &#37;I%, &#37;G%, which becomes the current version and date, 
+    like this: &quot;<CODE>1.3 09/27/99</CODE>&quot;.<BR>
+    You might specify this on the command line, for example: &nbsp;<tt>-versionID 
+    1.04</tt> 
+  <DT><B><a name="classlist"></a>-classlist</B></DT>
+  <DD>Generates a list of (outermost) classes that have errors and stores them 
+    in a file named <B>classErr.lst</B>. Fully-qualifed class names are generated, 
+    so that substituting slashes for the periods creates directory paths. The 
+    listing can then be used with a source control tool to check out the files 
+    and check them back in after making changes. [Unix authors using SCCS controled-files 
+    can use the <B>checkin</B> and <B>checkout</B> scripts.] 
+  <DT><B><a name="target"></a>-d </B><i>target</i></DT>
+  <DD>Specifies the output directory for generated files. 
+  <DT><B><a name="docletid"></a>-docletID</B></DT>
+  <DD>Identifies the doclet version in the summary page. Useful for future automated 
+    merge tools and to keep track of which version generated the errors. 
+  <dt><b><a name="skippkg"></a>-skipPkg </b><i>p1:p2:...</i></dt>
+  <dd>Specifies a list of package-patterns to skip, where each pattern represents 
+    a fully qualified package name and the package names are separated by the 
+    current system's path separator. Used when processing the Java platfrom to 
+    skip the org.omg.CosNaming packages and subpackages, which are automatically 
+    generated. The command line option that does that is: <code>-skipPkg org.omg.CosNaming.* 
+    </code> (See <a href="#skip">Skip List Specifications</a>.)</dd>
+  <dt><b><a name="skipclass"></a>-skipClass </b><i>c1:c2:...</i></dt>
+  <dd>Specifies a list of classname-patterns to skip, where each pattern represents 
+    a fully qualified class name and the names are separated by the current system's 
+    path separator. Used when processing the Java platfrom to skip a series of 
+    Holder and Helper classes for which otherwise-redundant comments are specified 
+    in the package documentation. The command line option that does that is: <code>-skipClass 
+    org.omg.*.*Helper:org.omg.*.*Holder </code> (See <a href="#skip">Skip List 
+    Specifications</a>.)</dd>
+  <dt><b><a name="evident"></a>-evident </b><i>level</i></dt>
+  <dd>The error level to assign to methods missing comments which are &quot;self-evident&quot; 
+    by virtue of the method name, where &quot;self-evident&quot; is defined as 
+    &quot;so obvious that this doclet can generate a comment for it&quot;. For 
+    example, the method <code>getComponentName()</code> would qualify as a (reasonably) 
+    self-evident method. It would have this comment generated for it: &quot;Returns 
+    the component name&quot;. By default, such comments are treated the same as 
+    any other missing comment (error level 2: Missing comment). Using the <code>-evident</code> 
+    switch, you can reassign that error level to level 3 (tag error), 4 (text 
+    error), or 5 (warning).</dd>
+  <dt><b><a name="execdepth"></a>-execDepth </b><i>level</i></dt>
+  <dd>The package-depth for the executive summary. The default is 1, which provides 
+    an executive summary that goes one package deep. For the Java platform, that 
+    would summarize the results for java.*, javax.*, and org.*. In actual use, 
+    the Java platform is summarized at depth=2, which produces summaries for java.applet.*, 
+    java.awt.*, etc.</dd>
+  <DT><B><a name="help"></a>-help</B></DT>
+  <DD>Displays a help message to remind you of the possible options. 
+  <dt><b><a name="eol"></a>-eol</b></dt>
+  <dd><i><font color="#FF0000"><b>&lt;Deprecated until standard doclet HtmlWriter 
+    class allows specifying EOL.&gt;</b></font></i><br>
+    Changes the line-termination character. The default is NL (LF), which is useful 
+    on most systems. (The system-specific line terminator is not used, in case 
+    the utility is being run over a network.) Options are: 
+    <table border="0">
+      <tr> 
+        <td valign="TOP"><b>Unix</b></td>
+        <td>The Unix line-terminator. See NL, below.</td>
+      </tr>
+      <tr> 
+        <td valign="TOP"><b>Dos</b></td>
+        <td>The DOS line-terminator. See CR+LF, below.</td>
+      </tr>
+      <tr> 
+        <td valign="TOP"><b>NL</b></td>
+        <td>The Unix line-terminator, &quot;NewLine&quot; (\n). Recognized by 
+          many DOS utilities, as well. This is the default value.</td>
+      </tr>
+      <tr> 
+        <td valign="TOP"><b>CR+LF</b></td>
+        <td>The DOS line-terminator, &quot;CarriageReturn + LineFeed&quot; (\r&nbsp;+&nbsp;\n).</td>
+      </tr>
+      <tr> 
+        <td valign="TOP"><b>LF</b></td>
+        <td>Same as NL. (On Unix systems, DOS LF is usually known as NL.)</td>
+      </tr>
+      <tr> 
+        <td valign="TOP"><b>CR</b></td>
+        <td>For completeness, in case some system uses it.</td>
+      </tr>
+      <tr> 
+        <td valign="TOP"><b>LF+CR</b></td>
+        <td>For completeness, in case some system uses it.</td>
+      </tr>
+    </table>
+    Note: Both the options and their values are case-insensitive. 
+  <dt>&nbsp; </dt>
+</DL>
+<H2> 
+  <HR ALIGN="CENTER">
+  <A NAME="JavaDoc Options"></A>Javadoc Options</H2>
+<P>These options are provided by Javadoc. There are other options, as well, described 
+  at <A HREF="http://java.sun.com/products/jdk/1.2/docs/tooldocs/solaris/javadoc.html">http://java.sun.com/products/jdk/1.2/docs/tooldocs/solaris/javadoc.html</A>. 
+  But these are the main ones you'll need:</P>
+<DL> 
+  <DT><B><a name="public"></a>-public</B></DT>
+  <DD>Tells Javadoc to process only public classes and public members of classes. 
+  <DT><B><a name="protected"></a>-protected</B></DT>
+  <DD>Tells Javadoc to process both public and protected classes and members. 
+  <DT><B><a name="sourcepath"></a>-sourcepath</B></DT>
+  <DD>Tells Javadoc where to find the specified packages and files. Very important 
+    if the -classpath option is used on the command line, since Javadoc uses the 
+    classpath if no sourcepath is specified! (That results in processing binary 
+    files.) When a package is specified, use the fully qualified package name. 
+    The sourcepath then points to the directory containing the first entry in 
+    the fully qualified name. When a file is specified, the sourcepath acts like 
+    a directory-path -- it names the directory that contains the file. 
+  <DT><B><a name="classpath"></a>-classpath</B></DT>
+        <DD>Tells Javadoc where to find the classes needed for external references.
+    in the JDK. 
+  <DT><B><a name="docletpath"></a>-docletpath</B></DT>
+  <DD>Tells Javadoc where to find the doclet. Names the directory containing the 
+    start of the fully qualified doclet name. 
+</DL>
+
+<H2> 
+  <HR>
+  <A NAME="Text Control Options"></A>Text Control Options</H2>
+
+<P>For methods like <tt>getX()</tt>, <tt>setX()</tt>, and <tt>isX()</tt>, DocCheck 
+  generates a complete template with initial comment text and all tags fully specified. 
+  DocCheck includes a variety of options that let you control the text that is 
+  generated for the first line of an API comment. In each case, you follow the 
+  option with the word or phrase you want to use in that position. For example: 
+  <CODE>-ifcTxt &quot;This interface dictates that ...&quot;</CODE>. The definitions 
+  below show some standard alternatives you can use, or you can make up your own.</P>
+<DL> 
+  <DT><B><a name="ifctxt"></a>-ifcTxt</B></DT>
+  <DD>The text to use for an interface. The default text is &quot;Determines the 
+    requirements for an object that ...&quot; 
+  <DT><B><a name="gettxt"></a>-getTxt</B></DT>
+  <DD>The text that precedes the property name in a method named <CODE>getFoo()</CODE>. 
+    The default phrase is &quot;Returns the foo value&quot;. The <CODE>-getTxt</CODE> 
+    option replaces &quot;Returns the&quot;.<BR>
+    Alternatives: &quot;Retrieves the&quot;, &quot;Gets the&quot;. 
+  <DT><B><a name="settxt"></a>-setTxt</B></DT>
+  <DD>The text that precedes the property name in a method named <CODE>setFoo()</CODE> 
+    that sets a non-boolean variable. The default phrase is &quot;Specifies the 
+    foo value&quot;. The <CODE>-setTxt</CODE> option replaces &quot;Specifies 
+    the&quot;.<BR>
+    Alternative: &quot;Sets the&quot;. 
+  <DT><B><a name="istxt"></a>-isTxt</B></DT>
+  <DD>The text that precedes the property name in a method named <CODE>isFoo()</CODE>. 
+    The default phrase is &quot;Returns true if this object is foo&quot;. The 
+    <CODE>-isTxt</CODE> option replaces &quot;Returns true of this object is&quot;.<BR>
+    Alternative: &quot;Determines if this object is&quot;. 
+  <DT><B><a name="valtxt"></a>-valTxt</B></DT>
+  <DD>The text that follows the property name in a method named <CODE>getFoo()</CODE> 
+    that returns a non-boolean variable. The default phrase is &quot;Returns the 
+    foo value&quot;. The <CODE>-valTxt</CODE> option replaces &quot;value&quot;.<BR>
+    Alternatives: &quot;value for this object&quot;, &quot;property&quot; (useful 
+    for Java Bean components). 
+  <DT><B><a name="cnrtxt"></a>-cnrTxt</B></DT>
+  <DD>The initial text for a constructor. The default phrase is &quot;Constructs 
+    {a/an} <I>ObjectName</I> object.&quot;. The <CODE>-cnrTxt</CODE> option replaces 
+    &quot;Constructs&quot;. (Typically, you will want to modify this phrase to 
+    identify what is unique about this constructor relative to other constructors.)<BR>
+    Alternative: &quot;Creates&quot;. 
+  <DT><B><a name="objtxt"></a>-objTxt</B></DT>
+  <DD>The final text for a constructor. The default phrase is &quot;Constructs 
+    {a/an} <I>ObjectName</I> object&quot;. The <CODE>-objTxt</CODE> option replaces 
+    &quot;object&quot;.<BR>
+    Alternative: &quot;instance&quot;. 
+  <DT><B><a name="bsettxt"></a>-bSetTxt</B></DT>
+  <DD>The text that precedes the property name in a method named <CODE>setFoo()</CODE> 
+    that sets a <CODE>boolean</CODE> variable. The default phrase is &quot;Identifies 
+    this object as foo&quot;. The <CODE>-bSetTxt</CODE> option replaces &quot;Identifies 
+    this object as&quot;.<BR>
+    Alternative: &quot;Determines if this object is a&quot;. 
+  <DT><B><a name="bvaltxt"></a>-bValTxt</B></DT>
+  <DD>The text that follows the property name in a method named <CODE>isFoo()</CODE> 
+    and for a method named <CODE>setFoo()</CODE> that sets a <CODE>boolean</CODE> 
+    variable. The default value is the null string that follows &quot;foo&quot; 
+    in &quot;Returns true if the value is foo&quot; and &quot;Identifies this 
+    object as foo&quot;.<BR>
+    Alternative: &quot;value&quot;, when used with an alternative for <CODE>-bSetTxt</CODE> 
+    and <CODE>-isTxt</CODE> similar to those shown above for <CODE>-getTxt</CODE> 
+    and <CODE>-setText</CODE> 
+</DL>
+
+
+<H2><HR><a name="skip"></a>Skip List Specifications</H2>
+
+<p>A list of packages to skip can be specified with <code><b>-skipPkg</b></code>. 
+  A list of classes/interfaces to skip can be specified with -skipClass. 
+  For both options, &quot;*&quot; wildcards can be specified, as defined 
+  by the PathSpecifier class in <a href="pattern.html">pattern-matching 
+  classes for filenames</a>.</p>
+
+<p>Entries in the list are divided by the path separator for the current system 
+  (":" for Unix, ";" for DOS). Each entry in the list must be fully qualified, 
+  however, patterns can be specified. Patterns can be specified for each part 
+  of the path. So, "j*.s*" matches java.security as well as javax.swing. When 
+  the directory path ends with "*", all subdirecories are implied. So "-skipClass 
+  javax.swing.*.Foo" ignores all classes and interfaces named Foo in javax.swing 
+  and all sub-sub-(etc)-packages of javax.swing. To limit the specification to 
+  a single layer of packages, use "?*". Specifying javax.swing.?*.Foo would therefore 
+  skip classes and interfaces named Foo in subpackages of javax.swing, but not 
+  in sub-sub-packages. Here is the table of <code>-skipPkg</code> options for 
+  processing various combinations of packages from the swing hierarchy: </p>
+<pre>
+           swing
+             |
+         +---+---+
+       table    text
+                  |
+                 html
+</pre><dl>
+<dt>javax.swing
+<dd>The swing package only.
+<dt>javax.swing.*
+<dd>The swing package and all sub packages: table, text, 
+    and text.html.
+<dt>javax.swing.*.*
+<dd>All sub packages of swing, not including swing itself
+    and all their subs, recursively: table, text, table.html.
+<dt>javax.swing.?*
+<dd>Direct descendants of swing, not including subpackages
+    and not including swing itself: table, text. (This is 
+    the only time that "?" is recognized as a pattern-character.
+    "?" has not yet been implemented as a general one-character
+    template.)
+<dt>javax.swing:javax.swing.?*
+<dd>The swing package and any direct descendants.
+</dl>
+Similar rules apply when specifying skip lists for classes.
+<p> Note that ignored classes, interfaces, and packages do <i>not</i> factor into 
+  the total number of packages, classes, and members processed. The statistics 
+  and percentages that are reported reflect only those items that are actually 
+  processed. 
+<p>
+
+<H2><HR>
+<A NAME="Troubleshooting"></A>
+Troubleshooting</H2>
+
+<P>When you are having trouble using DocCheck, look here for insights.<font color="#FF0000"><b><i> 
+  </i></b></font></P>
+
+<DL>
+	<DT><B>No package, class, or source file named ...</B></DT>
+	
+  <DD>Javadoc generates this error message when the <CODE>-sourcepath</CODE> option 
+    is invalid or missing. The named file always ends with a &quot;dot&quot;, 
+    but that is simply a period. (When it occurs by itself, it looks like the 
+    OS shortcut for &quot;current directory&quot;, but it is still just a period.) 
+    If the specified file(s) exist in the the current directory, or if the fully 
+    qualified package name starts in the current directory, you don't need to 
+    use the <CODE>-sourcepath</CODE> option. Otherwise, you need it. Check the 
+    <A HREF="#Doclet Options">Doclet Options</A> section for more details on this 
+    option. 
+  <DT><B>Strange output text...</B></DT>
+	
+  <DD>If you point Javadoc at files that contain binary characters or files containing 
+    line-endings from a different system (for example DOS <CODE>CR/LF</CODE>-terminated 
+    files on a Unix system, you can get some truly weird output running across 
+    your screen. Don't do that. 
+  <DT><B>No output...</B></DT>
+	<DD><B>Situation:</B> You are positioned in the directory that contains a package. You run DocCheck, specifying
+	the name of the package. The doclet seems to run, but no errors are generated -- and you *know* there are errors
+	in the files.<BR>
+	<B>Cause:</B> The files in the package have a multi-part package name. (For example: <CODE>package foo.bar;</CODE>).<BR>
+    <B>Solution:</B> Javadoc requires a fully qualified package name. Position 
+    yourself to the directory that contains the start of the directory path and 
+    specify the fully-qualified name. 
+</DL>
+
+<P></P>
+
+<P>
+<H2><HR>
+<a name="notes"></a>
+Notes</h2>
+
+<p>Some notes on DocCheck's features: how they work and how to use them:</p>
+<ul>
+  <li>Whenever possible, the DocCheck doclet creates comments and tags that can 
+    be cut and pasted into place in the source file. DocCheck generates as much 
+    English text as it reasonably can, to minimize the amount of typing you need 
+    to do. 
+  <li>Tags that have errors start with a &quot;?&quot;. Tags that are intended 
+    for cut and paste operations start with &quot;*&quot;. 
+  <li>To accomodate differences in phrasing, the tag-checker looks for a valid 
+    data type in the first 5 words of the text. That allows tags like 
+    <p><code>@param foo an int that...</code></p>
+    <p>and</p>
+    <pre>@param foo the most recent int value...
+</pre>
+  <li>To recognize data types encoded in HTML links, the comment parser breaks 
+    on &lt; and &gt; as well as spaces and array brackets. That, coupled with 
+    the 5-deep search for a data type, allows the parser to recognize 
+    <p><code>@param an &lt;a href=&quot;...&quot;&gt;URL&lt;/a&gt;</code></p>
+    <p>as well as</p>
+    <p><code>@param an &lt;a href=&quot;...&quot;&gt;URL[]&lt;/a&gt;<br>
+      <br>
+      </code> 
+  
+  <li>Within each error category, reports errors in &quot;near file-order&quot;. 
+    (All fields, then all constructors, then all methods, and finally all inner 
+    classes. Each subgroup in file order.) 
+  <li>Errors broken down by severity level, so you can focus on the most important 
+    issues first. 
+  <li>Generates a comment-template when comments are missing. 
+  <li>Generates complete comment text and tags for setFoo(), getFoo(), and isFoo() 
+    methods. 
+  <li>Generates tag-templates when tags are missing, in a format suitable for 
+    cutting and pasting. 
+  <li>Generates additional verbage for int and boolean types. For example, generates 
+    the following for a boolean return value: <code>*&nbsp;@return&nbsp;true&nbsp;if&nbsp;...</code> 
+  <li>Generates special text for arrays (ex: <code>an&nbsp;array&nbsp;of&nbsp;Object</code>) 
+  <li>Identifies missing, invalid, and extraneous @param, @return, and @exception 
+    tags (plus @author and @version for classes). 
+  <li>Allows specification of the text to use for generated @author and @verison 
+    tags. 
+  <li>Option for generating a file containing a list of (outermost) classes that 
+    have errors (<b>classErr.lst</b>). 
+  <li>Generates an intitial line of boilerplate for interfaces that are missing 
+    comments: &quot;Defines the requirements for an object that ...&quot;. 
+  <li>Generates non-Javadoc comments for methods without comments that implement 
+    an interface. Comments are of the form <code>//Inherited from&nbsp;java.awt.event.ActionListener</code>. 
+    (In the standard doclet such methods inherit their comments from the interface.) 
+    The generated // comments can then be added to the source file to say, in 
+    effect, &quot;This space intentionally left blank.&quot; (There is as yet 
+    no way for the doclet to check for the existence of such comments, so any 
+    class containing such methods is listed in the -classlist file, so the file 
+    can be inspected to see if the comments need to be added.) 
+  <li>You can control the text that DocCheck generates when the first line of 
+    text is missing from an API comment, so you can the kind of description you 
+    want. 
+  <li>Generates a line of text for overridden methods that identifies the source 
+    method and ignores missing tags for that method, since the standard doclet 
+    generates a link to the overridden method that the reader can follow for more 
+    information. 
+  <li>Generates a comment for methods that override other methods. The generated 
+    comment can simply be added to existing comments, or used as a reminder to 
+    fill in the <i>reason</i> for overriding the method. 
+</ul>
+<hr>
+</BODY>
+
+</HTML>

@@ -1,0 +1,62 @@
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+	<ui:style>
+		.label {
+			padding-left: 2pt;
+			padding-right: 2pt;
+		}
+		
+		.panel {
+			margin: 0pt;
+		}
+				
+		@external .btn,.btn-up,.btn-up-hovering,.btn-down,.btn-down-hovering;
+		.btn {
+		}
+		
+		.btn-up {
+		  margin-right: 4px;
+		  margin-bottom: 4px;
+		  padding: 0px 1px 0px 0px;
+		  border: 1px outset #ccc;
+		}		
+		
+		.btn-up-hovering {
+		  margin-right: 4px;
+		  margin-bottom: 4px;
+		  padding: 0px 1px 0px 0px;
+		  border: 1px outset;
+  		  border-color: #9cf #69e #69e #7af;
+		}
+		
+		.btn-down {
+		  margin-right: 4px;
+		  margin-bottom: 4px;
+		  padding: 0px 0px 0px 1px;
+		  border: 1px inset #ccc;
+		}
+		
+		.btn-down-hovering {
+		  margin-right: 4px;
+		  margin-bottom: 4px;
+		  padding: 0px 0px 0px 1px;
+		  border: 1px inset;
+  		  border-color: #9cf #69e #69e #7af;
+		}		
+	</ui:style>
+
+	<ui:with field='res'
+		type='com.xclinical.mdr.client.res.StandardImageBundle' />
+
+	<g:HorizontalPanel styleName="{style.panel}">
+		<g:Label ui:field="label" styleName="{style.label}"/>
+		<g:cell verticalAlignment="ALIGN_MIDDLE">
+			<g:ToggleButton ui:stylePrimaryName="btn" ui:field="pinned">
+				<g:upFace image="{res.pinUp}" />
+				<g:downFace image="{res.pinDown}" />
+			</g:ToggleButton>
+		</g:cell>
+	</g:HorizontalPanel>
+
+</ui:UiBinder>

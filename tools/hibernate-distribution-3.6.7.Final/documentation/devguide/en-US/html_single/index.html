@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory">Hibernate Developer Guide</title><link rel="stylesheet" href="css/hibernate-single.css" type="text/css"/><meta xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" name="generator" content="DocBook XSL Stylesheets V1.74.0"/></head><body><div class="book" lang="en-US"><div class="titlepage"><div><p id="title"><a href="http://www.hibernate.org" class="site_href"><strong>Hibernate.org</strong></a><a href="http://hibernate.org/Documentation/DocumentationOverview" class="doc_href"><strong>Community Documentation</strong></a></p><div><h1 class="title"><a id="d0e1"/>Hibernate Developer Guide</h1></div><div><div xmlns="" xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="authorgroup"><div class="authors">by <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">Gavin</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">King</span>, <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">Christian</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">Bauer</span>, <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">Max</span> <span xmlns="http://www.w3.org/1999/xhtml" class="othername">Rydahl</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">Andersen</span>, <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">Emmanuel</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">Bernard</span>, <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">Steve</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">Ebersole</span>, and <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">Hardy</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">Ferentschik</span></div><div class="editors"/><div class="others">and thanks to <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">James</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">Cobb</span> (Graphic Design), <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">Cheyenne</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">Weaver</span> (Graphic Design), <span xmlns="http://www.w3.org/1999/xhtml" class="othername">Bernardo Antonio Buffa Colom&amp;#x00e9</span>, <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">Vincent</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">Ricard</span>, <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">Sebastien</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">Cesbron</span>, <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">Michael</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">Courcy</span>, <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">Vincent</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">Giguère</span>, <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">Baptiste</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">Mathus</span>, <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">Emmanuel</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">Bernard</span>, <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">Anthony</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">Patricio</span>, <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">Alvaro</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">Netto</span>, <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">Anderson</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">Braulio</span>, <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">Daniel Vieira</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">Costa</span>, <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">Francisco</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">gamarra</span>, <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">Gamarra</span>, <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">Luiz Carlos</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">Rodrigues</span>, <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">Marcel</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">Castelo</span>, <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">Paulo</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">César</span>, <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">Pablo L.</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">de Miranda</span>, <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">Renato</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">Deggau</span>, <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">Rogério</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">Araújo</span>, <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">Wanderson</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">Siqueira</span>, and <span xmlns="http://www.w3.org/1999/xhtml" class="firstname">Cao</span> <span xmlns="http://www.w3.org/1999/xhtml" class="orgname">RedSaga</span> <span xmlns="http://www.w3.org/1999/xhtml" class="surname">Xiaogang</span></div></div></div><div><p class="releaseinfo">3.6.7.Final</p></div><div><p class="copyright">Copyright © 2004 Red Hat, Inc.</p></div><div><p class="pubdate">August 17, 2011</p></div></div><hr/></div><div class="toc"><dl><dt><span class="preface"><a href="#hibernate-gsg-preface">Preface</a></span></dt><dd><dl><dt><span class="section"><a href="#d0e246">1. Get Involved</a></span></dt><dt><span class="section"><a href="#d0e273">2. Getting Started Guide</a></span></dt></dl></dd><dt><span class="chapter"><a href="#hibernate-dev-database">1. Database Access</a></span></dt><dd><dl><dt><span class="section"><a href="#hibernate-dev-database-connect">1.1. JDBC Connections</a></span></dt><dd><dl><dt><span class="section"><a href="#hibernate-dev-database-connect-pools">1.1.1. Using connection pooling</a></span></dt><dt><span class="section"><a href="#hibernate-dev-database-connect-dataSource">1.1.2. Using javax.sql.DataSource</a></span></dt></dl></dd><dt><span class="section"><a href="#hibernate-dev-database-dialect">1.2. Database Dialects</a></span></dt><dd><dl><dt><span class="section"><a href="#hibernate-dev-database-dialect-config">1.2.1. Specifying the Dialect to use</a></span></dt><dt><span class="section"><a href="#hibernate-dev-database-dialect-resolution">1.2.2. Dialect resolution</a></span></dt><dt><span class="section"><a href="#hibernate-dev-database-dialect-custom">1.2.3. Custom Dialects</a></span></dt></dl></dd><dt><span class="section"><a href="#hiberate-dev-database-schema">1.3. Database Schema</a></span></dt></dl></dd></dl></div><div class="preface" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="hibernate-gsg-preface"/>Preface</h2></div></div></div><p>
+        Working with both Object-Oriented software and Relational Databases can be cumbersome and time consuming.
+        Development costs are significantly higher due to a paradigm mismatch between how data is represented in
+        objects versus relational databases.  Hibernate is an Object/Relational Mapping solution for Java environments.
+        The term Object/Relational Mapping refers to the technique of mapping data from an object model representation
+        to a relational data model representation (and visa versa).  See
+        <a class="ulink" href="http://en.wikipedia.org/wiki/Object-relational_mapping">http://en.wikipedia.org/wiki/Object-relational_mapping</a> for a good high-level discussion.
+    </p><div xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="note"><h2>Note</h2><p>
+            While having a strong background in SQL is not required to use Hibernate, having a basic understanding of
+            the concepts can greatly help you understand Hibernate more fully and quickly.  Probably the single
+            best background is an understanding of data modeling principles.  You might want to consider these resources
+            as a good starting point:
+            </p><div class="itemizedlist"><ul><li><p>
+                        <a class="ulink" href="http://www.agiledata.org/essays/dataModeling101.html">http://www.agiledata.org/essays/dataModeling101.html</a>
+                    </p></li><li><p>
+                        <a class="ulink" href="http://en.wikipedia.org/wiki/Data_modeling">http://en.wikipedia.org/wiki/Data_modeling</a>
+                    </p></li></ul></div><p>
+        </p></div><p>
+        Hibernate not only takes care of the mapping from Java classes to database tables (and from Java data types to
+        SQL data types), but also provides data query and retrieval facilities. It can significantly reduce
+        development time otherwise spent with manual data handling in SQL and JDBC.  Hibernate’s design goal is to
+        relieve the developer from 95% of common data persistence-related programming tasks by eliminating the need for
+        manual, hand-crafted data processing using SQL and JDBC.  However, unlike many other persistence solutions,
+        Hibernate does not hide the power of SQL from you and guarantees that your investment in relational technology
+        and knowledge is as valid as always.
+    </p><p>
+        Hibernate may not be the best solution for data-centric applications that only use stored-procedures to
+        implement the business logic in the database, it is most useful with object-oriented domain models and business
+        logic in the Java-based middle-tier. However, Hibernate can certainly help you to remove or encapsulate
+        vendor-specific SQL code and will help with the common task of result set translation from a tabular
+        representation to a graph of objects.
+    </p><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="d0e246"/>1. Get Involved</h2></div></div></div><div class="itemizedlist"><ul><li><p>
+                    Use Hibernate and report any bugs or issues you find. See
+                    <a class="ulink" href="http://hibernate.org/issuetracker.html">http://hibernate.org/issuetracker.html</a> for details.
+                </p></li><li><p>
+                    Try your hand at fixing some bugs or implementing enhancements. Again, see
+                    <a class="ulink" href="http://hibernate.org/issuetracker.html">http://hibernate.org/issuetracker.html</a>.
+                </p></li><li><p>
+                    Engage with the community using mailing lists, forums, IRC, or other ways listed at
+                    <a class="ulink" href="http://hibernate.org/community.html">http://hibernate.org/community.html</a>.
+                </p></li><li><p>
+                    Help improve or translate this documentation. Contact us on
+                    the developer mailing list if you have interest.
+                </p></li><li><p>
+                    Spread the word. Let the rest of your organization know about the benefits of
+                    Hibernate.
+                </p></li></ul></div></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="d0e273"/>2. Getting Started Guide</h2></div></div></div><p>
+            New users may want to first look through the
+            <em class="citetitle">Hibernate Getting Started Guide</em> for basic information as well as
+            tutorials.  Even seasoned veterans may want to considering perusing the sections pertaining to
+            build artifacts for any changes.
+        </p></div></div><div class="chapter" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="hibernate-dev-database"/>Chapter 1. Database Access</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="#hibernate-dev-database-connect">1.1. JDBC Connections</a></span></dt><dd><dl><dt><span class="section"><a href="#hibernate-dev-database-connect-pools">1.1.1. Using connection pooling</a></span></dt><dt><span class="section"><a href="#hibernate-dev-database-connect-dataSource">1.1.2. Using javax.sql.DataSource</a></span></dt></dl></dd><dt><span class="section"><a href="#hibernate-dev-database-dialect">1.2. Database Dialects</a></span></dt><dd><dl><dt><span class="section"><a href="#hibernate-dev-database-dialect-config">1.2.1. Specifying the Dialect to use</a></span></dt><dt><span class="section"><a href="#hibernate-dev-database-dialect-resolution">1.2.2. Dialect resolution</a></span></dt><dt><span class="section"><a href="#hibernate-dev-database-dialect-custom">1.2.3. Custom Dialects</a></span></dt></dl></dd><dt><span class="section"><a href="#hiberate-dev-database-schema">1.3. Database Schema</a></span></dt></dl></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="hibernate-dev-database-connect"/>1.1. JDBC Connections</h2></div></div></div><p>
+            Hibernate understands how to connect to a database through an interface
+            <code class="interfacename">org.hibernate.connection.ConnectionProvider</code>.  While
+            <code class="interfacename">org.hibernate.connection.ConnectionProvider</code> is considered an extension SPI,
+            Hibernate comes with a number of built-in providers.
+        </p><div class="section" lang="en-US"><div class="titlepage"><div><div><h3 class="title"><a id="hibernate-dev-database-connect-pools"/>1.1.1. Using connection pooling</h3></div></div></div><p>
+                The built-in connection pooling based providers all require the following settings
+            </p><div class="variablelist"><dl><dt><span class="term"><span class="property">hibernate.connection.driver_class</span></span></dt><dd><p>
+                            Names the <code class="interfacename">java.sql.Driver</code> implementation class from your JDBC
+                            provider.
+                        </p></dd><dt><span class="term"><span class="property">hibernate.connection.url</span></span></dt><dd><p>
+                            The JDBC connection url.  See your JDBC provider's documentation for details and examples.
+                        </p></dd><dt><span class="term"><span class="property">hibernate.connection.username</span></span></dt><dd><p>
+                            The name of the user to use when opening a JDBC <code class="interfacename">java.sql.Connection</code>.
+                        </p></dd><dt><span class="term"><span class="property">hibernate.connection.password</span></span></dt><dd><p>
+                            The password associated with the provided username.
+                        </p></dd></dl></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h4 class="title"><a id="hibernate-dev-database-connect-pools-hibernate"/>1.1.1.1. Using Hibernate's built-in connection pooling</h4></div></div></div><div xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="warning"><h2>Warning</h2><p>
+                        The built-in Hibernate connection pool is not intended for production use.  It lacks several
+                        features found on any decent connection pool.  However, it can be quite useful to get started
+                        and in unit testing.
+                    </p></div><p>
+                    The only additional supported setting for the built-in pooling is the
+                    <span class="property">hibernate.connection.pool_size</span> setting which tells the pool how many
+                    connections maximum it can keep in the pool.
+                </p></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h4 class="title"><a id="hibernate-dev-database-connect-pools-c3p0"/>1.1.1.2. Using c3p0 for connection pooling</h4></div></div></div><p>
+                    
+                    To be continued...
+                </p></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h4 class="title"><a id="hibernate-dev-database-connect-pools-proxool"/>1.1.1.3. Using proxool for connection pooling</h4></div></div></div><p>
+                    
+                    To be continued...
+                </p></div></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h3 class="title"><a id="hibernate-dev-database-connect-dataSource"/>1.1.2. Using <code class="interfacename">javax.sql.DataSource</code></h3></div></div></div><p>
+                Hibernate can also use a <code class="interfacename">javax.sql.DataSource</code> to obtain
+                connections.  To do so, Hibernate expects to be able to locate the
+                <code class="interfacename">javax.sql.DataSource</code> in <code class="literal">JNDI</code>.  The
+                <span class="property">hibernate.connection.datasource</span> setting tells Hibernate the <code class="literal">JNDI</code>
+                namespace at which it can find the the <code class="interfacename">javax.sql.DataSource</code>.
+            </p><p>
+                Generally speaking a <code class="interfacename">javax.sql.DataSource</code> is configured to connect to
+                the database using a single set of credentials (username/password).  Sometimes, however, the
+                <code class="interfacename">javax.sql.DataSource</code> is set up so that the credentials have to be
+                used to obtain a <code class="interfacename">java.sql.Connection</code> from it.  In these cases
+                applications would specify the credentials via the <span class="property">hibernate.connection.username</span>
+                and <span class="property">hibernate.connection.password</span> settings, which Hibernate would pass along to the
+                <code class="interfacename">javax.sql.DataSource</code> when obtaining a
+                <code class="interfacename">java.sql.Connection</code> from it.
+            </p></div></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="hibernate-dev-database-dialect"/>1.2. Database Dialects</h2></div></div></div><p>
+            A <em class="firstterm"><span>Dialect</span></em> informs Hibernate of the capabilities of the
+            underlying database.  This role is fulfilled by an instance of a
+            <code class="classname">org.hibernate.dialect.Dialect</code> subclass.  The Dialect is one of the most important
+            pieces of information given to the Hibernate <code class="interfacename">org.hibernate.Sessionfactory</code>
+            during startup as it allows Hibernate to properly plan how it needs to communicate with the database.
+        </p><div class="section" lang="en-US"><div class="titlepage"><div><div><h3 class="title"><a id="hibernate-dev-database-dialect-config"/>1.2.1. Specifying the Dialect to use</h3></div></div></div><p>
+                The developer may manually specify the Dialect to use by setting the
+                <span class="property">hibernate.dialect</span> configuration property to the name of the specific
+                <code class="classname">org.hibernate.dialect.Dialect</code> class to use.
+            </p></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h3 class="title"><a id="hibernate-dev-database-dialect-resolution"/>1.2.2. Dialect resolution</h3></div></div></div><p>
+                Assuming a <code class="interfacename">org.hibernate.connection.ConnectionProvider</code> has been
+                set up according to <a class="xref" href="#hibernate-dev-database-connect" title="1.1. JDBC Connections">Section 1.1, “JDBC Connections”</a> then Hibernate will attempt
+                to automatically determine the Dialect to use based on the
+                <code class="interfacename">java.sql.DatabaseMetaData</code> reported by a
+                <code class="interfacename">java.sql.Connection</code> obtained from that
+                <code class="interfacename">org.hibernate.connection.ConnectionProvider</code>.
+            </p><p>
+                This functionality is provided by a series of
+                <code class="interfacename">org.hibernate.dialect.resolver.DialectResolver</code> instances registered
+                with Hibernate internally.  Hibernate comes with a standard set of recognitions.  If your application
+                requires extra Dialect resolution capabilities, it would simply register a custom implementation
+                of <code class="interfacename">org.hibernate.dialect.resolver.DialectResolver</code> as follows
+            </p><div class="example"><a id="hibernate-dev-database-dialect-resolution-registration"/><p class="title"><b>Example 1.1. Registering a custom <code class="interfacename">org.hibernate.dialect.resolver.DialectResolver</code></b></p><div class="example-contents"><pre xmlns="" xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="JAVA"></span>
+<!--  --><br/><span class="java_plain">&nbsp;&nbsp;&nbsp;&nbsp;org</span><span class="java_separator">.</span><span class="java_plain">hibernate</span><span class="java_separator">.</span><span class="java_plain">dialect</span><span class="java_separator">.</span><span class="java_plain">resolver</span><span class="java_separator">.</span><span class="java_type">DialectFactory</span><span class="java_separator">.</span><span class="java_plain">registerDialectResolver</span><span class="java_separator">(</span><span class="java_plain">&nbsp;</span><span class="java_literal">&quot;org.hibernate.example.CustomDialectResolver&quot;</span><span class="java_plain">&nbsp;</span><span class="java_separator">);</span>
+</pre></div></div><br class="example-break"/><p>
+                Registered <code class="interfacename">org.hibernate.dialect.resolver.DialectResolver</code> are
+                <span class="emphasis"><em>prepended</em></span> to an internal list of resolvers, so they take precedence
+                before any already registered resolvers including the standard one. 
+            </p></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h3 class="title"><a id="hibernate-dev-database-dialect-custom"/>1.2.3. Custom Dialects</h3></div></div></div><p>
+                It is sometimes necessary for developers to write a custom Dialect for Hibernate to use.  Generally
+                this is as simple as selecting a particular <code class="classname">org.hibernate.dialect.Dialect</code>
+                implementation that is closest to your needs and subclassing it and overriding where necessary.
+            </p><p>
+                Custom dialects may be manually specified as outlined in
+                <a class="xref" href="#hibernate-dev-database-dialect-config" title="1.2.1. Specifying the Dialect to use">Section 1.2.1, “Specifying the Dialect to use”</a> as well as registered through a resolver as
+                outlined in <a class="xref" href="#hibernate-dev-database-dialect-resolution-registration" title="Example 1.1. Registering a custom org.hibernate.dialect.resolver.DialectResolver">Example 1.1, “Registering a custom org.hibernate.dialect.resolver.DialectResolver”</a>.
+            </p></div></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="hiberate-dev-database-schema"/>1.3. Database Schema</h2></div></div></div><p>
+            
+            To be continued...
+        </p></div></div></div><HR xmlns=""/><a xmlns="" href=""><p xmlns="http://www.w3.org/1999/xhtml" class="copyright">Copyright © 2004 Red Hat, Inc.</p></a></body></html>

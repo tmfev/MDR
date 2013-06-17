@@ -1,0 +1,53 @@
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:mdr="urn:import:com.xclinical.mdr.client">
+
+	<ui:with type="com.xclinical.mdr.client.res.MdrResources"
+		field="r" />
+
+	<ui:style>
+		.panel {
+			padding: 4pt;
+		}
+		
+		.list {
+			width: 100%;
+			height: 100%;
+			margin: 0pt;
+		}
+		
+		.button {
+			float: right;
+		}
+		
+		.rating {
+			cursor: pointer;
+		}
+		
+		.searchPanel {
+			margin: 2pt;
+			padding: 0pt;
+		}
+		
+		.searchElement {
+			position: relative;
+			width: 100%;
+			margin: 0;
+			padding: 0;
+			height: 18pt;
+		}
+		
+		.searchText {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+		}
+	</ui:style>
+
+	<g:FlowPanel styleName="{style.panel}">
+		<g:FlowPanel styleName="{style.searchElement}">
+			<g:TextBox styleName="{style.searchText}" ui:field="searchTerm" />
+		</g:FlowPanel>
+		<mdr:SearchList ui:field="searchList" styleName="{style.list}" />
+	</g:FlowPanel>
+</ui:UiBinder>

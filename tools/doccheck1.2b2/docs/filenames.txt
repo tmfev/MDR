@@ -1,0 +1,12 @@
+* Table of package-groups, single-number summary
+  --ExecutiveSummary.html
+ 
+* Table of all packages, single-number summary
+  --PackageSummary.html
+ 
+* Table of all packages, breaking down the
+  numbers by type of error
+  --Statistics.html
+ 
+* Table of all classes in a package (Class/Interface Summary)
+  --pkg/PackageErrors.html

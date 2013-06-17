@@ -1,0 +1,8 @@
+#!/bin/ksh
+
+# Export the path for the correct JAVA_HOME
+export JAVA_HOME=/java/re/jdk/1.4.1/latest/binaries/solaris-sparc
+
+# Run ant with the "all" target:
+/java/pubs/dev/lib/apache-ant-1.5.3-1/bin/ant all
+

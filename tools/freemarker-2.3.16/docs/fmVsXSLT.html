@@ -1,0 +1,361 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="Keywords" content="FreeMarker, template, templates, HTML, HTML template, page template, text, macro, macros, preprocessor, MVC, view, servlet, Java, free, open source, JSP, taglib, Velocity, WebMacro">
+    <meta name="Description" content="Java template engine; a generic tool to generate text output (HTML, RTF, source code, etc.). Practical for servlet-based Web applications following the MVC pattern. Free.">
+    <meta name="verify-v1" content="OU7KNU7q+wGizVoaX/MNUo/tZ5o5RC06VfCjQIRRJu4=">
+    <link rel="STYLESHEET" type="text/css" href="site.css">
+    <title>FreeMarker: Java Template Engine Library - FreeMarker vs. XSLT</title>
+  </head>
+  <body>
+    <table border="0" cellspacing="0" cellpadding="0" width="100%">
+      <tr>
+        <td align="left" valign="top" width="20%">
+  <table bgcolor="#E0E0E0" cellspacing="0" cellpadding="0" border="0" width="100%">
+    <tr valign="top">
+      <td height="1" width="1" bgcolor="black"><img src="images/none.gif" width="1" height="1" alt="" hspace="0" vspace="0" border="0"></td>
+      <td height="1" bgcolor="black"><img src="images/none.gif" width="1" height="1" alt="" hspace="0" vspace="0" border="0"></td>
+      <td height="1" width="1" bgcolor="black"><img src="images/none.gif" width="1" height="1" alt="" hspace="0" vspace="0" border="0"></td>
+    </tr>
+    <tr>
+      <td width="1" bgcolor="black"><img src="images/none.gif" width="1" height="1" alt="" hspace="0" vspace="0" border="0"/></td>
+      <td>
+        <table bgcolor="#E0E0E0" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 0px">
+          <tr><td>
+
+  <table bgcolor="#E0E0E0" border="0" cellspacing="10" cellpadding="0" width="100%">
+    <tr><td colspan="2" align="center">
+        <a href="http://freemarker.org"><img border="0" src="images/logo_e0e0e0.png" alt="FreeMarker logo"></a><br>&nbsp;
+    </td></tr>
+
+  
+    <tr><td>
+  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr><td width="100%">
+      <b>About</b>
+    </td></tr>
+  </table>
+  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="index.html">Overview</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="features.html">Features</a>
+    </td>
+  </tr>
+
+      </table>
+</td></tr>
+
+    <tr><td>
+  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr><td width="100%">
+      <b>Download</b>
+    </td></tr>
+  </table>
+  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="freemarkerdownload.html">FreeMarker</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="editors.html">Editor/IDE plugins</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="fmpp.html">File generator tool (FMPP)</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="usCavalry.html">Migrating from Velocity</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="libraries.html">FTL Libraries</a>
+    </td>
+  </tr>
+
+      </table>
+</td></tr>
+
+    <tr><td>
+  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr><td width="100%">
+      <b>Documentation</b>
+    </td></tr>
+  </table>
+  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="docs/index.html">Table of Contents</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="docs/api/index.html">Short-cut to: Java API</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="docs/app_faq.html">Short-cut to: FAQ</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="docs/alphaidx.html">Short-cut to: Index</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="docs/app_versions.html">Short-cut to: Versions</a>
+    </td>
+  </tr>
+
+      </table>
+</td></tr>
+
+    <tr><td>
+  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr><td width="100%">
+      <b>Community, help</b>
+    </td></tr>
+  </table>
+  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="http://sourceforge.net/tracker/?func=add&amp;group_id=794&amp;atid=100794">REPORT BUGS HERE!</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="http://sourceforge.net/mail/?group_id=794">Mailing list subscription</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="gmane.html">Browse/search the mailing list archives</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="gmane.html">News (nntp) interface</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="https://sourceforge.net/forum/?group_id=794">Web forums</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="http://freemarker.org/builds/">Development builds (automatic)</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="http://freemarker.org/wiki">Wiki</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="http://freemarker.blogspot.com/">Blog</a>
+    </td>
+  </tr>
+
+      </table>
+</td></tr>
+
+    <tr><td>
+  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr><td width="100%">
+      <b>Miscellaneous</b>
+    </td></tr>
+  </table>
+  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="poweredBy.html">Powered by FreeMarker</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="http://sourceforge.net/projects/freemarker">SourceForge project page</a>
+    </td>
+  </tr>
+
+        <tr>
+    <td align="left" valign="top"><img src="images/bullet_e0e0e0.png" width=7 height=10 alt="-">&nbsp;</td>
+    <td width="93%" align="left">
+      <a class="nav" href="whoWeAre.html">Who we are</a>
+    </td>
+  </tr>
+
+      </table>
+</td></tr>
+
+  
+  </table>
+
+          </td></tr>
+        </table>
+      </td>
+      <td width="1" bgcolor="black"><img src="images/none.gif" width="1" height="1" alt="" hspace="0" vspace="0" border="0"/></td>
+    </tr>
+    <tr valign="top">
+      <td height="1" width="1" bgcolor="black"><img src="images/none.gif" width="1" height="1" alt="" hspace="0" vspace="0" border="0"></td>
+      <td height="1" bgcolor="black"><img src="images/none.gif" width="1" height="1" alt="" hspace="0" vspace="0" border="0"></td>
+      <td height="1" width="1" bgcolor="black"><img src="images/none.gif" width="1" height="1" alt="" hspace="0" vspace="0" border="0"></td>
+    </tr>
+  </table>            
+        </td>
+        <td align="left" valign="top" width="5%">
+          &nbsp;
+        </td>
+        <td align="left" valign="top" width="72%">
+          <table border="0" cellspacing="0" cellpadding="0" width="100%">
+            <tr><td align="right"><span class="pageTitle">FreeMarker vs. XSLT</span></td></tr>
+            <tr bgcolor="#000000"><td><img src="images/none.gif" width=1 height=1 hspace="0" vspace="0" border="0" alt=""></td></tr>
+          </table>
+
+  
+    <p>
+     FreeMarker 2.3 introduced some powerful new facilities for XML processing. You can drop XML documents into the data model, and templates can pull data from them in a variety of ways, such as with XPath expressions. See the <a href="docs/xgui.html">appropriate manual section</a> for a detailed introduction. Here, we contrast FreeMarker, as an XML transformation tool with the much better-known XSLT stylesheet approach promulgated by the Worldwide Web Consortium (W3C).
+    </p>
+    <p>
+      XSLT is a W3C recommendation for transforming XML. Its basic programming paradigm is a functional declarative programming model. Though this theoretical model is elegant and powerful -- at least for those who master it -- the fact remains that, put simply, it is not everybody's cup of tea. XSL syntax, mostly because it is an XML application, is really quite verbose and awkward to edit. It is our opinion that using FreeMarker instead of XSLT will be a very welcome relief to many people out there.
+    </p>
+  
+  
+    <h2>Availability</h2>
+
+      <p>
+       Since XSLT is a W3C standard, it is more widely known, there are various books in print on the topic, and various third-party implementations available in various programming languages and for various computing platforms.
+      </p>
+      <p>
+      By contrast, FreeMarker has exactly one implementation (our own freely available open-source implementation) that runs on one platform, albeit a <em>virtual</em> platform -- the Java Virtual Machine (JVM). Virtually the only documentation on FreeMarker is what we provide.
+      </p>
+      <p>
+      That said, the wider availability of literature on XSLT is, in a sense, good news and bad news. The good news is that many books on XSLT are available; the bad news is that this plethora of tutorial materials surely came into existence in large part due to the difficulty of learning and mastering XSLT. Also, we should note that the FreeMarker manual is chock full of examples and tutorials. As a practical matter, it is likely that people will be up and running, writing useful templates in FreeMarker very quickly -- a matter of days or even hours. It is unlikely that this will be the case with XSLT.
+      </p>
+      <p>
+      That FreeMarker is (currently) tied to the JVM is not a severe constraint, since, as of this writing, there is a JVM implementation for every significant computing environment. As to the availability of competing implementations, we leave it to your judgment to consider how important this really is. FreeMarker has a highly active open-source community, and we react to bug reports very quickly and we are also highly responsive to requests for feature enhancements. 
+      </p>
+    
+    <h2>Different Programming Models</h2>
+
+       <p>
+       XSLT and FreeMarker can both be used to generate output from XML input, but they are really very different tools. FreeMarker is a <em>text template engine</em>. As such, it is not based on any preconceived notion of the structure of the output. You provide a page template with certain embedded instructions and what is not an embedded instruction is passed through as-is to the output. By contrast, XSLT is really a tree-transformation tool; it takes an input <em>tree</em> and manipulates it into an output <em>tree</em>.
+       </p>
+       <p>
+       The FreeMarker Template Language (FTL) is based on a much more conventional programming model -- the procedural or imperative model. You can define variables and functions. You control the flow of execution via conventional imperative constructs such as loops, and if-else statements. XSLT is based on a <em>functional programming model</em> that will be quite strange and alien to most users.
+       </p>
+    
+    
+    <h2>Computing Resource Usage</h2>
+
+      <p>
+        As of this writing, we do not have a wide range of comparative tests on runtime performance. However, initial indications are that FreeMarker is faster and less memory hungry than XSLT (Saxon implementation) for equivalent transformation tasks.
+      </p>
+      <p>
+        <i>Note: With FreeMarker 2.3pre3, we switched over from using XSLT stylesheets to generate the Manual using FreeMarker itself. The FTL-based transformation, producing almost identical output from the same input (a big XDocBook XML document) is 15 times faster than the legacy XSLT transformation using Saxon. Moreover, the FTL-based transformation requires about 4 megabytes of heap space, vs. 14 megabytes for Saxon. But unfortunately, these results can't be fairly compared, because the FreeMarker version uses a dedicated Java program that takes over some of the XDocBook processing work, and it is not clear what the result would be without that.</i>
+      </p>
+    
+  
+        </td>
+        <td align="left" valign="top" width="3%" rowspan=3>
+          &nbsp;
+        </td>
+      </tr>
+    </table>
+
+    <p>&nbsp;
+    
+    <table border=0 cellspacing=0 cellpadding=0 width="100%">
+      <tr><td height=1 bgcolor="#C0C0C0"><img src="images/none.gif" width=1 height=1 alt=""></td></tr>
+    </table>
+    <table border=0 cellspacing=0 cellpadding=0 width="100%">
+      <tr>
+      <td align=left valign=top class="footnote"><font size="1">&nbsp;<br></font>
+        <b>Found broken link or other problem with this site?</b><br>
+        Report to: <a href="mailto:ddekanyREMOVEME@freemail.hu">ddekanyREMOVEME@freemail.hu</a><br>
+        (remove the "REMOVEME" from the address)<br>
+      </td>
+      <td align=right valign=top class="footnote"><font size="1">&nbsp;<br></font>
+        Page last generated: 2009-12-08 08:39:00 GMT<br>
+        All content on this page is copyrighted by the FreeMarker project.<br>
+        &nbsp;
+      </td>
+    </table>
+
+    <table border=0 cellspacing=0 cellpadding=0 width="100%">
+      <tr>
+        <td width="100%">&nbsp;</td>
+        <td valign="middle" align="right">
+            <a href="http://sourceforge.net"><img src="images/sflogo.png" border="0" alt="SourceForge Logo"></a>
+        </td>
+        <td>
+          &nbsp;&nbsp;
+        </td>
+        <td valign="middle" align="right">
+          <a href="http://freemarker.org"><img src="images/poweredby_ffffff.png" alt="Powered by FreeMarker" border="0"></a>
+        </td>
+    </table>
+  </body>
+</html>
+
+
+

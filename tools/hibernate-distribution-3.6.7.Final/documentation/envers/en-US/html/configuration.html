@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory">Chapter 3. Configuration</title><link rel="stylesheet" href="css/hibernate.css" type="text/css"/><meta xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" name="generator" content="DocBook XSL Stylesheets V1.74.0"/><link rel="home" href="index.html" title="Hibernate Envers - Easy Entity Auditing"/><link rel="up" href="index.html" title="Hibernate Envers - Easy Entity Auditing"/><link rel="prev" href="example.html" title="Chapter 2. Short example"/><link rel="next" href="revisionlog.html" title="Chapter 4. Logging data for revisions"/><link rel="copyright" href="Legal_Notice.html" title="Legal Notice"/></head><body><p id="title"><a href="http://www.hibernate.org" class="site_href"><strong>Hibernate.org</strong></a><a href="http://hibernate.org/Documentation/DocumentationOverview" class="doc_href"><strong>Community Documentation</strong></a></p><ul class="docnav"><li class="previous"><a accesskey="p" href="example.html"><strong>Prev</strong></a></li><li class="next"><a accesskey="n" href="revisionlog.html"><strong>Next</strong></a></li></ul><div class="chapter" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="configuration"/>Chapter 3. Configuration</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="configuration.html#config-basics">3.1. Basic configuration</a></span></dt><dt><span class="section"><a href="configuration.html#config-audit-strategy">3.2. Choosing an audit strategy</a></span></dt><dt><span class="section"><a href="configuration.html#config-reference">3.3. Reference</a></span></dt></dl></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="config-basics"/>3.1. Basic configuration</h2></div></div></div><p>
+        To start working with Envers, all configuration that you must do is add the event
+        listeners to persistence.xml, as described in the <a class="xref" href="quickstart.html" title="Chapter 1. Quickstart">Chapter 1, <i>Quickstart</i></a>.
+     </p><p>
+        However, as Envers generates some entities, and maps them to tables, it is possible to set the prefix and suffix
+        that is added to the entity name to create an audit table for an entity, as well
+        as set the names of the fields that are generated.
+     </p></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="config-audit-strategy"/>3.2. Choosing an audit strategy</h2></div></div></div><p>
+        After the basic configuration it is important to choose the audit strategy that will be used to persist and 
+        retrieve audit information. There is a trade-off is between the performance of persisting and the performance  
+        of querying the audit information. Currently there two audit strategies:
+
+        </p><div xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="orderedlist"><ol><li><p>
+                   The default audit strategy persists the audit data together with a start revision. For each row 
+                   inserted, updated or deleted in an audited table, one or more rows are inserted in the audit tables,
+                   together with the start revision of its validity. Rows in the audit tables are never updated after insertion. 
+                   Queries of audit information use subqueries to select the applicable rows in the audit tables.
+                   These subqueries are notoriously slow and difficult to index. 
+             </p></li><li><p>
+                   The alternative is a validity audit strategy. This strategy stores the start-revision and the end-revision 
+                   of audit information. For each row inserted, updated or deleted in an audited table, one or more rows
+                   are inserted in the audit tables, together with the start revision of its validity. But at the same time 
+                   the end-revision field of the previous audit rows (if available) are set to this revision. 
+                   Queries on the audit information can then use 'between start and end revision' instead of subqueries 
+                   as used by the default audit strategy. 
+                   The consequence of this strategy is that persisting audit information will be a bit slower, because of the  
+                   extra updates involved, but retrieving audit information will be a lot faster. This can be improved by
+                   adding extra indexes.
+             </p></li></ol></div><p>
+     </p></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="config-reference"/>3.3. Reference</h2></div></div></div><p>
+        In more detail, here are the properties that you can set:
+    </p><div class="table"><a id="d0e252"/><p class="title"><b>Table 3.1. Envers Configuration Properties</b></p><div class="table-contents"><table summary="Envers Configuration Properties" border="1"><colgroup><col/><col/><col/></colgroup><thead><tr><th>Property name</th><th>Default value</th><th>Description</th></tr></thead><tbody><tr><td>
+                        <span class="property">org.hibernate.envers.audit_table_prefix</span>
+                    </td><td>
+
+                    </td><td>
+                        String that will be prepended to the name of an audited entity to create
+                        the name of the entity, that will hold audit information.
+                    </td></tr><tr><td>
+                        <span class="property">org.hibernate.envers.audit_table_suffix</span>
+                    </td><td>
+                        _AUD
+                    </td><td>
+                        String that will be appended to the name of an audited entity to create
+                        the name of the entity, that will hold audit information. If you
+                        audit an entity with a table name Person, in the default setting Envers
+                        will generate a <code class="literal">Person_AUD</code> table to store historical data.
+                    </td></tr><tr><td>
+                        <span class="property">org.hibernate.envers.revision_field_name</span>
+                    </td><td>
+                        REV
+                    </td><td>
+                        Name of a field in the audit entity that will hold the revision number.
+                    </td></tr><tr><td>
+                        <span class="property">org.hibernate.envers.revision_type_field_name</span>
+                    </td><td>
+                        REVTYPE
+                    </td><td>
+                        Name of a field in the audit entity that will hold the type of the
+                        revision (currently, this can be: add, mod, del).
+                    </td></tr><tr><td>
+                        <span class="property">org.hibernate.envers.revision_on_collection_change</span>
+                    </td><td>
+                        true
+                    </td><td>
+                        Should a revision be generated when a not-owned relation field changes
+                        (this can be either a collection in a one-to-many relation, or the field
+                        using "mappedBy" attribute in a one-to-one relation).
+                    </td></tr><tr><td>
+                        <span class="property">org.hibernate.envers.do_not_audit_optimistic_locking_field</span>
+                    </td><td>
+                        true
+                    </td><td>
+                        When true, properties to be used for optimistic locking, annotated with
+                        <code class="literal">@Version</code>, will be automatically not audited
+                        (their history won't be stored; it normally doesn't make sense to store it).
+                    </td></tr><tr><td>
+                        <span class="property">org.hibernate.envers.store_data_at_delete</span>
+                    </td><td>
+                        false
+                    </td><td>
+                        Should the entity data be stored in the revision when the entity is deleted (instead of only
+                        storing the id and all other properties as null). This is not normally needed, as the data is
+                        present in the last-but-one revision. Sometimes, however, it is easier and more efficient to
+                        access it in the last revision (then the data that the entity contained before deletion is
+                        stored twice).
+                    </td></tr><tr><td>
+                        <span class="property">org.hibernate.envers.default_schema</span>
+                    </td><td>
+                        null (same as normal tables)
+                    </td><td>
+                        The default schema name that should be used for audit tables. Can be overriden using the
+                        <code class="literal">@AuditTable(schema="...")</code> annotation. If not present, the schema will
+                        be the same as the schema of the normal tables.
+                    </td></tr><tr><td>
+                        <span class="property">org.hibernate.envers.default_catalog</span>
+                    </td><td>
+                        null (same as normal tables)
+                    </td><td>
+                        The default catalog name that should be used for audit tables. Can be overriden using the
+                        <code class="literal">@AuditTable(catalog="...")</code> annotation. If not present, the catalog will
+                        be the same as the catalog of the normal tables.                        
+                    </td></tr><tr><td>
+                        <span class="property">org.hibernate.envers.audit_strategy</span>
+                    </td><td>
+                        org.hibernate.envers.strategy.DefaultAuditStrategy
+                    </td><td>
+                        The audit strategy that should be used when persisting audit data. The default stores only the
+                        revision, at which an entity was modified. An alternative, the
+                        <code class="literal">org.hibernate.envers.strategy.ValidityAuditStrategy</code> stores both the
+                        start revision and the end revision. Together these define when an audit row was valid, hence 
+                        the name ValidityAuditStrategy. 
+                    </td></tr><tr><td>
+                        <span class="property">org.hibernate.envers.audit_strategy_validity_end_rev_field_name</span>
+                    </td><td>
+                        REVEND
+                    </td><td>
+                        The column name that will hold the end revision number in audit entities. This property is only 
+                        valid if the validity audit strategy is used.
+                    </td></tr><tr><td>
+                        <span class="property">org.hibernate.envers.audit_strategy_validity_store_revend_timestamp</span>
+                    </td><td>
+                        false
+                    </td><td>
+                        Should the timestamp of the end revision be stored, until which the data was valid, in addition to the end revision itself. 
+                        This is useful to be able to purge old Audit records out of a relational database by using table partitioning. 
+                        Partitioning requires a column that exists within the table.
+                        This property is only evaluated if the ValidityAuditStrategy is used.
+                    </td></tr><tr><td>
+                        <span class="property">org.hibernate.envers.audit_strategy_validity_revend_timestamp_field_name</span>
+                    </td><td>
+                        REVEND_TSTMP
+                    </td><td>
+                        Column name of the timestamp of the end revision until which the data was valid.
+                        Only used if the ValidityAuditStrategy is used, and 
+                        org.hibernate.envers.audit_strategy_validity_store_revend_timestamp evaluates to true
+                    </td></tr></tbody></table></div></div><br class="table-break"/><div xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="important"><h2>Important</h2><p>
+            The following configuration options have been added recently and should be regarded as experimental: 
+            </p><div class="orderedlist"><ol><li>
+                    org.hibernate.envers.audit_strategy
+                </li><li>
+                    org.hibernate.envers.audit_strategy_validity_end_rev_field_name
+                </li><li>
+                    org.hibernate.envers.audit_strategy_validity_store_revend_timestamp 
+                </li><li>
+                    org.hibernate.envers.audit_strategy_validity_revend_timestamp_field_name
+                </li></ol></div><p>
+        </p></div><p>
+        To change the name of the revision table and its fields (the table, in which the
+        numbers of revisions and their timestamps are stored), you can use the
+        <code class="literal">@RevisionEntity</code> annotation.
+        For more information, see <a class="xref" href="revisionlog.html" title="Chapter 4. Logging data for revisions">Chapter 4, <i>Logging data for revisions</i></a>.
+    </p><p>
+        To set the value of any of the properties described above, simply add an entry to
+        your <code class="literal">persistence.xml</code>. For example:
+    </p><pre class="programlisting">&lt;persistence-unit ...&gt;
+&lt;provider&gt;org.hibernate.ejb.HibernatePersistence&lt;/provider&gt;
+&lt;class&gt;...&lt;/class&gt;
+&lt;properties&gt;
+   &lt;property name="hibernate.dialect" ... /&gt;
+   &lt;!-- other hibernate properties --&gt;
+
+   &lt;property name="hibernate.ejb.event.post-insert"
+             value="org.hibernate.ejb.event.EJB3PostInsertEventListener,org.hibernate.envers.event.AuditEventListener" /&gt;
+   &lt;property name="hibernate.ejb.event.post-update"
+             value="org.hibernate.ejb.event.EJB3PostUpdateEventListener,org.hibernate.envers.event.AuditEventListener" /&gt;
+   &lt;property name="hibernate.ejb.event.post-delete"
+             value="org.hibernate.ejb.event.EJB3PostDeleteEventListener,org.hibernate.envers.event.AuditEventListener" /&gt;
+   &lt;property name="hibernate.ejb.event.pre-collection-update"
+             value="org.hibernate.envers.event.AuditEventListener" /&gt;
+   &lt;property name="hibernate.ejb.event.pre-collection-remove"
+             value="org.hibernate.envers.event.AuditEventListener" /&gt;
+   &lt;property name="hibernate.ejb.event.post-collection-recreate"
+             value="org.hibernate.envers.event.AuditEventListener" /&gt;
+
+   &lt;property name="org.hibernate.envers.versionsTableSuffix" value="_V" /&gt;
+   &lt;property name="org.hibernate.envers.revisionFieldName" value="ver_rev" /&gt;
+   &lt;!-- other envers properties --&gt;
+&lt;/properties&gt;
+&lt;/persistence-unit&gt;</pre><p>
+        The <code class="literal">EJB3Post...EvenListener</code>s are needed, so that ejb3 entity lifecycle callback
+        methods work (<code class="literal">@PostPersist, @PostUpdate, @PostRemove</code>.
+    </p><p>
+        You can also set the name of the audit table on a per-entity basis, using the
+        <code class="literal">@AuditTable</code> annotation. It may be tedious to add this
+        annotation to every audited entity, so if possible, it's better to use a prefix/suffix.
+    </p><p>
+        If you have a mapping with secondary tables, audit tables for them will be generated in
+        the same way (by adding the prefix and suffix). If you wish to overwrite this behaviour,
+        you can use the <code class="literal">@SecondaryAuditTable</code> and
+        <code class="literal">@SecondaryAuditTables</code> annotations.
+    </p><p>
+        If you'd like to override auditing behaviour of some fields/properties in an embedded component, you can use
+        the <code class="literal">@AuditOverride(s)</code> annotation on the place where you use the component.
+    </p><p>
+        If you want to audit a relation mapped with <code class="literal">@OneToMany+@JoinColumn</code>,
+        please see <a class="xref" href="exceptions.html" title="Chapter 10. Mapping exceptions">Chapter 10, <i>Mapping exceptions</i></a> for a description of the additional
+        <code class="literal">@AuditJoinTable</code>  annotation that you'll probably want to use.
+    </p><p>
+        If you want to audit a relation, where the target entity is not audited (that is the case for example with
+        dictionary-like entities, which don't change and don't have to be audited), just annotate it with
+        <code class="literal">@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)</code>. Then, when reading historic
+        versions of your entity, the relation will always point to the "current" related entity.
+    </p></div></div><HR xmlns=""/><a xmlns="" href="legalnotice.html"><p xmlns="http://www.w3.org/1999/xhtml" class="copyright">Copyright © 2004 Red Hat Inc.</p></a><ul class="docnav"><li class="previous"><a accesskey="p" href="example.html"><strong>Prev</strong>Chapter 2. Short example</a></li><li class="up"><a accesskey="u" href="#"><strong>Top of page</strong></a></li><li class="home"><a accesskey="h" href="index.html"><strong>Front page</strong></a></li><li class="next"><a accesskey="n" href="revisionlog.html"><strong>Next</strong>Chapter 4. Logging data for revisions</a></li></ul></body></html>

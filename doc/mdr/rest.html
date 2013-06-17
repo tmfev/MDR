@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MDR Rest API</title>
+</head>
+<body>
+	
+<h1>MDR Rest API</h1>
+
+<center>
+	<div style="background-color:red;">
+		This document is in early draft status. 
+		Content may change without notice.
+	</div>
+</center>
+
+<p>
+	Using the Client Service API, remote clients can make HTTP calls to a supporting 
+	MDR server and fetch information in a structured way.
+	A client can make calls to the Client API to request information from an MDR server. Calls must 
+	comply with the HTTP/1.1 Protocol (See http://www.w3.org/Protocols/rfc2616/rfc2616.html).
+</p>
+
+<h2>Requests</h2>
+<p>
+	The request uses the HTTP method GET. The request must contain an Accept header ﬁeld to 
+	indicate that is accepts the content type “application/json”. It is recommended that clients 
+	do not specify additional content types as the server may favor HTML over JSON in 
+	future releases.
+<p></p>
+	A client fetches the contents of an entity by making a GET request for the entity. The URL of the 
+	entity is /mdr/items/<urn-specification> where <urn-specification> is the URN 
+	of the entity.
+<p></p>		
+	A client fetches the contents of a relation by making a GET request for the entity relation. The URL 
+	of an entity relation is the concatenation of an entity URL and the name of the relation.
+	
+<h3>Queries</h3>
+<p>
+	This feature will be available in the next feature release.
+<p></p>	
+	With queries, a client can request a set of entities that match certain criteria. A client can also 
+	specify additional parameters for the query.
+<p></p>	
+	The URL of a query call is /mdr/queries/<name> where <name> is the name of the query. 
+	Additional parameters can be added as query parameters to the URL.
+</p>
+	
+<h3>Identiﬁed Item</H3>
+<p>
+	The query for an identiﬁed item can retrieve a speciﬁc item from the repository when the client 
+	knows its scoped identiﬁer. The scoped identiﬁer in turn is deﬁned by a Namespace and an 
+	identiﬁer string. A Namespace is uniquely deﬁned by its scheme reference. To make things easier, a 
+	caller can specify all parameters in a single query.
+<p></p>	
+	For example, the singleton root context of any MDR can be retrieved using the following query:
+	/mdr/queries/identifiedItem?namespace=urn:mdr:data&identifier=root
+</p>
+
+<h3>Full Text Search</h3>
+<p>
+	This API call is an equivalent to the search feature in the MDR user interface. Full text search 
+	indexes speciﬁc properties of every entity and maintains a relationship between the entity that is 
+	being indexed and a related entity that is the target of the index entry. A query then returns the 
+	target entity and not the entity being indexed. For example, when search adds a Designation to the 
+	index, the target will be the DesignatableItem that contains this Designation.
+	The URL for the search call is /mdr/queries/search?q=<search term>. On success, the 
+	caller receives a list of entities that match the search criteria.
+</p>
+
+<h2>Responses</h2>
+<p>
+	For every request, the server sends an HTTP response. The response either contains the requested 
+	data or an error message. If the HTTP result code is 200, the request has been processed 
+	successfully and the response is the JSON encoded entity or relation. (See http://www.ietf.org/rfc/rfc4627.txt)
+	The response is always UTF-8 encoded.
+<p></p>	
+	If the requested data was an entity GET, then the response is a JSON object that contains the 
+	entity. If the requested data was a relation, the response is a JSON array that contains the members 
+	of the relation.
+</p>
+
+<h1>JSON Mapping</h1>
+<p>
+	In many technologies, there exists a direct mapping from a JSON object to a runtime object. E.g. in 
+	JavaScript, eval() creates such an object. Since the names of the attributes will be named as the are 
+	speciﬁed in JSON, the server returns “JSON-friendly” names instead of the original ISO11179 
+	names.
+<p></p>	 
+	As a general rule, type names will begin with a capital letter and will be camel cased with no 
+	underscores. To build a type name from its ISO11179 equivalent, remove the underscores. E.g. 
+	Value_Domain becomes ValueDomain. Property names begin with a lower case character followed 
+	by camel case. To build a property name from its ISO11179 equivalent, remove the underscores 
+	and capitalize the character following the underscore.
+</p>
+	
+<h3>Display Names</h3>
+<p>
+	The server adds an additional property called displayName to all entities. The display name is 
+	intended to be used to label the entity.
+</p>
+
+<h3>Relations</h3>
+<p>
+	1:1 relations are represented in JSON as an attribute that has a bare representation of the target 
+	entity as its value. A bare representation is deﬁned as a JSON object that only returns the id and 
+	displayName attributes. If the target entity is not deﬁned, the value is null.
+	1:n relations are represented as JSON arrays. Every element of the array is again a JSON 
+	representation of the entity.
+</p>
+	
+<h3>Windowing</h3>
+<p>
+	Windows is not implemented, yet
+<p></p>	
+	With windowing, a client can limit the amount of data returned by a 1:n relation request. For every 
+	such request, the client must specify the index of the ﬁrst element and the number of elements to 
+	return. The server returns the array of entities and the total size of the array.
+	The speciﬁcation of the window is based on the Content-Range ﬁeld (See http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html, chapter 14.16).
+ 	A request contains an additional query parameter range that contains the window speciﬁcation. For example, the path 
+ 	/mdr/entities/urn:mdr:Context@2/designations?range=0-99 would return at most 
+	the ﬁrst 100 elements of the relation. 
+	The ﬁrst element of the array returned is the actual range of the data, e.g. 0-99/239.
+</p>
+
+<h2>Authentication</h2>
+<p>
+	Authentication in not implemented in the current version of the Client Service API. For GET 
+	requests, a possible solution would be that a client deposits a public key on the server that is 
+	attached to a speciﬁc account. A client would then sign a challenge sent by the server and the 
+	server would create an authentication token on success and return it to the client. The client would 
+	then add the token as a header ﬁeld on every call.
+</p>
+	
+<h1>Examples</h1>
+<p>
+	To experiment with the Client Service API, it is recommended to use a command line tool like 
+	curl or wget. The following examples have been designed and tested using curl.
+	Tip: The MDR user interface shows the object id for every entity. You can use these ids to construct 
+	your test URLs.
+</p>
+
+<h2>Example 1</h2>
+<p>
+	Purpose: Fetch a single context (this is the root context).
+	http://localhost:8888/mdr/entities/urn:mdr:Context@2
+<pre>
+{
+ "id": "urn:mdr:Context@2"
+}
+</pre>
+<h2>Example 2</h2>
+<p>
+	Purpose: Fetch a list of designations (This entity has one single designation).
+	http://localhost:8888/mdr/entities/urn:mdr:Context@2/designations
+<pre>
+[
+ {
+ "id": "urn:mdr:Designation@1",
+ "displayName": "MDR",
+ "sign": "MDR",
+ "language": "urn:mdr:LanguageIdentification@1",
+ "item": "urn:mdr:Context@2"
+ }
+]
+</pre>
+	
+</p>
+
+</body>
+</html>

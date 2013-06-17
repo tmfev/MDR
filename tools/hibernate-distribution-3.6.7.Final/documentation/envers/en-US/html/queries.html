@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory">Chapter 5. Queries</title><link rel="stylesheet" href="css/hibernate.css" type="text/css"/><meta xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" name="generator" content="DocBook XSL Stylesheets V1.74.0"/><link rel="home" href="index.html" title="Hibernate Envers - Easy Entity Auditing"/><link rel="up" href="index.html" title="Hibernate Envers - Easy Entity Auditing"/><link rel="prev" href="revisionlog.html" title="Chapter 4. Logging data for revisions"/><link rel="next" href="schema.html" title="Chapter 6. Generating schema with Ant"/><link rel="copyright" href="Legal_Notice.html" title="Legal Notice"/></head><body><p id="title"><a href="http://www.hibernate.org" class="site_href"><strong>Hibernate.org</strong></a><a href="http://hibernate.org/Documentation/DocumentationOverview" class="doc_href"><strong>Community Documentation</strong></a></p><ul class="docnav"><li class="previous"><a accesskey="p" href="revisionlog.html"><strong>Prev</strong></a></li><li class="next"><a accesskey="n" href="schema.html"><strong>Next</strong></a></li></ul><div class="chapter" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="queries"/>Chapter 5. Queries</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="queries.html#entities-at-revision">5.1. Querying for entities of a class at a given revision</a></span></dt><dt><span class="section"><a href="queries.html#revisions-of-entity">5.2. Querying for revisions, at which entities of a given class changed</a></span></dt></dl></div><p>
+        You can think of historic data as having two dimension. The first - horizontal -
+        is the state of the database at a given revision. Thus, you can
+        query for entities as they were at revision N. The second - vertical - are the
+        revisions, at which entities changed. Hence, you can query for revisions,
+        in which a given entity changed.
+    </p><p>
+        The queries in Envers are similar to
+        <a class="ulink" href="http://www.hibernate.org/hib_docs/v3/reference/en/html/querycriteria.html">Hibernate Criteria</a>,
+        so if you are common with them, using Envers queries will be much easier.
+    </p><p>
+        The main limitation of the current queries implementation is that you cannot
+        traverse relations. You can only specify constraints on the ids of the
+        related entities, and only on the "owning" side of the relation. This however
+        will be changed in future releases.
+    </p><p>
+        Please note, that queries on the audited data will be in many cases much slower
+        than corresponding queries on "live" data, as they involve correlated subselects.
+    </p><p>
+        In the future, queries will be improved both in terms of speed and possibilities, when using the valid-time
+        audit strategy, that is when storing both start and end revisions for entities. See
+        <a class="xref" href="configuration.html" title="Chapter 3. Configuration">Chapter 3, <i>Configuration</i></a>.
+    </p><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="entities-at-revision"/>5.1. Querying for entities of a class at a given revision</h2></div></div></div><p>
+            The entry point for this type of queries is:
+        </p><pre class="programlisting">AuditQuery query = getAuditReader().createQuery().forEntitiesAtRevision(MyEntity.class, revisionNumber);</pre><p>
+            You can then specify constraints, which should be met by the entities returned, by
+            adding restrictions, which can be obtained using the <code class="literal">AuditEntity</code>
+            factory class. For example, to select only entities, where the "name" property
+            is equal to "John":
+        </p><pre class="programlisting">query.add(AuditEntity.property("name").eq("John"));</pre><p>
+            And to select only entites that are related to a given entity:
+        </p><pre class="programlisting">query.add(AuditEntity.property("address").eq(relatedEntityInstance));
+// or
+query.add(AuditEntity.relatedId("address").eq(relatedEntityId));</pre><p>
+            You can limit the number of results, order them, and set aggregations and projections
+            (except grouping) in the usual way.
+            When your query is complete, you can obtain the results by calling the
+            <code class="literal">getSingleResult()</code> or <code class="literal">getResultList()</code> methods.
+        </p><p>
+            A full query, can look for example like this:
+        </p><pre class="programlisting">List personsAtAddress = getAuditReader().createQuery()
+    .forEntitiesAtRevision(Person.class, 12)
+    .addOrder(AuditEntity.property("surname").desc())
+    .add(AuditEntity.relatedId("address").eq(addressId))
+    .setFirstResult(4)
+    .setMaxResults(2)
+    .getResultList();</pre></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="revisions-of-entity"/>5.2. Querying for revisions, at which entities of a given class changed</h2></div></div></div><p>
+            The entry point for this type of queries is:
+        </p><pre class="programlisting">AuditQuery query = getAuditReader().createQuery()
+    .forRevisionsOfEntity(MyEntity.class, false, true);</pre><p>
+            You can add constraints to this query in the same way as to the previous one.
+            There are some additional possibilities:
+        </p><div xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="orderedlist"><ol><li><p>
+                using <code class="literal">AuditEntity.revisionNumber()</code> you can specify constraints, projections
+                and order on the revision number, in which the audited entity was modified
+                </p></li><li><p>
+                similarly, using <code class="literal">AuditEntity.revisionProperty(propertyName)</code> you can specify constraints,
+                projections and order on a property of the revision entity, corresponding to the revision
+                in which the audited entity was modified
+                </p></li><li><p>
+                <code class="literal">AuditEntity.revisionType()</code> gives you access as above to the type of
+                the revision (ADD, MOD, DEL).
+                </p></li></ol></div><p>
+            Using these methods,
+            you can order the query results by revision number, set projection or constraint
+            the revision number to be greater or less than a specified value, etc. For example, the
+            following query will select the smallest revision number, at which entity of class
+            <code class="literal">MyEntity</code> with id <code class="literal">entityId</code> has changed, after revision
+            number 42:
+        </p><pre class="programlisting">Number revision = (Number) getAuditReader().createQuery()
+    .forRevisionsOfEntity(MyEntity.class, false, true)
+    .setProjection(AuditEntity.revisionNumber().min())
+    .add(AuditEntity.id().eq(entityId))
+    .add(AuditEntity.revisionNumber().gt(42))
+    .getSingleResult();</pre><p>
+            The second additional feature you can use in queries for revisions is the ability
+            to maximalize/minimize a property. For example, if you want to select the
+            revision, at which the value of the <code class="literal">actualDate</code> for a given entity
+            was larger then a given value, but as small as possible:
+        </p><pre class="programlisting">Number revision = (Number) getAuditReader().createQuery()
+    .forRevisionsOfEntity(MyEntity.class, false, true)
+    // We are only interested in the first revision
+    .setProjection(AuditEntity.revisionNumber().min())
+    .add(AuditEntity.property("actualDate").minimize()
+        .add(AuditEntity.property("actualDate").ge(givenDate))
+        .add(AuditEntity.id().eq(givenEntityId)))
+    .getSingleResult();
+</pre><p>
+            The <code class="literal">minimize()</code> and <code class="literal">maximize()</code> methods return a criteria,
+            to which you can add constraints, which must be met by the entities with the
+            maximized/minimized properties.
+        </p><p>
+            You probably also noticed that there are two boolean parameters, passed when
+            creating the query. The first one, <code class="literal">selectEntitiesOnly</code>, is only valid when
+            you don't set an explicit projection. If true, the result of the query will be
+            a list of entities (which changed at revisions satisfying the specified
+            constraints).
+        </p><p>
+            If false, the result will be a list of three element arrays. The
+            first element will be the changed entity instance. The second will be an entity
+            containing revision data (if no custom entity is used, this will be an instance
+            of <code class="literal">DefaultRevisionEntity</code>). The third will be the type of the
+            revision (one of the values of the <code class="literal">RevisionType</code> enumeration:
+            ADD, MOD, DEL).
+        </p><p>
+            The second parameter, <code class="literal">selectDeletedEntities</code>, specifies if revisions,
+            in which the entity was deleted should be included in the results. If yes, such entities
+            will have the revision type DEL and all fields, except the id,
+            <code class="literal">null</code>.
+        </p></div></div><HR xmlns=""/><a xmlns="" href="legalnotice.html"><p xmlns="http://www.w3.org/1999/xhtml" class="copyright">Copyright © 2004 Red Hat Inc.</p></a><ul class="docnav"><li class="previous"><a accesskey="p" href="revisionlog.html"><strong>Prev</strong>Chapter 4. Logging data for revisions</a></li><li class="up"><a accesskey="u" href="#"><strong>Top of page</strong></a></li><li class="home"><a accesskey="h" href="index.html"><strong>Front page</strong></a></li><li class="next"><a accesskey="n" href="schema.html"><strong>Next</strong>Chapter 6. Generating schema with Ant</a></li></ul></body></html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Metadata Templates</title>
+</head>
+<body>
+	
+<h1>Metadata Templates</h1>
+
+<p>
+	With Metadata Templates, you can import arbitrary XML content into the MDR. 
+</p>
+
+<h2>Performing Imports using MDT</h2>
+<p>
+	To import using MDT, you need both an MDT definition file and the XML content file you want to import.
+	Then you upload both documents to the MDR server and open the XML content document. The document will
+	have an additional tab to perform the import. For the format file, specify the MDT file you just uploaded. 
+</p>
+
+<h2>MDT File Format</h2>
+<p>
+	MDT files are simple text files that you can edit using a text editor that can save files without
+	formatting.
+</p>
+
+<h3>Meta Data</h3>
+<p>
+	The head of the file contains optional meta data information. Every line of meta data begins with 
+	an <code>@</code> followed by the meta data name and a string that contains the meta data value.
+	For example,
+	
+<pre>
+@name "ODM 1.3 Import Template"
+</pre> 
+	
+	would name the document acordingly.
+</p>
+
+<h3>Comments</h3>
+<p>
+	MDT files can contain single line and multi line comments. Single line comments start with <code>//</code>
+	and end at the end of the line. Multiline comments are enclosed in <code>/*</code> and <code>*/</code> 
+</p>
+
+<h3>Type References</h3>
+<p>
+	Every domain model type must be declared before it can be used. To declare the type, an import statement
+	specifies the fully qualified class name, e.g.
+<pre>
+import net.xclinical.iso11179.Link;	
+</pre>
+</p>
+
+<h3>Rule Definitions</h3>
+<p>
+	The rest of the MDT file is a set of cascaded rules. A rule maps an XPath expression to an rule definition.
+	When the execution engine processes an import, it starts with the root rule and recursively processes all
+	rules my matching them against the XML content.  
+</p>
+<p>
+	There is a single root rule in every MDT file. Usually, the root rule maps to the document element, e.g.
+<pre>
+["/"] {
+	//...
+}
+</pre>
+</p>
+<p>
+	A rule definition can be either a declaration, a block statement or a reference of a block.
+</p>
+
+<h4>Declarations</h4>
+<p>
+	A declaration statement creates a new domain model entity. E.g.
+<pre>
+Namespace {
+        oneNamePerItem = true;
+        oneItemPerName = true;
+        mandatoryNamingConvention = true;
+        shorthandPrefix = "lang";
+        namespaceSchemeReference = "urn:ietf:rfc:4646";
+}
+</pre>
+<p>
+	creates a new entity of type <code>Namespace</code> and initializes it using the statements in
+	the block statement following the type name.
+</p>
+
+<p>
+	The type name of a declaration statement can optionally be followed by a coalesce expression. The coalesce
+	expression will be evaluated first. When it returns <code>null</code>, a new entity will be created. If it
+	returns something else, the statement will evaluate to the returned object. This is useful to create
+	entities only once and return a reference to the existing entity later. 
+</p>
+<p>
+	For example, here is a stement to return the existing namespace if it exists and create a new one otherwise:
+</p>
+<pre>
+var odmTypes = Namespace : Namespace.find("http://www.cdisc.org/ns/odm/v1.3") {
+	oneNamePerItem = true;
+	oneItemPerName = true;
+	mandatoryNamingConvention = true;
+	shorthandPrefix = "mdr";
+	namespaceSchemeReference = "http://www.cdisc.org/ns/odm/v1.3";
+}	
+</pre>
+
+<h4>Block Statement</h4>
+<p>
+	A block statement is a set of other statements. Whenever a block statement evaluates, all its statements
+	will be evaluated sequentially.
+</p>
+<p>
+	A named block is a block statement with a unique name, e.g.
+<pre>
+def ablock {
+	//...
+}
+</pre>
+<p>
+	defines a block called <code>ablock</code> that can be used in the MDT file whenever a block statement
+	is expected.
+</p>
+
+<h3>Variables</h3>
+<p>
+	To declare a new variable, use the <code>var</code> keyword, followed by the variable name and an initializer.
+	E.g.
+<pre>
+	var i = 1;
+</pre>
+<p>
+	creates a new variable and initializes it to one.
+</p>
+<p>
+	If you declare a variable that was previously declared in an outer block, then the new variable shadows the
+	outer declaration. 
+</p>
+<p>
+	Inside a declaration, the new entity will be the default scope, so the statement
+</p>
+<pre>
+var d = Namespace {
+	shorthandPrefix = "d";
+}
+</pre>
+<p>
+	Creates a new entity and then assigns <code>"d"</code> to the the entity because the new entity is the default scope.
+</p>
+
+<h3>Methods</h3>
+<p>
+	The execution engine has a generic mechanism for invoking methods on any Java class that runs in the Java
+	runtime on the server. The classes must be imported using an import statement before they can be used. 
+</p>
+<p>
+	For example, when you import the class <code>net.xclinical.mdt.Utils</code>, then the statement
+<pre>
+	Utils.concat("/ClaML/ModifierClass[@modifier='", modifierCode, "']")
+</pre>
+<p>
+	Creates an XPath expression at runtime.
+</p>
+
+
+<h2>Example</h2>
+
+Here is an <a href="odm130.mdt">MDT file</a> to import ODM 1.3 XML.
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Freemarker Web site" topic="docs/index.html" link_to="freemarker-toc.xml#WebLink">
+
+  
+    
+      <topic label="Overview" href="docs/index.html" />
+      <topic label="Features" href="docs/features.html" />
+    
+    
+      <topic label="FreeMarker" href="docs/freemarkerdownload.html" />
+      <topic label="Editor/IDE plugins" href="docs/editors.html" />
+      <topic label="File generator tool (FMPP)" href="docs/fmpp.html" />
+      <topic label="Migrating from Velocity" href="docs/usCavalry.html" />
+      <topic label="FTL Libraries" href="docs/libraries.html" />
+    
+    
+      <topic label="Table of Contents" href="docs/docs/index.html" />
+      <topic label="Short-cut to: Java API" href="docs/docs/api/index.html" />
+      <topic label="Short-cut to: FAQ" href="docs/docs/app_faq.html" />
+      <topic label="Short-cut to: Index" href="docs/docs/alphaidx.html" />
+      <topic label="Short-cut to: Versions" href="docs/docs/app_versions.html" />
+    
+    
+      <topic label="REPORT BUGS HERE!" href="http://sourceforge.net/tracker/?func=add&amp;group_id=794&amp;atid=100794" />
+      <topic label="Mailing list subscription" href="http://sourceforge.net/mail/?group_id=794" />
+      <topic label="Browse/search the mailing list archives" href="docs/gmane.html" />
+      <topic label="News (nntp) interface" href="docs/gmane.html" />
+      <topic label="Web forums" href="https://sourceforge.net/forum/?group_id=794" />
+      <topic label="Development builds (automatic)" href="http://freemarker.org/builds/" />
+      <topic label="Wiki" href="http://freemarker.org/wiki" />
+      <topic label="Blog" href="http://freemarker.blogspot.com/" />
+    
+    
+      <topic label="Powered by FreeMarker" href="docs/poweredBy.html" />
+      <topic label="SourceForge project page" href="http://sourceforge.net/projects/freemarker" />
+      <topic label="Who we are" href="docs/whoWeAre.html" />
+    
+  
+</toc>
+
+

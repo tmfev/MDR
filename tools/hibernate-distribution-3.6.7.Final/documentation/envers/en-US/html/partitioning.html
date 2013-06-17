@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory">Chapter 8. Audit table partitioning</title><link rel="stylesheet" href="css/hibernate.css" type="text/css"/><meta xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" name="generator" content="DocBook XSL Stylesheets V1.74.0"/><link rel="home" href="index.html" title="Hibernate Envers - Easy Entity Auditing"/><link rel="up" href="index.html" title="Hibernate Envers - Easy Entity Auditing"/><link rel="prev" href="tables.html" title="Chapter 7. Generated tables and their content"/><link rel="next" href="source.html" title="Chapter 9. Building from source and testing"/><link rel="copyright" href="Legal_Notice.html" title="Legal Notice"/></head><body><p id="title"><a href="http://www.hibernate.org" class="site_href"><strong>Hibernate.org</strong></a><a href="http://hibernate.org/Documentation/DocumentationOverview" class="doc_href"><strong>Community Documentation</strong></a></p><ul class="docnav"><li class="previous"><a accesskey="p" href="tables.html"><strong>Prev</strong></a></li><li class="next"><a accesskey="n" href="source.html"><strong>Next</strong></a></li></ul><div class="chapter" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="partitioning"/>Chapter 8. Audit table partitioning</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="partitioning.html#partitioning-benefits">8.1. Benefits of audit table partitioning</a></span></dt><dt><span class="section"><a href="partitioning.html#partitioning-columns">8.2. Suitable columns for audit table partitioning</a></span></dt><dt><span class="section"><a href="partitioning.html#partitioning-example">8.3. Audit table partitioning example</a></span></dt><dd><dl><dt><span class="section"><a href="partitioning.html#partitioning-example-column">8.3.1. Determining a suitable partitioning column</a></span></dt><dt><span class="section"><a href="partitioning.html#partitioning-example-scheme">8.3.2. Determining a suitable partitioning scheme</a></span></dt></dl></dd></dl></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="partitioning-benefits"/>8.1. Benefits of audit table partitioning</h2></div></div></div><p>
+            Because audit tables tend to grow indefinitely they can quickly become really large. When the audit tables have grown
+            to a certain limit (varying per RDBMS and/or operating system) it makes sense to start using table partitioning.
+            SQL table partitioning offers a lot of advantages including, but certainly not limited to:
+            </p><div xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="orderedlist"><ol><li><p>
+                        Improved query performance by selectively moving rows to various partitions (or even purging old rows)
+                    </p></li><li><p>
+                        Faster data loads, index creation, etc.
+                    </p></li></ol></div><p>
+        </p></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="partitioning-columns"/>8.2. Suitable columns for audit table partitioning</h2></div></div></div><p>         
+            Generally SQL tables must be partitioned on a column that exists within the table. As a rule it makes sense to use
+            either the <span class="emphasis"><em>end revision</em></span> or the <span class="emphasis"><em>end revision timestamp</em></span> column for 
+            partioning of audit tables.
+            </p><div xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="note"><h2>Note</h2><p>
+                    End revision information is not available for the default AuditStrategy. 
+                </p><p>
+                    Therefore the following Envers configuration options are required: 
+                </p><p>
+                    <code class="literal">org.hibernate.envers.audit_strategy</code> = 
+                    <code class="literal">org.hibernate.envers.strategy.ValidityAuditStrategy</code>
+                </p><p>
+                    <code class="literal">org.hibernate.envers.audit_strategy_validity_store_revend_timestamp</code> = 
+                    <code class="literal">true</code>
+                </p><p>
+                    Optionally, you can also override the default values following properties: 
+                </p><p>
+                    <code class="literal">org.hibernate.envers.audit_strategy_validity_end_rev_field_name</code>
+                </p><p>
+                    <code class="literal">org.hibernate.envers.audit_strategy_validity_revend_timestamp_field_name</code>
+                </p><p>
+                    For more information, see <a class="xref" href="configuration.html" title="Chapter 3. Configuration">Chapter 3, <i>Configuration</i></a>.
+                </p></div><p>
+        </p><p>
+           The reason why the end revision information should be used for audit table partioning is based on the assumption that
+           audit tables should be partionioned on an 'increasing level of interestingness', like so: 
+        </p><p>
+            </p><div xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="orderedlist"><ol><li><p>
+                        A couple of partitions with audit data that is not very (or no longer) interesting. 
+                        This can be stored on slow media, and perhaps even be purged eventually.  
+                    </p></li><li><p>
+                        Some partitions for audit data that is potentially interesting.
+                    </p></li><li><p>
+                        One partition for audit data that is most likely to be interesting. 
+                        This should be stored on the fastest media, both for reading and writing.  
+                    </p></li></ol></div><p>
+        </p></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h2 class="title"><a id="partitioning-example"/>8.3. Audit table partitioning example</h2></div></div></div><p>
+            In order to determine a suitable column for the 'increasing level of interestingness',
+            consider a simplified example of a salary registration for an unnamed agency. 
+        </p><p>
+            Currently, the salary table contains the following rows for a certain person X:
+                      
+            </p><div class="table"><a id="d0e848"/><p class="title"><b>Table 8.1. Salaries table</b></p><div class="table-contents"><table summary="Salaries table" border="1"><colgroup><col/><col/></colgroup><thead><tr><th>Year</th><th>Salary (USD)</th></tr></thead><tbody><tr><td>2006</td><td>3300</td></tr><tr><td>2007</td><td>3500</td></tr><tr><td>2008</td><td>4000</td></tr><tr><td>2009</td><td>4500</td></tr></tbody></table></div></div><p><br class="table-break"/>
+        </p><p>
+            The salary for the current fiscal year (2010) is unknown. The agency requires that all changes in registered 
+            salaries for a fiscal year are recorded (i.e. an audit trail). The rationale behind this is that decisions 
+            made at a certain date are based on the registered salary at that time. And at any time it must be possible 
+            reproduce the reason why a certain decision was made at a certain date.
+        </p><p>
+            The following audit information is available, sorted on in order of occurrence:
+
+            </p><div class="table"><a id="d0e886"/><p class="title"><b>Table 8.2. Salaries - audit table</b></p><div class="table-contents"><table summary="Salaries - audit table" border="1"><colgroup><col/><col/><col/><col/><col/></colgroup><thead><tr><th>Year</th><th>Revision type</th><th>Revision timestamp</th><th>Salary (USD)</th><th>End revision timestamp</th></tr></thead><tbody><tr><td>2006</td><td>ADD</td><td>2007-04-01</td><td>3300</td><td>null</td></tr><tr><td>2007</td><td>ADD</td><td>2008-04-01</td><td>35</td><td>2008-04-02</td></tr><tr><td>2007</td><td>MOD</td><td>2008-04-02</td><td>3500</td><td>null</td></tr><tr><td>2008</td><td>ADD</td><td>2009-04-01</td><td>3700</td><td>2009-07-01</td></tr><tr><td>2008</td><td>MOD</td><td>2009-07-01</td><td>4100</td><td>2010-02-01</td></tr><tr><td>2008</td><td>MOD</td><td>2010-02-01</td><td>4000</td><td>null</td></tr><tr><td>2009</td><td>ADD</td><td>2010-04-01</td><td>4500</td><td>null</td></tr></tbody></table></div></div><p><br class="table-break"/>
+        </p><div class="section" lang="en-US"><div class="titlepage"><div><div><h3 class="title"><a id="partitioning-example-column"/>8.3.1. Determining a suitable partitioning column</h3></div></div></div><p>
+                To partition this data, the 'level of interestingness' must be defined. 
+                Consider the following:
+                </p><div xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="orderedlist"><ol><li><p>
+                            For fiscal year 2006 there is only one revision. It has the oldest <span class="emphasis"><em>revision timestamp</em></span>
+                            of all audit rows, but should still be regarded as interesting because it is the latest modification 
+                            for this fiscal year in the salary table; its <span class="emphasis"><em>end revision timestamp</em></span> is null.
+                        </p><p>
+                            Also note that it would be very unfortunate if in 2011 there would be an update of the salary for fiscal 
+                            year 2006 (which is possible in until at least 10 years after the fiscal year) and the audit 
+                            information would have been moved to a slow disk (based on the age of the 
+                            <span class="emphasis"><em>revision timestamp</em></span>). Remember that in this case Envers will have to update 
+                            the <span class="emphasis"><em>end revision timestamp</em></span> of the most recent audit row.
+                        </p></li><li><p>
+                             There are two revisions in the salary of fiscal year 2007 which both have nearly the same 
+                             <span class="emphasis"><em>revision timestamp</em></span> and a different <span class="emphasis"><em>end revision timestamp</em></span>. 
+                             On first sight it is evident that the first revision was a mistake and probably uninteresting. 
+                             The only interesting revision for 2007 is the one with <span class="emphasis"><em>end revision timestamp</em></span> null.
+                        </p></li></ol></div><p>
+                        
+                Based on the above, it is evident that only the <span class="emphasis"><em>end revision timestamp</em></span> is suitable for 
+                audit table partitioning. The <span class="emphasis"><em>revision timestamp</em></span> is not suitable. 
+            </p></div><div class="section" lang="en-US"><div class="titlepage"><div><div><h3 class="title"><a id="partitioning-example-scheme"/>8.3.2. Determining a suitable partitioning scheme</h3></div></div></div><p>
+                A possible partitioning scheme for the salary table would be as follows:
+                </p><div xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="orderedlist"><ol><li><p>
+                            <span class="emphasis"><em>end revision timestamp</em></span> year = 2008
+                        </p><p>
+                            This partition contains audit data that is not very (or no longer) interesting. 
+                        </p></li><li><p>
+                            <span class="emphasis"><em>end revision timestamp</em></span> year = 2009
+                        </p><p>
+                            This partition contains audit data that is potentially interesting.
+                        </p></li><li><p>
+                            <span class="emphasis"><em>end revision timestamp</em></span> year &gt;= 2010 or null  
+                        </p><p>
+                            This partition contains the most interesting audit data. 
+                        </p></li></ol></div><p>
+            </p><p>
+                This partitioning scheme also covers the potential problem of the update of the 
+                <span class="emphasis"><em>end revision timestamp</em></span>, which occurs if a row in the audited table is modified. 
+                Even though Envers will update the <span class="emphasis"><em>end revision timestamp</em></span> of the audit row to 
+                the system date at the instant of modification, the audit row will remain in the same partition
+                (the 'extension bucket').
+            </p><p>
+                And sometime in 2011, the last partition (or 'extension bucket') is split into two new partitions:
+                </p><div xmlns:rf="java:org.jboss.highlight.XhtmlRendererFactory" class="orderedlist"><ol><li><p>
+                            <span class="emphasis"><em>end revision timestamp</em></span> year = 2010
+                        </p><p>
+                            This partition contains audit data that is potentially interesting (in 2011).
+                        </p></li><li><p>
+                            <span class="emphasis"><em>end revision timestamp</em></span> year &gt;= 2011 or null  
+                        </p><p>
+                            This partition contains the most interesting audit data and is the new 'extension bucket'. 
+                        </p></li></ol></div><p>
+            </p></div></div></div><HR xmlns=""/><a xmlns="" href="legalnotice.html"><p xmlns="http://www.w3.org/1999/xhtml" class="copyright">Copyright © 2004 Red Hat Inc.</p></a><ul class="docnav"><li class="previous"><a accesskey="p" href="tables.html"><strong>Prev</strong>Chapter 7. Generated tables and their content</a></li><li class="up"><a accesskey="u" href="#"><strong>Top of page</strong></a></li><li class="home"><a accesskey="h" href="index.html"><strong>Front page</strong></a></li><li class="next"><a accesskey="n" href="source.html"><strong>Next</strong>Chapter 9. Building from source and testing</a></li></ul></body></html>

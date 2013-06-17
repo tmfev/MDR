@@ -1,0 +1,32 @@
+@author Eric Armstrong, 23 Aug '00
+
+The "master" directory for the doccheck package is
+at /home/ericarms/dev/doccheck.
+
+I work on them there and then publish them:
+  /java/jdk/ws/tools/doclets/doccheck         (source, classes, docs)
+  /usr/web/work/products/jdk/javadoc/doccheck (docs only)
+
+Here's the calling hierarchy for the build scripts:
+
+  makeAll 
+    compileAll
+      compileIf
+         compile
+    makeApiDocs
+    makeZipFile
+
+This one is used if any changes affected the sample output,
+causing them to be copied. (That happens in my home directory.
+The result is published to /java/jdk/... and /usr/web/...)
+  makeAndFixSample
+    fixSampleDocsAt
+       fixSampleDoc
+
+For a heartbeat test, use
+  % cd test
+  % runtest
+
+This test processes contents of test/testsrc, creating
+test/testout
+

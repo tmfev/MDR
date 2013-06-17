@@ -1,0 +1,26 @@
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:mdr="urn:import:com.xclinical.mdr.client">
+
+	<ui:with type="com.xclinical.mdr.client.res.MdrResources"
+		field="r" />
+
+	<ui:style>
+		.panel {
+			padding: 4pt;
+		}
+		
+		.button {
+			float: right;
+		}
+		
+		.rating {
+			cursor: pointer;
+		}
+	</ui:style>
+
+	<g:VerticalPanel styleName="{style.panel}">
+		<g:Label ui:field="summary" />
+		<mdr:RatingWidget styleName="{style.rating}" ui:field="myRating" />
+		<g:PushButton addStyleNames="{style.button}" ui:field="submit">Submit</g:PushButton>		
+	</g:VerticalPanel>
+</ui:UiBinder>
