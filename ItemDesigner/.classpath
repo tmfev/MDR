@@ -26,6 +26,6 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/hibernate-commons-annotations-4.0.1.Final.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/hibernate-validator-4.3.0.Final.jar"/>
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Jsonite"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jsonite"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

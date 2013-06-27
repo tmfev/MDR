@@ -63,7 +63,6 @@ import net.xclinical.iso11179.ext.ResultList;
 import net.xclinical.iso11179.ext.User;
 import net.xclinical.iso11179.ext.Visitable;
 
-import com.sun.xml.internal.txw2.output.IndentingXMLStreamWriter;
 import com.xclinical.mdr.repository.HasKey;
 import com.xclinical.mdr.repository.Key;
 
@@ -83,7 +82,7 @@ public class GenericXmlExporter extends AbstractVisitor implements Decls {
 	public GenericXmlExporter(OutputStream stm) throws XMLStreamException {
 		XMLOutputFactory fac = XMLOutputFactory.newFactory();
 		fac.setProperty("javax.xml.stream.isRepairingNamespaces", true);
-		writer = new IndentingXMLStreamWriter(fac.createXMLStreamWriter(stm, "utf-8"));
+		writer = fac.createXMLStreamWriter(stm, "utf-8");
 		writer.writeStartDocument("utf-8", "1.0");
 		writeStartElement(MDR);
 	}
