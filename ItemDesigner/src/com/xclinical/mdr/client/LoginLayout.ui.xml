@@ -130,6 +130,11 @@
 				            von Datenbanken und Dokumentationsprozessen in prospektiven klinischen und epidemiologischen Studien und Registern</div></td>
 					</tr>
 					<tr>
+					    <td colspan="4">
+					        &#187; <a href="http://mdr.imise.uni-leipzig.de/MDR-Broschuere.pdf">Image-Broschüre</a> der TMF zum BMBF-Projekt Nationalen Metadata Repository (Stand März 2013)
+					    </td>
+					</tr>
+					<tr>
 					    <td align="center"><a href="http://www.imise.uni-leipzig.de"><g:Image resource="{res.imiseLogo}"/></a></td>
 					    <td align="center"><a href="http://www.ibe.med.uni-muenchen.de"><g:Image resource="{res.lmuLogo}"/></a></td>
    					    <td align="center"><a href="http://www.xclinical.com"><g:Image resource="{res.xclinicalLogo}"/></a></td>
@@ -145,11 +150,12 @@
 					    <td>Härtelstraße 16-18<br/>04107 Leipzig</td>
 					    <td>Marchioninistraße 15<br/>81377 München</td>
 					    <td>Arnulfstraße 19<br/>80335 München</td>
-					    <td>Neustädtische Kirchstr. 6<br/>10117 Berlin</td>
+					    <td>Charlottenstraße 42<br/>10117 Berlin</td>
 					</tr>
 					<tr>
 					    <td colspan="4">
-					        <div class="{style.contactText}">Kontakt: <a href="mailto:markus.loeffler@imise.uni-leipzig.de">markus.loeffler@imise.uni-leipzig.de</a></div>
+					        <div class="{style.contactText}">Kontakt (inhaltlich): <a href="mailto:Johannes.Drepper@tmf-ev.de">Dr. Johannes Drepper</a></div>
+					        <div class="{style.contactText}">Kontakt (technisch): <a href="mailto:matthias.loebe@imise.uni-leipzig.de">Matthias Löbe</a></div>
 					    </td>
 					</tr>
 					<tr>
