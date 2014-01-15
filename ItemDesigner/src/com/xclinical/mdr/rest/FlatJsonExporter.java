@@ -17,6 +17,8 @@
  */
 package com.xclinical.mdr.rest;
 
+import java.util.List;
+
 import net.xclinical.iso11179.Assertion;
 import net.xclinical.iso11179.AssertionEnd;
 import net.xclinical.iso11179.Concept;
@@ -54,6 +56,7 @@ import net.xclinical.iso11179.ext.User;
 import net.xclinical.iso11179.ext.UserGroup;
 import net.xclinical.iso11179.ext.Visitable;
 
+import com.mictale.jsonite.JsonArray;
 import com.mictale.jsonite.JsonObject;
 import com.xclinical.mdr.repository.HasKey;
 import com.xclinical.mdr.repository.Key;
@@ -76,6 +79,19 @@ public class FlatJsonExporter extends AbstractVisitor {
 		return ex.obj;		
 	}
 
+	public static JsonArray of(List<Object> elements) {
+		JsonArray result = new JsonArray();
+				
+		for (Object obj : elements) {
+			FlatJsonExporter ex = new FlatJsonExporter();
+			((Visitable)obj).accept(ex);
+			result.add(ex.obj);
+		}
+		
+		return result;		
+	}
+	
+	
 	private void put(String name, HasKey key) {
 		if (key == null) {
 			obj.put(name, null);

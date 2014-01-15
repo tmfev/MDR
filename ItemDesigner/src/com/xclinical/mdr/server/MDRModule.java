@@ -45,6 +45,7 @@ import net.xclinical.iso11179.ext.UnitOfMeasureListCommand;
 import com.google.inject.persist.jpa.JpaPersistModule;
 import com.google.inject.servlet.ServletModule;
 import com.xclinical.mdr.rest.RestfulEntityServlet;
+import com.xclinical.mdr.rest.QueryServlet;
 import com.xclinical.mdr.server.command.JsonCommandServlet;
 
 /**
@@ -65,6 +66,7 @@ public class MDRModule extends ServletModule {
 		filter(ROOT + "*").through(PersistFilter.class);
 
 		serve("/mdr/entities/*").with(RestfulEntityServlet.class);		
+		serve("/mdr/queries/*").with(QueryServlet.class);		
 		
 		serve(ROOT + "backup").with(BackupServlet.class);		
 		serve(ROOT + "update/*").with(UpdateServlet.class);		

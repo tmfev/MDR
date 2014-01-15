@@ -17,15 +17,9 @@
  */
 package net.xclinical.iso11179.ext;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Query;
-
 import com.xclinical.mdr.client.iso11179.model.Item;
-import com.xclinical.mdr.repository.Key;
-import com.xclinical.mdr.repository.RepositoryStoreException;
-import com.xclinical.mdr.server.PMF;
 import com.xclinical.mdr.server.command.AbstractCommand;
 import com.xclinical.mdr.server.tree.TreeSource;
 import com.xclinical.mdr.server.tree.TreeWriter;
@@ -45,38 +39,6 @@ public final class SearchCommand extends AbstractCommand {
 	
 	public SearchCommand() {		
 	}
-
-	public <T> List<T> runNamedQuery(String name, Object...params) {
-		Query query = PMF.get().createNamedQuery(name);
-		for (int i = 0; i < params.length; i++) {
-			query.setParameter(i + 1, params[i]);
-		}
-
-		query.setFirstResult(start);
-		
-		@SuppressWarnings("unchecked")
-		List<T> hits = query.getResultList();
-		return hits;
-	}
-
-	public <T> List<T> extractKey(List<Object[]> l) throws RemoteException {
-		List<T> items = new ArrayList<T>(l.size());
-		
-		int count = Math.min(l.size(), length);
-		for (int i = 0; i < count; i++) {
-			Object[] hit = l.get(i);
-			Key k = Key.parse((String)hit[0]);
-			
-			try {
-				items.add((T) PMF.find(k));
-			}
-			catch(RepositoryStoreException e) {
-				throw new RemoteException(e);
-			}
-		}		
-		
-		return items;
-	}
 	
 	@Override
 	public void invoke(TreeWriter writer, TreeSource source) throws RemoteException {
@@ -88,15 +50,17 @@ public final class SearchCommand extends AbstractCommand {
 		
 		List<Object> items;
 		List<Object[]> hits;
+
+		SearchHelper search = new SearchHelper();
 		
 		if (type.length() > 0) {
-			hits = runNamedQuery(query + Item.ADD_TYPE, term.toUpperCase() + '%', type);
+			hits = search.runNamedQuery(start, query + Item.ADD_TYPE, term.toUpperCase() + '%', type);
 		}
 		else {
-			hits = runNamedQuery(query, term.toUpperCase() + '%');
+			hits = search.runNamedQuery(start, query, term.toUpperCase() + '%');
 		}
 		
-		items = extractKey(hits);
+		items = search.extractKey(length, hits);
 				
 		FlatJsonExporter.copy(writer, new ResultList(items, start, start + items.size()));
 	}

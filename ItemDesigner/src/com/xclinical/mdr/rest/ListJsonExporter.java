@@ -18,6 +18,7 @@
 package com.xclinical.mdr.rest;
 
 import java.util.Collection;
+import java.util.List;
 
 import net.xclinical.iso11179.Assertion;
 import net.xclinical.iso11179.AssertionEnd;
