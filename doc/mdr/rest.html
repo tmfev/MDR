@@ -35,6 +35,15 @@
 	A client fetches the contents of a relation by making a GET request for the entity relation. The URL 
 	of an entity relation is the concatenation of an entity URL and the name of the relation.
 	
+<h3>Collections</h3>
+<p>
+	Every item type defines a set of collections that hold other items that share a specific relation type.
+	To retrieve a collection, append the collection name to the request.
+</p>
+<p>
+	<code>com.xclinical.mdr.rest.ListJsonExporter</code> contains the names of all supported collection names.
+</p>
+
 <h3>Queries</h3>
 <p>
 	Queries run well known database queries and return the result elements.
@@ -46,7 +55,9 @@
 	is the name of a named query defined in the <code>net.xclinical.iso11179</code> package, e.g. <code>Item.searchByRating</code> 
 	Additional parameters can be added as query parameters to the URL. Pass parameters as named URI parameters <code>p0</code>, <code>p1</code>, etc.
 </p>
-
+<p>
+	Check for <code>@NamedQuery</code> annotations in namespace <code>net.xclinical.iso11179</code> for all query names.
+</p>
 	
 <h3>Identified Item</H3>
 <p>
@@ -57,17 +68,6 @@
 <p></p>	
 	For example, the singleton root context of any MDR can be retrieved using the following query:
 	/mdr/queries/identifiedItem?namespace=urn:mdr:data&identifier=root
-</p>
-
-<h3>Full Text Search</h3>
-<p>
-	This API call is an equivalent to the search feature in the MDR user interface. Full text search 
-	indexes specific properties of every entity and maintains a relationship between the entity that is 
-	being indexed and a related entity that is the target of the index entry. A query then returns the 
-	target entity and not the entity being indexed. For example, when search adds a Designation to the 
-	index, the target will be the DesignatableItem that contains this Designation.
-	The URL for the search call is /mdr/queries/search?q=<search term>. On success, the 
-	caller receives a list of entities that match the search criteria.
 </p>
 
 <h2>Responses</h2>
