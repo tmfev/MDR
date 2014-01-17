@@ -5,10 +5,6 @@
 
 <web-app>
 
-	<listener>
-		<listener-class>com.xclinical.mdr.server.MDRServletConfig</listener-class>
-	</listener>
-
 	<filter>
 		<filter-name>guiceFilter</filter-name>
 		<filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
@@ -19,9 +15,20 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
+	<listener>
+		<listener-class>com.xclinical.mdr.server.MDRServletConfig</listener-class>
+	</listener>
+
 	<!-- Default page to serve -->
 	<welcome-file-list>
 		<welcome-file>ItemDesigner.html</welcome-file>
 	</welcome-file-list>
+
+	<env-entry>
+		<description>Gibt den Pfad zu Apache Derby an, worin das MDR seine Daten speichert</description>
+		<env-entry-name>MDR</env-entry-name>
+		<env-entry-value>/var/opt/MDR/HEAD</env-entry-value>
+		<env-entry-type>java.lang.String</env-entry-type>
+	</env-entry>
 
 </web-app>

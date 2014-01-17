@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project name="ItemDesigner" default="build" basedir=".">
 	<!-- The basic version code. -->
-	<property name="mdr.version" value="0.8.39" />
+	<property name="mdr.version" value="0.8.40" />
 
 	<!-- Arguments to gwtc and devmode targets -->
 	<property name="gwt.args" value="-strict -gen gen-src -style PRETTY" />
