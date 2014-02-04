@@ -146,7 +146,7 @@ public class MDRServletConfig extends GuiceServletContextListener {
 	    		baseDir = mdr;
 	    	}
 	    	else {        	
-	    		LOG.info("Falling hack to user's home directory");
+	    		LOG.info("Falling back to user's home directory");
 	    		final String home = System.getenv("HOME");
 	    		baseDir = home + "/mdr";
 	    	}
